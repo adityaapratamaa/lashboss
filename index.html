@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LashBoss — No.1 Serum Bulu Mata & Alis Indonesia</title>
+<meta name="description" content="LashBoss - Serum Bulu Mata & Alis No.1 di Indonesia. BPOM & Halal Certified. Dapatkan bulu mata lebih panjang, tebal & lentik dalam 2 minggu!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #E8739A;
+    --pink-light: #F4A7C0;
+    --pink-pale: #FDE8F0;
+    --pink-deep: #C4527A;
+    --black: #1A1018;
+    --charcoal: #2D2030;
+    --white: #FFFBFD;
+    --cream: #FDF5F8;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --text-dark: #1A1018;
+    --text-mid: #5A3F52;
+    --text-light: #9B7D8F;
+    --shadow-pink: 0 20px 60px rgba(232,115,154,0.25);
+    --shadow-deep: 0 30px 80px rgba(26,16,24,0.15);
+    --radius: 20px;
+    --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--pink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 2px solid var(--pink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.12s var(--transition);
+    opacity: 0.6;
+  }
+  .cursor.expanded { width: 24px; height: 24px; }
+  .cursor-ring.expanded { width: 60px; height: 60px; opacity: 0.3; }
+
+  /* ─── LOADING SCREEN ─── */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--black);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+
+  .loader-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--white);
+    letter-spacing: 0.15em;
+    font-style: italic;
+    animation: loaderPulse 1.5s ease-in-out infinite;
+  }
+  .loader-logo span { color: var(--pink); }
+
+  .loader-tagline {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--pink-light);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .loader-bar-wrap {
+    width: 220px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    margin-top: 3rem;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .loader-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--pink), var(--pink-light));
+    width: 0%;
+    border-radius: 99px;
+    animation: loadBar 2.2s var(--transition) forwards;
+  }
+
+  .loader-petals {
+    position: absolute;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    width: 8px; height: 14px;
+    background: var(--pink);
+    border-radius: 50% 50% 50% 0;
+    opacity: 0;
+    animation: petalFall linear infinite;
+  }
+
+  @keyframes loadBar { 0%{width:0} 100%{width:100%} }
+  @keyframes loaderPulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+  @keyframes petalFall {
+    0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.25rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(255,251,253,0.92);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 2px 30px rgba(232,115,154,0.12);
+  }
+
+  .nav-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    font-style: italic;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--pink-deep); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--pink-light);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  nav.scrolled .nav-links a { color: var(--text-mid); }
+  nav.scrolled .nav-links a::after { background: var(--pink); }
+
+  .nav-cta {
+    background: var(--pink);
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 99px;
+    letter-spacing: 0.15em !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,115,154,0.4) !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  nav.scrolled .hamburger span { background: var(--pink-deep); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 70% 50%, rgba(196,82,122,0.35) 0%, rgba(232,115,154,0.15) 40%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 10% 80%, rgba(232,115,154,0.2) 0%, transparent 60%),
+                var(--black);
+  }
+
+  .hero-particles {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--pink-light);
+    border-radius: 50%;
+    animation: sparkleAnim ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes sparkleAnim {
+    0%,100%{opacity:0;transform:scale(0.5)}
+    50%{opacity:0.8;transform:scale(1.5)}
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+    padding-top: 5rem;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(232,115,154,0.15);
+    border: 1px solid rgba(232,115,154,0.3);
+    color: var(--pink-light);
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--pink);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+  .hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1;
+    color: var(--white);
+    font-style: italic;
+    animation: fadeInUp 0.8s ease 0.35s both;
+  }
+  .hero-title .pink { color: var(--pink); }
+  .hero-title .outline {
+    -webkit-text-stroke: 2px var(--pink-light);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    margin: 1.5rem 0 2rem;
+    font-weight: 300;
+    max-width: 450px;
+    animation: fadeInUp 0.8s ease 0.5s both;
+  }
+
+  .hero-stats {
+    display: flex; gap: 2rem;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.8s ease 0.65s both;
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--pink-light);
+    line-height: 1;
+    font-style: italic;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.8s both;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--pink);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s var(--transition);
+    box-shadow: 0 8px 30px rgba(232,115,154,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(232,115,154,0.5); }
+  .btn-primary:hover::before { opacity: 1; }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+  }
+  .btn-outline:hover {
+    border-color: var(--pink-light);
+    background: rgba(232,115,154,0.15);
+    transform: translateY(-2px);
+  }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInRight 1s ease 0.4s both;
+  }
+
+  .hero-circle {
+    width: clamp(300px, 40vw, 520px);
+    height: clamp(300px, 40vw, 520px);
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.12), rgba(232,115,154,0.25));
+    border: 1px solid rgba(232,115,154,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: floatCircle 6s ease-in-out infinite;
+  }
+
+  .hero-inner-circle {
+    width: 75%;
+    height: 75%;
+    background: radial-gradient(circle at 40% 30%, rgba(232,115,154,0.4), rgba(196,82,122,0.6));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--white);
+    letter-spacing: 0.1em;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    border: 1px dashed rgba(232,115,154,0.25);
+    border-radius: 50%;
+    animation: orbitSpin linear infinite;
+  }
+  .orbit-ring:nth-child(1) { width: 110%; height: 110%; animation-duration: 15s; }
+  .orbit-ring:nth-child(2) { width: 125%; height: 125%; animation-duration: 22s; animation-direction: reverse; }
+  .orbit-ring:nth-child(3) { width: 140%; height: 140%; animation-duration: 30s; }
+
+  .orbit-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--pink-light);
+    border-radius: 50%;
+    top: -4px; left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px var(--pink);
+  }
+
+  .float-badge {
+    position: absolute;
+    background: rgba(255,251,253,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 0.8rem 1.1rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    animation: floatBadge ease-in-out infinite;
+  }
+  .float-badge-icon { font-size: 1.4rem; }
+  .float-badge-text { font-size: 0.7rem; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+  .float-badge-sub { font-size: 0.6rem; font-weight: 400; color: var(--text-light); }
+  .badge1 { top: 8%; right: -5%; animation-duration: 4s; animation-delay: 0s; }
+  .badge2 { bottom: 15%; left: -8%; animation-duration: 5s; animation-delay: 1s; }
+  .badge3 { top: 55%; right: -10%; animation-duration: 4.5s; animation-delay: 0.5s; }
+
+  @keyframes floatBadge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes floatCircle { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-15px) rotate(2deg)} }
+  @keyframes orbitSpin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s ease 1.5s both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(232,115,154,0.6), transparent);
+    animation: scrollPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:0.4} 50%{transform:scaleY(1.3);opacity:1} }
+
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 6rem 5%; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+  .section-title em { font-style: italic; color: var(--pink-deep); }
+  .section-desc {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.9;
+    max-width: 520px;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── BRAND STRIP ─── */
+  .brand-strip {
+    background: var(--pink);
+    padding: 1rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .brand-strip-inner {
+    display: flex;
+    gap: 3rem;
+    animation: stripScroll 20s linear infinite;
+    white-space: nowrap;
+  }
+  .brand-strip-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  @keyframes stripScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ─── WHY LASHBOSS ─── */
+  #why {
+    background: var(--cream);
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .why-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    border: 1px solid rgba(232,115,154,0.1);
+    transition: all 0.4s var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--pink), var(--pink-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-pink); border-color: var(--pink-light); }
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feature-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-dark); }
+  .feature-desc { font-size: 0.75rem; color: var(--text-light); line-height: 1.7; }
+
+  .why-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .why-blob {
+    width: clamp(280px, 35vw, 450px);
+    height: clamp(280px, 35vw, 450px);
+    background: linear-gradient(135deg, var(--pink-pale), var(--pink-light));
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: morphBlob 8s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  @keyframes morphBlob {
+    0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    50% { border-radius: 50% 60% 30% 60% / 30% 50% 60% 50%; }
+    75% { border-radius: 40% 50% 60% 30% / 60% 40% 50% 40%; }
+  }
+
+  .why-blob-text {
+    text-align: center;
+    z-index: 1;
+    position: relative;
+  }
+  .why-blob-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--pink-deep);
+    font-style: italic;
+    line-height: 1;
+  }
+  .why-blob-label {
+    font-size: 0.75rem;
+    color: var(--text-mid);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── PRODUCTS ─── */
+  #catalog { background: var(--white); }
+
+  .catalog-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .catalog-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 99px;
+    border: 1.5px solid rgba(232,115,154,0.2);
+    background: transparent;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--pink);
+    color: var(--white);
+    border-color: var(--pink);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .product-card {
+    background: var(--cream);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.45s var(--transition);
+    position: relative;
+    border: 1px solid rgba(232,115,154,0.08);
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-pink);
+  }
+
+  .product-img-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.15));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-emoji {
+    font-size: clamp(4rem, 8vw, 5.5rem);
+    transition: transform 0.4s var(--transition);
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+  }
+  .product-card:hover .product-emoji { transform: scale(1.1) rotate(-5deg); }
+
+  .product-badge {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: var(--pink);
+    color: var(--white);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+  }
+  .product-badge.gold { background: var(--gold); }
+  .product-badge.new { background: var(--charcoal); }
+
+  .product-wishlist {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    opacity: 0;
+  }
+  .product-card:hover .product-wishlist { opacity: 1; }
+  .product-wishlist:hover { background: var(--pink); color: white; transform: scale(1.1); }
+
+  .product-info {
+    padding: 1.2rem 1.4rem 1.4rem;
+  }
+  .product-cat {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .product-desc-short {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .product-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .stars { color: #F5A623; font-size: 0.75rem; }
+  .star-count { font-size: 0.65rem; color: var(--text-light); }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .product-price {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--pink-deep);
+    font-style: italic;
+  }
+  .product-price-orig {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+    margin-left: 0.3rem;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .product-buy-btn {
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    padding: 0.55rem 1rem;
+    border-radius: 99px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+  }
+  .product-buy-btn:hover { background: var(--pink-deep); transform: scale(1.05); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,16,24,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s;
+  }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 24px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.85) translateY(30px);
+    transition: transform 0.4s var(--transition);
+  }
+  .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
+  .modal-close {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    width: 36px; height: 36px;
+    background: var(--cream);
+    border: none;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    z-index: 1;
+  }
+  .modal-close:hover { background: var(--pink); color: white; }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+  }
+
+  .modal-img {
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    border-radius: 24px 0 0 24px;
+    padding: 2rem;
+  }
+
+  .modal-info {
+    padding: 2rem 2rem 2rem 1.5rem;
+  }
+
+  .modal-cat {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 700;
+  }
+  .modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 0.5rem 0 0.8rem;
+    line-height: 1.2;
+  }
+  .modal-stars { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 1rem; }
+  .modal-price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--pink-deep);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .modal-price-orig {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 0.5rem;
+  }
+  .modal-desc {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+  .modal-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .modal-benefit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-mid);
+  }
+  .benefit-dot {
+    width: 5px; height: 5px;
+    background: var(--pink);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .modal-shopee-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    background: #EE4D2D;
+    color: white;
+    padding: 0.85rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 0.05em;
+  }
+  .modal-shopee-btn:hover { background: #D93B1E; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(238,77,45,0.35); }
+
+  /* ─── PROCESS ─── */
+  #process {
+    background: var(--black);
+    color: var(--white);
+    overflow: hidden;
+    position: relative;
+  }
+  #process::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(232,115,154,0.15), transparent);
+  }
+  #process .section-title { color: var(--white); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 35px; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  }
+
+  .process-step {
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+  }
+
+  .step-num-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .step-circle {
+    width: 70px; height: 70px;
+    background: rgba(232,115,154,0.15);
+    border: 1.5px solid rgba(232,115,154,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s;
+  }
+  .process-step:hover .step-circle {
+    background: var(--pink);
+    border-color: var(--pink);
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(232,115,154,0.5);
+  }
+
+  .step-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+  .step-desc {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--cream); overflow: hidden; }
+
+  .testi-track-wrap {
+    overflow: hidden;
+    margin-top: 3rem;
+    position: relative;
+  }
+  .testi-track-wrap::before,
+  .testi-track-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .testi-track-wrap::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+  .testi-track-wrap::after { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+
+  .testi-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: testiScroll 35s linear infinite;
+  }
+  .testi-track:hover { animation-play-state: paused; }
+  @keyframes testiScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .testi-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    width: 320px;
+    flex-shrink: 0;
+    border: 1px solid rgba(232,115,154,0.08);
+    transition: box-shadow 0.3s;
+    position: relative;
+  }
+  .testi-card:hover { box-shadow: var(--shadow-pink); }
+  .testi-card::before {
+    content: '"';
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: var(--pink-light);
+    line-height: 1;
+  }
+
+  .testi-stars { color: #F5A623; font-size: 0.8rem; margin-bottom: 0.8rem; }
+  .testi-text {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+  }
+  .testi-user { display: flex; align-items: center; gap: 0.8rem; }
+  .testi-avatar {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    color: white;
+    font-size: 0.85rem;
+  }
+  .testi-name { font-size: 0.82rem; font-weight: 700; color: var(--text-dark); }
+  .testi-loc { font-size: 0.68rem; color: var(--text-light); }
+
+  /* ─── CERTIFICATIONS ─── */
+  #certifications {
+    background: var(--white);
+    text-align: center;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .cert-card {
+    padding: 2rem 1.5rem;
+    border: 1.5px solid rgba(232,115,154,0.12);
+    border-radius: var(--radius);
+    transition: all 0.4s;
+    text-align: center;
+  }
+  .cert-card:hover { border-color: var(--pink); background: var(--pink-pale); transform: translateY(-4px); }
+  .cert-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .cert-title { font-weight: 700; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 0.3rem; }
+  .cert-desc { font-size: 0.72rem; color: var(--text-light); line-height: 1.6; }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink), var(--pink-light));
+    color: var(--white);
+    text-align: center;
+    padding: 7rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");
+    background-size: 60px;
+  }
+
+  #cta .section-title { color: var(--white); }
+  #cta .section-label { color: rgba(255,255,255,0.7); }
+
+  .cta-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-white {
+    background: var(--white);
+    color: var(--pink-deep);
+    padding: 1rem 2.5rem;
+    border-radius: 99px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+
+  .btn-outline-white {
+    border: 2px solid rgba(255,255,255,0.5);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    border-radius: 99px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    color: rgba(255,255,255,0.55);
+    padding: 4rem 5% 2rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-brand-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: var(--white);
+    font-style: italic;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+  .footer-brand-name span { color: var(--pink); }
+  .footer-desc { font-size: 0.78rem; line-height: 1.8; max-width: 260px; }
+
+  .footer-social { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    transition: all 0.3s;
+  }
+  .social-btn:hover { background: var(--pink); color: white; transform: translateY(-2px); }
+
+  .footer-col-title {
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--pink-light); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2rem;
+    font-size: 0.72rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-bottom a { color: var(--pink-light); text-decoration: none; }
+
+  /* ─── FLOATING SHOPEE BTN ─── */
+  .float-shopee {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 500;
+    background: #EE4D2D;
+    color: white;
+    padding: 0.8rem 1.4rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 8px 24px rgba(238,77,45,0.4);
+    transition: all 0.3s;
+    animation: floatBtn 3s ease-in-out infinite;
+    letter-spacing: 0.05em;
+  }
+  .float-shopee:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 16px 40px rgba(238,77,45,0.5); }
+  @keyframes floatBtn { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  /* ─── MOBILE NAV ─── */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--white);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s var(--transition);
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--pink); }
+  .mobile-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 968px) {
+    .hero-content { grid-template-columns: 1fr; gap: 3rem; padding-top: 7rem; }
+    .hero-visual { display: none; }
+    .hero-stats { gap: 1.5rem; }
+
+    .why-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .why-features { grid-template-columns: 1fr 1fr; }
+    .why-visual { order: -1; }
+
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+
+    .cert-grid { grid-template-columns: 1fr 1fr; }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+
+    .modal-grid { grid-template-columns: 1fr; }
+    .modal-img { border-radius: 24px 24px 0 0; min-height: 200px; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 4rem 5%; }
+    .why-features { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .product-price-orig { display: none; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { text-align: center; justify-content: center; }
+    .catalog-header { flex-direction: column; align-items: flex-start; }
+    .float-shopee { padding: 0.7rem 1.1rem; font-size: 0.7rem; bottom: 1.5rem; right: 1rem; }
+  }
+
+  @media (max-width: 380px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Smooth scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--pink-light); border-radius: 2px; }
+
+  /* No-select for content protection */
+  .protected { user-select: none; -webkit-user-select: none; }
+</style>
+</head>
+<body class="protected">
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADING -->
+<div id="loader">
+  <div class="loader-petals" id="loaderPetals"></div>
+  <div class="loader-logo">LASH<span>BOSS</span></div>
+  <div class="loader-tagline">No.1 Serum Bulu Mata & Alis Indonesia</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#hero" onclick="closeMobileMenu()">Home</a>
+  <a href="#why" onclick="closeMobileMenu()">Tentang Kami</a>
+  <a href="#catalog" onclick="closeMobileMenu()">Produk</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Testimoni</a>
+  <a href="https://shopee.co.id/lashboss.id" target="_blank" style="color:var(--pink)">Shopee Store</a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">LASH<span style="color:var(--pink)">BOSS</span></a>
+  <ul class="nav-links">
+    <li><a href="#why">Tentang Kami</a></li>
+    <li><a href="#catalog">Produk</a></li>
+    <li><a href="#process">Cara Pakai</a></li>
+    <li><a href="#testimonials">Testimoni</a></li>
+    <li><a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-cta">🛍 Shopee</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas class="hero-particles" id="heroCanvas"></canvas>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        No.1 di Indonesia • BPOM & Halal
+      </div>
+      <h1 class="hero-title">
+        LASH<br>
+        <span class="pink">BOSS</span><br>
+        <span class="outline">BEAUTY</span>
+      </h1>
+      <p class="hero-sub">Serum Bulu Mata & Alis terbaik dengan formula eksklusif. Lebih panjang, tebal & lentik dalam 2 minggu — dijamin!</p>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">105K+</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Rating</div>
+        </div>
+      </div>
+
+      <div class="hero-btns">
+        <a href="https://shopee.co.id/lashboss.id" target="_blank" class="btn-primary">
+          🛍 Belanja Sekarang
+        </a>
+        <a href="#catalog" class="btn-outline">
+          Lihat Katalog
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-circle">
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="hero-inner-circle">LASHBOSS</div>
+      </div>
+
+      <div class="float-badge badge1">
+        <div class="float-badge-icon">✨</div>
+        <div>
+          <div class="float-badge-text">BPOM Certified</div>
+          <div class="float-badge-sub">Aman & Terpercaya</div>
+        </div>
+      </div>
+      <div class="float-badge badge2">
+        <div class="float-badge-icon">🌿</div>
+        <div>
+          <div class="float-badge-text">100% Halal</div>
+          <div class="float-badge-sub">MUI Certified</div>
+        </div>
+      </div>
+      <div class="float-badge badge3">
+        <div class="float-badge-icon">💗</div>
+        <div>
+          <div class="float-badge-text">2 Minggu</div>
+          <div class="float-badge-sub">Hasil nyata terasa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <div class="brand-strip-inner" id="brandStrip">
+    <div class="brand-strip-item">🌸 BPOM Certified</div>
+    <div class="brand-strip-item">✨ Halal MUI</div>
+    <div class="brand-strip-item">💗 No.1 Indonesia</div>
+    <div class="brand-strip-item">🌿 Oil-Based Formula</div>
+    <div class="brand-strip-item">⚡ Hasil 2 Minggu</div>
+    <div class="brand-strip-item">🎯 50K+ Customers</div>
+    <div class="brand-strip-item">💎 Premium Quality</div>
+    <div class="brand-strip-item">🛡 Safe for Sensitive Eyes</div>
+    <div class="brand-strip-item">🌸 BPOM Certified</div>
+    <div class="brand-strip-item">✨ Halal MUI</div>
+    <div class="brand-strip-item">💗 No.1 Indonesia</div>
+    <div class="brand-strip-item">🌿 Oil-Based Formula</div>
+    <div class="brand-strip-item">⚡ Hasil 2 Minggu</div>
+    <div class="brand-strip-item">🎯 50K+ Customers</div>
+    <div class="brand-strip-item">💎 Premium Quality</div>
+    <div class="brand-strip-item">🛡 Safe for Sensitive Eyes</div>
+  </div>
+</div>
+
+<!-- WHY LASHBOSS -->
+<section id="why">
+  <div class="why-grid">
+    <div class="reveal-left">
+      <div class="section-label">Kenapa LashBoss?</div>
+      <h2 class="section-title">Formula <em>Premium</em> untuk Bulu Mata Impianmu</h2>
+      <p class="section-desc">LashBoss hadir dengan teknologi terdepan & bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
+
+      <div class="why-features">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🧴</div>
+          <div class="feature-title">Oil-Concentrated Serum</div>
+          <div class="feature-desc">100% ingredients mengandung nutrisi, vitamin & fatty acid tanpa pengencer air.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.1s">
+          <div class="feature-icon">🔬</div>
+          <div class="feature-title">Encapsulated Biotin</div>
+          <div class="feature-desc">Diserap langsung ke akar bulu mata, 7× lebih efektif dari biotin biasa.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.2s">
+          <div class="feature-icon">🌻</div>
+          <div class="feature-title">Natural Oils Blend</div>
+          <div class="feature-desc">Sunflower, Sweet Almond, & Camellia Seed Oil untuk kelembapan maksimal.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.3s">
+          <div class="feature-icon">👁️</div>
+          <div class="feature-title">Safe for Sensitive Eyes</div>
+          <div class="feature-desc">Formulasi khusus aman untuk mata sensitif & pengguna eyelash extension.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual reveal-right">
+      <div class="why-blob">
+        <div class="why-blob-text">
+          <div class="why-blob-num">7×</div>
+          <div class="why-blob-label">Lebih Efektif</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog">
+  <div class="catalog-header reveal">
+    <div>
+      <div class="section-label">Koleksi Produk</div>
+      <h2 class="section-title">Pilihan <em>Terbaik</em> untuk Kamu</h2>
+    </div>
+    <div class="catalog-filter">
+      <button class="filter-btn active" onclick="filterProducts('all', this)">Semua</button>
+      <button class="filter-btn" onclick="filterProducts('serum', this)">Serum</button>
+      <button class="filter-btn" onclick="filterProducts('tools', this)">Beauty Tools</button>
+      <button class="filter-btn" onclick="filterProducts('bundle', this)">Bundle</button>
+    </div>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Products rendered by JS -->
+  </div>
+</section>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-grid">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-info">
+        <div class="modal-cat" id="modalCat"></div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-stars">
+          <span style="color:#F5A623">★★★★★</span>
+          <span style="font-size:0.7rem;color:var(--text-light)" id="modalRating"></span>
+        </div>
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-benefits" id="modalBenefits"></div>
+        <a href="https://shopee.co.id/lashboss.id" target="_blank" class="modal-shopee-btn">
+          🛍 Beli di Shopee
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div style="text-align:center;max-width:600px;margin:0 auto" class="reveal">
+    <div class="section-label" style="color:var(--pink-light)">Cara Penggunaan</div>
+    <h2 class="section-title">Mudah & Simpel,<br><em>Hasil Maksimal</em></h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-step reveal" style="transition-delay:0.1s">
+      <div class="step-num-wrap">
+        <div class="step-circle">🧼</div>
+      </div>
+      <div class="step-label">Step 01</div>
+      <div class="step-title">Bersihkan Wajah</div>
+      <div class="step-desc">Pastikan area mata bersih dari makeup dan kotoran sebelum aplikasi.</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.2s">
+      <div class="step-num-wrap">
+        <div class="step-circle">💧</div>
+      </div>
+      <div class="step-label">Step 02</div>
+      <div class="step-title">Ambil Sedikit Serum</div>
+      <div class="step-desc">Cukup 1 tetes kecil saja — karena highly concentrated, sedikit sudah cukup!</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.3s">
+      <div class="step-num-wrap">
+        <div class="step-circle">✨</div>
+      </div>
+      <div class="step-label">Step 03</div>
+      <div class="step-title">Aplikasikan ke Bulu Mata</div>
+      <div class="step-desc">Oleskan dari akar hingga ujung bulu mata dan alis secara merata.</div>
+    </div>
+    <div class="process-step reveal" style="transition-delay:0.4s">
+      <div class="step-num-wrap">
+        <div class="step-circle">🌙</div>
+      </div>
+      <div class="step-label">Step 04</div>
+      <div class="step-title">Biarkan Semalaman</div>
+      <div class="step-desc">Gunakan malam hari & biarkan serum bekerja saat kamu tidur. Lihat hasilnya!</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div style="text-align:center;max-width:580px;margin:0 auto" class="reveal">
+    <div class="section-label">Real Reviews</div>
+    <h2 class="section-title">Apa Kata Mereka yang <em>Sudah Coba?</em></h2>
+  </div>
+
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+      <!-- Testimonials rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div style="text-align:center" class="reveal">
+    <div class="section-label">Keamanan & Kepercayaan</div>
+    <h2 class="section-title">Sudah Tersertifikasi & <em>Terpercaya</em></h2>
+    <p class="section-desc" style="margin:0 auto">LashBoss berkomitmen memberikan produk yang aman, halal, dan berkualitas tinggi untuk semua konsumen Indonesia.</p>
+  </div>
+
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🏅</div>
+      <div class="cert-title">BPOM Certified</div>
+      <div class="cert-desc">Terdaftar resmi di Badan Pengawas Obat & Makanan Indonesia. Aman & legal.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.1s">
+      <div class="cert-icon">☪️</div>
+      <div class="cert-title">Halal MUI</div>
+      <div class="cert-desc">Bersertifikat Halal dari Majelis Ulama Indonesia. Aman digunakan semua kalangan.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.2s">
+      <div class="cert-icon">🌿</div>
+      <div class="cert-title">Dermatologically Tested</div>
+      <div class="cert-desc">Teruji secara dermatologis, aman untuk kulit sensitif di area mata.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.3s">
+      <div class="cert-icon">🥇</div>
+      <div class="cert-title">No.1 Indonesia</div>
+      <div class="cert-desc">Serum bulu mata & alis nomor 1 terlaris di Indonesia dengan ribuan ulasan positif.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="reveal">
+    <div class="section-label">Yuk, Mulai Sekarang!</div>
+    <h2 class="section-title" style="margin:0 auto 1rem;max-width:600px">Jadilah <em>Bos</em> dari Bulu Matamu Sendiri!</h2>
+    <p class="cta-desc">Bergabung bersama 50,000+ perempuan Indonesia yang sudah membuktikan keajaiban LashBoss. Dapatkan bulu mata impianmu sekarang!</p>
+    <div class="cta-btns">
+      <a href="https://shopee.co.id/lashboss.id" target="_blank" class="btn-white">
+        🛍 Belanja di Shopee
+      </a>
+      <a href="https://www.instagram.com/lashboss.id/" target="_blank" class="btn-outline-white">
+        📸 Follow Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">LASH<span>BOSS</span></div>
+      <p class="footer-desc">No.1 Serum Bulu Mata & Alis di Indonesia. Beauty should be fun & effective. Tersedia di berbagai marketplace Indonesia.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/lashboss.id/" target="_blank" class="social-btn">📸</a>
+        <a href="https://shopee.co.id/lashboss.id" target="_blank" class="social-btn">🛍</a>
+        <a href="https://www.tiktok.com/@lashboss.id" target="_blank" class="social-btn">🎵</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Produk</div>
+      <ul class="footer-links">
+        <li><a href="#catalog">Rapunzel Serum</a></li>
+        <li><a href="#catalog">Gel-Based Serum</a></li>
+        <li><a href="#catalog">itCurl Curler</a></li>
+        <li><a href="#catalog">Bundle Special</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Marketplace</div>
+      <ul class="footer-links">
+        <li><a href="https://shopee.co.id/lashboss.id" target="_blank">Shopee</a></li>
+        <li><a href="#" target="_blank">Tokopedia</a></li>
+        <li><a href="#" target="_blank">Lazada</a></li>
+        <li><a href="#" target="_blank">TikTok Shop</a></li>
+        <li><a href="#" target="_blank">Sociolla</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Informasi</div>
+      <ul class="footer-links">
+        <li><a href="#why">Tentang Kami</a></li>
+        <li><a href="#process">Cara Pakai</a></li>
+        <li><a href="#certifications">Sertifikasi</a></li>
+        <li><a href="#testimonials">Testimoni</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 LashBoss Indonesia. All rights reserved.</div>
+    <div>BPOM: NA18211209320 | Produk Halal & Tersertifikasi</div>
+  </div>
+</footer>
+
+<!-- FLOATING SHOPEE BUTTON -->
+<a href="https://shopee.co.id/lashboss.id" target="_blank" class="float-shopee">
+  🛍 Beli di Shopee
+</a>
+
+<script>
+// ─── DISABLE RIGHT CLICK & DEV TOOLS ───
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C','U'].includes(e.key)) || (e.ctrlKey && e.key === 'U')) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('dragstart', e => e.preventDefault());
+document.addEventListener('selectstart', e => e.preventDefault());
+
+// ─── LOADER ───
+const loaderPetals = document.getElementById('loaderPetals');
+for (let i = 0; i < 12; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    animation-duration: ${2 + Math.random() * 3}s;
+    animation-delay: ${Math.random() * 2}s;
+    opacity: ${0.2 + Math.random() * 0.5};
+    transform: scale(${0.5 + Math.random()});
+    background: ${Math.random() > 0.5 ? '#E8739A' : '#F4A7C0'};
+  `;
+  loaderPetals.appendChild(p);
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 2400);
+});
+
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function animateCursor() {
+  if (cursor) { cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; }
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  if (ring) { ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+document.querySelectorAll('a,button,.product-card,.filter-btn').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor?.classList.add('expanded'); ring?.classList.add('expanded'); });
+  el.addEventListener('mouseleave', () => { cursor?.classList.remove('expanded'); ring?.classList.remove('expanded'); });
+});
+
+// ─── NAVBAR ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── MOBILE MENU ───
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.add('open');
+});
+document.getElementById('mobileClose').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.remove('open');
+});
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// ─── HERO CANVAS PARTICLES ───
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2.5 + 0.5,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    alpha: Math.random() * 0.5 + 0.1,
+    color: Math.random() > 0.5 ? '#E8739A' : '#F4A7C0'
+  });
+}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.alpha;
+    ctx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+// ─── SCROLL REVEAL ───
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ─── PRODUCTS DATA ───
+const products = [
+  {
+    id: 1,
+    name: 'Rapunzel Serum',
+    fullName: 'LashBoss Rapunzel Serum',
+    cat: 'serum',
+    catLabel: 'Serum Oil-Based',
+    emoji: '✨',
+    badge: 'Bestseller',
+    badgeClass: '',
+    price: 'Rp 129.000',
+    priceOrig: 'Rp 160.000',
+    rating: '4.9 (2.8k ulasan)',
+    shortDesc: 'Oil-Concentrated Serum untuk bulu mata 5× lebih tebal & panjang dalam 2 minggu.',
+    fullDesc: 'Rapunzel Serum adalah serum bulu mata & alis berbasis minyak dengan formula Oil-Concentrated eksklusif. Karena 100% ingredients-nya mengandung nutrisi aktif tanpa air, satu tetes kecil sudah cukup untuk memberikan manfaat maksimal. Dapat digunakan hingga 110 kali pemakaian!',
+    benefits: ['Bulu mata 5× lebih tebal & panjang', 'Encapsulated Biotin 7× lebih efektif', 'Oil-based: nutrisi dikunci di akar', 'Cocok untuk bulu mata rontok', '1 tetes = cukup untuk seluruh bulu mata', 'Bisa digunakan 110× pemakaian'],
+    shopeeUrl: 'https://shopee.co.id/LashBoss-Lash-and-Brow-Serum-for-Eyelash-Extension-(Gel-Based)-Serum-Penumbuh-Bulu-Mata-dan-Alis-Anti-Rontok-dan-Botak-untuk-Eyelash-Extension-i.17525438.19577664595'
+  },
+  {
+    id: 2,
+    name: 'Gel-Based Serum',
+    fullName: 'LashBoss Gel-Based Serum',
+    cat: 'serum',
+    catLabel: 'Serum Gel-Based',
+    emoji: '💧',
+    badge: 'For Extension',
+    badgeClass: 'gold',
+    price: 'Rp 99.000',
+    priceOrig: 'Rp 130.000',
+    rating: '4.8 (1.9k ulasan)',
+    shortDesc: 'Serum gel khusus pengguna eyelash extension. Anti-rontok & memperkuat bulu mata.',
+    fullDesc: 'LashBoss Gel-Based Serum didesain spesifik untuk pengguna eyelash extension. Formula gel-nya membantu mengurangi kerusakan akibat pemasangan extension, mendorong pertumbuhan bulu mata baru, memperkuat akar, dan membuat extension tahan lebih lama. Dilengkapi peptides & Acetyl Tetrapeptide-3.',
+    benefits: ['Khusus pengguna eyelash extension', 'Mengurangi kerusakan akibat extension', 'Extension tahan lebih lama', 'Anti rontok & kebotakan bulu mata', 'Peptides untuk regenerasi folikel', 'Aman untuk mata sensitif'],
+    shopeeUrl: 'https://shopee.co.id/LashBoss-Lash-and-Brow-Serum-for-Eyelash-Extension-(Gel-Based)-Serum-Penumbuh-Bulu-Mata-dan-Alis-Anti-Rontok-dan-Botak-untuk-Eyelash-Extension-i.17525438.19577664595'
+  },
+  {
+    id: 3,
+    name: 'Sensitive Eyes Serum',
+    fullName: 'LashBoss Serum for Sensitive Eyes',
+    cat: 'serum',
+    catLabel: 'Serum Sensitive',
+    emoji: '👁️',
+    badge: 'Gentle Formula',
+    badgeClass: 'new',
+    price: 'Rp 109.000',
+    priceOrig: 'Rp 145.000',
+    rating: '4.9 (1.2k ulasan)',
+    shortDesc: 'Formula lembut khusus untuk mata sensitif. Bebas iritasi, maksimal hasilnya.',
+    fullDesc: 'Formulasi eksklusif LashBoss khusus untuk kamu yang punya mata sensitif. Dibuat dengan Aloe Barbadensis & ekstrak tumbuhan alami yang menenangkan, serum ini memaksimalkan pertumbuhan bulu mata tanpa risiko iritasi. Aman untuk pengguna lensa kontak.',
+    benefits: ['Cocok untuk mata sangat sensitif', 'Aloe & ekstrak tumbuhan menenangkan', 'Bebas alkohol tinggi & pewangi keras', 'Aman pengguna lensa kontak', 'pH balanced formula', 'Dermatologically tested'],
+    shopeeUrl: 'https://shopee.co.id/lashboss.id'
+  },
+  {
+    id: 4,
+    name: 'itCurl Eyelash Curler',
+    fullName: 'LashBoss itCurl Eyelash Curler',
+    cat: 'tools',
+    catLabel: 'Beauty Tools',
+    emoji: '💄',
+    badge: 'New Arrival',
+    badgeClass: 'new',
+    price: 'Rp 79.000',
+    priceOrig: 'Rp 110.000',
+    rating: '4.8 (890 ulasan)',
+    shortDesc: 'Penjepit bulu mata presisi tinggi. Desain ergonomis, cocok untuk mata Asia.',
+    fullDesc: 'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna tanpa menyakiti bulu mata.',
+    benefits: ['Desain C-Curl untuk mata Asia', 'Bebas sudut tumpul yang menyakitkan', 'Silicone pad premium food-grade', 'Pegangan ergonomis anti-slip', 'Bisa digunakan ratusan kali', 'Tersedia pouch cantik'],
+    shopeeUrl: 'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'
+  },
+  {
+    id: 5,
+    name: 'Bundle Special',
+    fullName: 'LashBoss Bundle Special Set',
+    cat: 'bundle',
+    catLabel: 'Bundle Package',
+    emoji: '🎀',
+    badge: 'Best Value',
+    badgeClass: '',
+    price: 'Rp 185.000',
+    priceOrig: 'Rp 240.000',
+    rating: '4.9 (3.1k ulasan)',
+    shortDesc: 'Paket lengkap itCurl + Rapunzel Serum. Hemat lebih banyak, hasil lebih sempurna!',
+    fullDesc: 'Bundle Special LashBoss menghadirkan paket komplit terbaik: itCurl Eyelash Curler + Rapunzel Serum dalam satu paket ekonomis. Lengkapi rutinitas kecantikanmu dengan alat pelentik premium dan serum penumbuh terbaik. Sinergi sempurna untuk bulu mata impianmu!',
+    benefits: ['Hemat hingga 23% dibanding beli satuan', 'itCurl Curler + Rapunzel Serum', 'Paket gift-ready eksklusif', 'Cocok untuk hadiah ulang tahun', 'Free pouch eksklusif LashBoss', 'Hasil optimal dalam 2 minggu'],
+    shopeeUrl: 'https://shopee.co.id/-BUNDLE-SPECIAL-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Rapunzel-Serum-Bulu-Mata-dan-Alis-Serum-Bulu-Mata-No.-1-di-Indonesia-Serum-Bulu-Mata-Penjepit-Bulu-Mata-Menumbuhkan-Bulu-Mata-dan-Alis-Pelentik-Bulu-Mata-i.17525438.29827745416'
+  },
+  {
+    id: 6,
+    name: 'Pouch itCurl',
+    fullName: 'LashBoss Pouch itCurl',
+    cat: 'tools',
+    catLabel: 'Aksesori',
+    emoji: '👜',
+    badge: 'Cute!',
+    badgeClass: 'gold',
+    price: 'Rp 35.000',
+    priceOrig: 'Rp 55.000',
+    rating: '4.7 (450 ulasan)',
+    shortDesc: 'Tempat curler imut & fungsional. Jaga curler-mu tetap bersih dan aman.',
+    fullDesc: 'Pouch eksklusif LashBoss untuk menyimpan itCurl Eyelash Curler-mu. Dibuat dari bahan berkualitas dengan branding LashBoss yang cantik. Cocok dimasukkan ke dalam makeup bag atau tas sehari-hari. Melindungi curlermu dari debu dan kerusakan.',
+    benefits: ['Material premium & tahan lama', 'Ukuran compact masuk tas kecil', 'Design eksklusif LashBoss', 'Cocok untuk hadiah', 'Tersedia dalam berbagai warna', 'Mudah dibersihkan'],
+    shopeeUrl: 'https://shopee.co.id/lashboss.id'
+  }
+];
+
+// ─── RENDER PRODUCTS ───
+let currentFilter = 'all';
+
+function filterProducts(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const filtered = currentFilter === 'all' ? products : products.filter(p => p.cat === currentFilter);
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="product-card reveal" style="transition-delay:${i * 0.08}s" onclick="openModal(${p.id})">
+      <div class="product-img-wrap">
+        <div class="product-emoji">${p.emoji}</div>
+        <div class="product-badge ${p.badgeClass}">${p.badge}</div>
+        <div class="product-wishlist" onclick="event.stopPropagation()">♡</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.catLabel}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc-short">${p.shortDesc}</div>
+        <div class="product-stars">
+          <span class="stars">★★★★★</span>
+          <span class="star-count">${p.rating}</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <span class="product-price">${p.price}</span>
+            <span class="product-price-orig">${p.priceOrig}</span>
+          </div>
+          <button class="product-buy-btn" onclick="event.stopPropagation();window.open('${p.shopeeUrl}','_blank')">Beli</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Re-observe new elements
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+renderProducts();
+
+// ─── MODAL ───
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modalImg').textContent = p.emoji;
+  document.getElementById('modalCat').textContent = p.catLabel;
+  document.getElementById('modalName').textContent = p.fullName;
+  document.getElementById('modalRating').textContent = p.rating;
+  document.getElementById('modalPrice').innerHTML = `${p.price}<span class="modal-price-orig">${p.priceOrig}</span>`;
+  document.getElementById('modalDesc').textContent = p.fullDesc;
+  document.getElementById('modalBenefits').innerHTML = p.benefits.map(b =>
+    `<div class="modal-benefit"><div class="benefit-dot"></div>${b}</div>`
+  ).join('');
+  document.querySelector('.modal-shopee-btn').href = p.shopeeUrl;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+// ─── TESTIMONIALS ───
+const testimonials = [
+  { name: 'Anita S.', loc: 'Jakarta', stars: '★★★★★', text: 'Jujur awalnya skeptis, tapi setelah 2 minggu pakek Rapunzel Serum ini bulu mataku nyata beda banget!! Makin tebal & panjang, aku udah belinya ke-4 kalinya 🥹', initial: 'A' },
+  { name: 'Rizka M.', loc: 'Surabaya', stars: '★★★★★', text: 'Aku pake yang gel-based buat extensionku dan wow, extension-ku jadi tahan lebih lama dari biasanya. Bulu mata aslikku juga makin sehat. Worth it banget!', initial: 'R' },
+  { name: 'Dewi P.', loc: 'Bandung', stars: '★★★★★', text: 'Mata aku sensitif banget, hampir nyerah cari serum yang cocok. Eh ketemu LashBoss sensitive formula, ga ada iritasi sama sekali! Hasilnya bagus lagi 💕', initial: 'D' },
+  { name: 'Sari W.', loc: 'Medan', stars: '★★★★★', text: 'itCurl curler-nya WORTH IT BANGET. Bulu mataku yang susah dilentik jadi bisa kejepit sempurna. Sekarang aku malah jarang pake mascara lagi haha', initial: 'S' },
+  { name: 'Fiona R.', loc: 'Yogyakarta', stars: '★★★★★', text: 'Paket bundlenya dapet banyak banget dengan harga segitu! Hadiahkan ke adikku dia langsung addicted. Kita berdua sekarang sama-sama pake LashBoss 😂', initial: 'F' },
+  { name: 'Mega T.', loc: 'Makassar', stars: '★★★★★', text: 'Udah mau 2 bulan pake rutin, bulu mata alisku yang tipis banget sekarang mulai tumbuh lebih lebat. Belom pernah ada produk yang se-efektif ini buat aku pribadi 🙌', initial: 'M' },
+  { name: 'Putri H.', loc: 'Semarang', stars: '★★★★★', text: 'Packaging-nya lucu banget, sampe sayang mau dipake. Tapi hasilnya ga kalah dari kemasannya — dalam 3 minggu bulu mataku udah keliatan lebih tebal jelas banget!', initial: 'P' },
+  { name: 'Lina K.', loc: 'Palembang', stars: '★★★★★', text: 'Pelayanannya fast response, pengiriman cepet. Produknya original dan hasilnya memang nyata. Satu tetes beneran udah cukup buat seluruh area mata & alis!', initial: 'L' },
+  { name: 'Nisa A.', loc: 'Bali', stars: '★★★★★', text: 'Aku bule separoh dan bulu mataku lurus banget dari dulu. Setelah 1 bulan pake LashBoss, gilaaa ada progress nyata! Akhirnya ketemu juga yang works buat aku 🎉', initial: 'N' },
+];
+
+const testiTrack = document.getElementById('testiTrack');
+const doubled = [...testimonials, ...testimonials];
+testiTrack.innerHTML = doubled.map(t => `
+  <div class="testi-card">
+    <div class="testi-stars">${t.stars}</div>
+    <div class="testi-text">${t.text}</div>
+    <div class="testi-user">
+      <div class="testi-avatar">${t.initial}</div>
+      <div>
+        <div class="testi-name">${t.name}</div>
+        <div class="testi-loc">📍 ${t.loc}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+// ─── SPARKLE EFFECT ON HERO ───
+const heroSection = document.getElementById('hero');
+heroSection.addEventListener('mousemove', (e) => {
+  if (Math.random() > 0.85) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;position:fixed;pointer-events:none;z-index:3`;
+    document.body.appendChild(sparkle);
+    sparkle.style.animation = 'sparkleAnim 0.6s ease forwards';
+    setTimeout(() => sparkle.remove(), 600);
+  }
+});
+
+// ─── SMOOTH ANCHOR SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ─── PARALLAX ON HERO ───
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg && sy < window.innerHeight) {
+    heroBg.style.transform = `translateY(${sy * 0.3}px)`;
+  }
+});
+</script>
+</body>
+</html>
