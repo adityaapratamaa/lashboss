@@ -168,7 +168,74 @@
     background: radial-gradient(ellipse 70% 80% at 65% 50%, rgba(196,82,122,0.4) 0%, rgba(232,115,154,0.15) 45%, transparent 70%),
                 linear-gradient(160deg, #1A0F16 0%, #2A1520 50%, #1f0d18 100%);
     transition: background 1.2s ease;
+    overflow: hidden;
   }
+
+  /* floating particles */
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-particles span {
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: rgba(232,115,154,0.25);
+  border-radius: 50%;
+  animation: particleFloat linear infinite;
+}
+
+.hero-particles span:nth-child(1) {
+  left: 10%;
+  top: 20%;
+  animation-duration: 8s;
+}
+
+.hero-particles span:nth-child(2) {
+  left: 80%;
+  top: 30%;
+  width: 14px;
+  height: 14px;
+  animation-duration: 10s;
+}
+
+.hero-particles span:nth-child(3) {
+  left: 60%;
+  top: 75%;
+  width: 6px;
+  height: 6px;
+  animation-duration: 7s;
+}
+
+.hero-particles span:nth-child(4) {
+  left: 30%;
+  top: 60%;
+  width: 12px;
+  height: 12px;
+  animation-duration: 11s;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 0.2;
+  }
+}
 
   .hero-inner {
     position: relative;
