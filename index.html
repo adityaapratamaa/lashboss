@@ -169,6 +169,8 @@
                 linear-gradient(160deg, #1A0F16 0%, #2A1520 50%, #1f0d18 100%);
     transition: background 1.2s ease;
     overflow: hidden;
+    background-size: 200% 200%;
+animation: heroGradientMove 12s ease infinite;
   }
 
   /* floating particles */
@@ -235,6 +237,21 @@
     transform: translateY(0px);
     opacity: 0.2;
   }
+}
+@keyframes heroGradientMove {
+
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+
 }
 
   .hero-inner {
