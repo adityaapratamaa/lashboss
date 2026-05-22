@@ -99,39 +99,40 @@
 
   /* ─── NAVBAR ─── */
   nav{
-  position:absolute;
-  top:16px;
-  left:50%;
-  transform:translateX(-50%);
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
 
-  width:calc(100% - 56px);
-  max-width:1640px;
+  width: calc(100% - 40px);
+  max-width: 1620px;
 
-  height:66px;
+  height: 62px;
 
-  padding:0 24px;
+  padding: 0 28px;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  background:#0c0c0c;
+  background: rgba(10,10,10,0.88);
 
-  border:1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
 
-  border-radius:16px;
+  border-radius: 18px;
 
-  z-index:1000;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
+
+  z-index: 1000;
 }
   .nav-logo{
   font-family:'Barlow Condensed',sans-serif;
   font-weight:900;
   font-style:italic;
 
-  font-size:1.85rem;
+  font-size:1.45rem;
 
-  letter-spacing:0.04em;
+  letter-spacing:0.03em;
 
   color:white;
 
@@ -142,7 +143,8 @@
   .nav-links{
   display:flex;
   align-items:center;
-  gap:1.8rem;
+
+  gap:2.4rem;
 
   list-style:none;
 
@@ -152,7 +154,7 @@
   .nav-links a{
   color:rgba(255,255,255,0.72);
 
-  font-size:0.92rem;
+  font-size:0.82rem;
 
   font-weight:500;
 
@@ -165,14 +167,15 @@
 }
 
   .nav-cta{
-  height:40px;
+  height:42px;
 
-  padding:0 24px;
+  padding:0 22px;
 
-  border-radius:10px;
+  border-radius:12px;
 
-  background:#1a1a1a;
-border:1px solid rgba(255,255,255,0.08);
+  background:#161616;
+
+  border:1px solid rgba(255,255,255,0.08);
 
   color:white;
 
@@ -180,7 +183,7 @@ border:1px solid rgba(255,255,255,0.08);
   align-items:center;
   justify-content:center;
 
-  font-size:0.72rem;
+  font-size:0.74rem;
 
   font-weight:700;
 
@@ -188,7 +191,10 @@ border:1px solid rgba(255,255,255,0.08);
 
   transition:0.25s ease;
 }
-  .nav-cta:hover { background:#ea5d92 !important; transform: translateY(-2px); }
+  .nav-cta:hover{
+  background:#ea5d92;
+  transform:translateY(-2px);
+}
 
   .hamburger {
     display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;
