@@ -200,6 +200,23 @@
 animation: heroGradientMove 12s ease infinite;
   }
 
+  /* cinematic noise */
+
+.hero-noise {
+  position: absolute;
+  inset: -100%;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+
+  background-size: 4px 4px;
+
+  opacity: 0.18;
+
+  animation: noiseMove 8s linear infinite;
+
+  z-index: 1;
+}
+
   /* floating particles */
 
 .hero-particles {
@@ -277,6 +294,29 @@ animation: heroGradientMove 12s ease infinite;
 
   100% {
     background-position: 0% 50%;
+  }
+
+}
+@keyframes noiseMove {
+
+  0% {
+    transform: translate(0,0);
+  }
+
+  25% {
+    transform: translate(-2%, 3%);
+  }
+
+  50% {
+    transform: translate(3%, -2%);
+  }
+
+  75% {
+    transform: translate(-3%, 2%);
+  }
+
+  100% {
+    transform: translate(0,0);
   }
 
 }
@@ -410,6 +450,16 @@ opacity: 0;
     font-family: 'Barlow', sans-serif;
   }
   .btn-outline:hover { border-color:var(--pink-light);background:rgba(232,115,154,0.15);transform:translateY(-2px); }
+
+  /* magnetic button */
+
+.magnetic-btn {
+  position: relative;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+}
 
   /* ─── HERO PREMIUM VISUAL ─── */
 
@@ -1598,6 +1648,7 @@ opacity: 0;
 <!-- HERO (REBUILT) -->
 <section id="hero">
   <div class="hero-bg" id="heroBg">
+    <div class="hero-noise"></div>
 
   <div class="hero-particles">
     <span></span>
@@ -1632,8 +1683,8 @@ opacity: 0;
         </div>
       </div>
       <div class="hero-btns">
-        <a href="https://shopee.co.id/lashboss.id" target="_blank" class="btn-primary">🛍 Belanja Sekarang</a>
-        <a href="#catalog" class="btn-outline">Lihat Katalog</a>
+        <a href="https://shopee.co.id/lashboss.id" target="_blank" class="btn-primary magnetic-btn">🛍 Belanja Sekarang</a>
+        <a href="#catalog" class="btn-outline magnetic-btn">Lihat Katalog</a>
       </div>
     </div>
 
@@ -2696,6 +2747,38 @@ hero.addEventListener('mouseleave', () => {
 });
 
 </script>
+<script>
 
+const magneticButtons =
+  document.querySelectorAll('.magnetic-btn');
+
+magneticButtons.forEach((button) => {
+
+  button.addEventListener('mousemove', (e) => {
+
+    const rect =
+      button.getBoundingClientRect();
+
+    const x =
+      e.clientX - rect.left - rect.width / 2;
+
+    const y =
+      e.clientY - rect.top - rect.height / 2;
+
+    button.style.transform =
+      `translate(${x * 0.18}px, ${y * 0.18}px)`;
+
+  });
+
+  button.addEventListener('mouseleave', () => {
+
+    button.style.transform =
+      `translate(0px, 0px)`;
+
+  });
+
+});
+
+</script>
 </body>
 </html>
