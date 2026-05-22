@@ -99,20 +99,47 @@
 
   /* ─── NAVBAR ─── */
   nav {
-    position: fixed; top:0;left:0;right:0;
-    z-index: 1000;
-    padding: 1.1rem 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.4s ease;
-  }
-  nav.scrolled {
-    background: rgba(26,15,22,0.95);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 2px 30px rgba(0,0,0,0.3);
-  }
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
 
+  width: calc(100% - 80px);
+  max-width: 1280px;
+
+  z-index: 1000;
+
+  padding: 1rem 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.25);
+
+  transition: all 0.4s ease;
+}
+  nav.scrolled {
+
+  background: rgba(20,10,18,0.75);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 12px 50px rgba(0,0,0,0.4);
+
+}
   .nav-logo {
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 900;
@@ -1429,6 +1456,12 @@ opacity: 0;
 
   /* ─── RESPONSIVE ─── */
   @media(max-width:968px) {
+    nav {
+  width: calc(100% - 24px);
+  top: 12px;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+}
     /* HERO — completely new mobile layout */
     #hero { min-height: 100svh; align-items: flex-start; }
     .hero-inner {
