@@ -497,6 +497,11 @@ opacity: 0;
   }
 }
 
+.parallax-item {
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
   /* Hero dots */
   .hero-dots {
     position: absolute;
@@ -1584,18 +1589,18 @@ opacity: 0;
 
    <div class="hero-visual">
 
-  <div class="hero-orb orb-1"></div>
-  <div class="hero-orb orb-2"></div>
+  <div class="hero-orb orb-1 parallax-item"></div>
+  <div class="hero-orb orb-2 parallax-item"></div>
 
-  <div class="hero-floating-card card-1">
+  <div class="hero-floating-card card-1 parallax-item">
     ✨ BPOM Certified
   </div>
 
-  <div class="hero-floating-card card-2">
+  <div class="hero-floating-card card-2 parallax-item">
     💖 10.000+ Customers
   </div>
 
-  <div class="hero-product-wrap">
+  <div class="hero-product-wrap parallax-item">
 
     <div class="hero-product-glow"></div>
 
@@ -2607,5 +2612,40 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 </script>
+
+<script>
+
+const hero = document.querySelector('#hero');
+const parallaxItems = document.querySelectorAll('.parallax-item');
+
+hero.addEventListener('mousemove', (e) => {
+
+  const x = (window.innerWidth / 2 - e.pageX) / 30;
+  const y = (window.innerHeight / 2 - e.pageY) / 30;
+
+  parallaxItems.forEach((item, index) => {
+
+    const speed = (index + 1) * 0.15;
+
+    item.style.transform =
+      `translate(${x * speed}px, ${y * speed}px)`;
+
+  });
+
+});
+
+hero.addEventListener('mouseleave', () => {
+
+  parallaxItems.forEach((item) => {
+
+    item.style.transform =
+      `translate(0px, 0px)`;
+
+  });
+
+});
+
+</script>
+
 </body>
 </html>
