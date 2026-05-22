@@ -107,9 +107,9 @@
   width:calc(100% - 56px);
   max-width:1640px;
 
-  height:58px;
+  height:66px;
 
-  padding:0 18px;
+  padding:0 24px;
 
   display:flex;
   align-items:center;
@@ -119,16 +119,17 @@
 
   border:1px solid rgba(255,255,255,0.05);
 
-  border-radius:14px;
+  border-radius:16px;
 
   z-index:1000;
+  backdrop-filter: blur(14px);
 }
   .nav-logo{
   font-family:'Barlow Condensed',sans-serif;
   font-weight:900;
   font-style:italic;
 
-  font-size:1.05rem;
+  font-size:1.85rem;
 
   letter-spacing:0.04em;
 
@@ -141,7 +142,7 @@
   .nav-links{
   display:flex;
   align-items:center;
-  gap:2.2rem;
+  gap:1.8rem;
 
   list-style:none;
 
@@ -151,7 +152,7 @@
   .nav-links a{
   color:rgba(255,255,255,0.72);
 
-  font-size:0.74rem;
+  font-size:0.92rem;
 
   font-weight:500;
 
@@ -170,7 +171,8 @@
 
   border-radius:10px;
 
-  background:#ea5d92;
+  background:#1a1a1a;
+border:1px solid rgba(255,255,255,0.08);
 
   color:white;
 
@@ -186,7 +188,7 @@
 
   transition:0.25s ease;
 }
-  .nav-cta:hover { background: var(--pink-deep) !important; transform: translateY(-2px); }
+  .nav-cta:hover { background:#ea5d92 !important; transform: translateY(-2px); }
 
   .hamburger {
     display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;
