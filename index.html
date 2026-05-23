@@ -512,197 +512,40 @@ opacity: 0;
   will-change: transform;
 }
 
-  /* ─── HERO CHATLABS-STYLE VISUAL ─── */
+  /* ─── HERO VISUAL — clean auto-slider ─── */
   .hero-visual {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    min-height: 560px;
   }
 
-  .hero-panel {
+  .hero-slider {
     position: relative;
     width: 100%;
-    max-width: 540px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
+    max-width: 480px;
+    aspect-ratio: 3/4;
+    border-radius: 24px;
     overflow: hidden;
-    backdrop-filter: blur(4px);
-    box-shadow:
-      0 40px 80px rgba(0,0,0,0.5),
-      0 0 0 1px rgba(232,115,154,0.08) inset;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
   }
 
-  /* Top tab bar */
-  .hero-panel-tabs {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0 1rem;
-    background: rgba(0,0,0,0.3);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    height: 44px;
-  }
-  .hero-tab {
-    padding: 0 1rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  .hero-tab.active {
-    color: white;
-    border-bottom-color: var(--pink);
-  }
-  .hero-tab:hover:not(.active) {
-    color: rgba(255,255,255,0.7);
-  }
-
-  /* Main image stage */
-  .hero-stage {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    background: rgba(0,0,0,0.2);
-  }
-
-  .hero-stage-slide {
+  .hero-slide {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
     opacity: 0;
-    transition: opacity 0.9s ease, transform 0.9s ease;
+    transition: opacity 1.2s ease, transform 1.2s ease;
     transform: scale(1.04);
   }
-  .hero-stage-slide.active {
+  .hero-slide.active {
     opacity: 1;
     transform: scale(1);
   }
-  .hero-stage-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  /* Thumbnail strip on right side (ChatLabs-style) */
-  .hero-thumbs {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 5;
-  }
-  .hero-thumb {
-    width: 56px;
-    height: 56px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid rgba(255,255,255,0.15);
-    transition: all 0.2s ease;
-    opacity: 0.65;
-    flex-shrink: 0;
-  }
-  .hero-thumb.active {
-    border-color: var(--pink);
-    opacity: 1;
-    box-shadow: 0 0 12px rgba(232,115,154,0.5);
-  }
-  .hero-thumb:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-  }
-  .hero-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  /* Bottom label strip */
-  .hero-panel-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.8rem 1.1rem;
-    background: rgba(0,0,0,0.4);
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  .hero-panel-label {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .hero-panel-label.active-label {
-    color: var(--pink-light);
-  }
-  .hero-panel-dots {
-    display: flex;
-    gap: 5px;
-  }
-  .hero-panel-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .hero-panel-dot.active {
-    background: var(--pink);
-    width: 16px;
-    border-radius: 3px;
-  }
-
-  /* Floating badge top-left of panel */
-  .hero-panel-badge {
-    position: absolute;
-    top: 56px;
-    left: 12px;
-    background: rgba(10,4,8,0.85);
-    border: 1px solid rgba(232,115,154,0.3);
-    backdrop-filter: blur(8px);
-    border-radius: 10px;
-    padding: 0.5rem 0.8rem;
-    z-index: 5;
-    animation: badgeFloat 4s ease-in-out infinite;
-  }
-  .hero-panel-badge-title {
-    font-size: 0.62rem;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-  .hero-panel-badge-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 900;
-    font-style: italic;
-    color: var(--pink-light);
-    line-height: 1;
-  }
-  @keyframes badgeFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-  }
-
-  /* old hero-slider kept for JS compatibility but hidden */
-  .hero-slider { display: none; }
 
 
 
@@ -1698,22 +1541,6 @@ opacity: 0;
     .footer-grid { grid-template-columns:1fr 1fr; }
     .nav-links { display:none; }
     .hamburger { display:flex; }
-    .modal-grid { grid-template-columns:1fr; }
-    .modal-img { border-radius:20px 20px 0 0;min-height:180px; }
-    .results-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .testi-card { flex: 0 0 calc(50% - 0.75rem); }
-    .quiz-result-card { flex-direction: column; text-align: center; align-items: center; }
-    .quiz-btns { justify-content: center; }
-    .ba-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-    /* Hero panel mobile */
-    .hero-visual { min-height: unset; }
-    .hero-panel { max-width: 100%; }
-    .hero-stage { aspect-ratio: 3/4; }
-    .hero-thumb { width: 44px; height: 44px; }
-    .hero-panel-tabs { overflow-x: auto; scrollbar-width: none; }
-    .hero-panel-tabs::-webkit-scrollbar { display: none; }
   }
   @media(max-width:600px) {
     section { padding:4rem 5%; }
@@ -1840,72 +1667,12 @@ opacity: 0;
     </div>
 
    <div class="hero-visual">
-  <!-- ChatLabs-style panel -->
-  <div class="hero-panel" id="heroPanel">
-    <!-- Tab bar -->
-    <div class="hero-panel-tabs">
-      <div class="hero-tab active" onclick="switchHeroTab(0, this)">Serum Bulu Mata</div>
-      <div class="hero-tab" onclick="switchHeroTab(1, this)">Serum Alis</div>
-      <div class="hero-tab" onclick="switchHeroTab(2, this)">Hair Growth</div>
-    </div>
-
-    <!-- Main image stage -->
-    <div class="hero-stage" id="heroStage">
-      <div class="hero-stage-slide active" data-label="Oil-Based Serum">
-        <img src="./images/product1.jpeg" alt="LashBoss Serum Bulu Mata">
-      </div>
-      <div class="hero-stage-slide" data-label="Gel-Based Serum">
-        <img src="./images/product2.jpeg" alt="LashBoss Serum Alis">
-      </div>
-      <div class="hero-stage-slide" data-label="Rosemary Hair Oil">
-        <img src="./images/product3.jpeg" alt="LashBoss Hair Growth Oil">
-      </div>
-
-      <!-- Floating badge -->
-      <div class="hero-panel-badge">
-        <div class="hero-panel-badge-title">Rating</div>
-        <div class="hero-panel-badge-val">4.9★ · 50K+</div>
-      </div>
-
-      <!-- Thumbnail strip (right side like ChatLabs) -->
-      <div class="hero-thumbs" id="heroThumbs">
-        <div class="hero-thumb active" onclick="switchHeroPanel(0)" data-idx="0">
-          <img src="./images/product1.jpeg" alt="thumb 1">
-        </div>
-        <div class="hero-thumb" onclick="switchHeroPanel(1)" data-idx="1">
-          <img src="./images/product2.jpeg" alt="thumb 2">
-        </div>
-        <div class="hero-thumb" onclick="switchHeroPanel(2)" data-idx="2">
-          <img src="./images/product3.jpeg" alt="thumb 3">
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer strip -->
-    <div class="hero-panel-footer">
-      <span class="hero-panel-label active-label" id="heroPanelLabel">Oil-Based Serum</span>
-      <div class="hero-panel-dots" id="heroPanelDots">
-        <div class="hero-panel-dot active" onclick="switchHeroPanel(0)"></div>
-        <div class="hero-panel-dot" onclick="switchHeroPanel(1)"></div>
-        <div class="hero-panel-dot" onclick="switchHeroPanel(2)"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Keep old slider hidden for legacy JS -->
-  <div class="hero-slider">
-    <img src="./images/product1.jpeg" class="hero-slide active" alt="Product 1">
-    <img src="./images/product2.jpeg" class="hero-slide" alt="Product 2">
-    <img src="./images/product3.jpeg" class="hero-slide" alt="Product 3">
+  <div class="hero-slider" id="heroSlider">
+    <img src="./images/product1.jpeg" class="hero-slide active" alt="LashBoss Product 1">
+    <img src="./images/product2.jpeg" class="hero-slide" alt="LashBoss Product 2">
+    <img src="./images/product3.jpeg" class="hero-slide" alt="LashBoss Product 3">
   </div>
 </div>
-
-  <!-- Slide dots (hidden, replaced by panel dots) -->
-  <div class="hero-dots" id="heroDots" style="display:none">
-    <div class="hero-dot active" onclick="goToSlide(0)"></div>
-    <div class="hero-dot" onclick="goToSlide(1)"></div>
-    <div class="hero-dot" onclick="goToSlide(2)"></div>
-  </div>
 </section>
 
 
@@ -2452,25 +2219,25 @@ const heroBgs = [
   'radial-gradient(ellipse 80% 60% at 70% 40%, rgba(196,82,122,0.3) 0%, rgba(201,169,110,0.1) 50%, transparent 70%), linear-gradient(140deg, #1a0d15 0%, #1A0F16 100%)'
 ];
 
-let heroIdx=0;
+let heroBgIdx=0;
 let heroTimer;
 const heroBgEl = document.getElementById('heroBg');
 const heroProducts = document.querySelectorAll('.hero-product');
 const heroDotEls = document.querySelectorAll('.hero-dot');
 
 function goToSlide(n){
-  heroProducts[heroIdx].classList.remove('active');
-  heroDotEls[heroIdx].classList.remove('active');
-  heroIdx=n;
-  heroProducts[heroIdx].classList.add('active');
-  heroDotEls[heroIdx].classList.add('active');
-  heroBgEl.style.background = heroBgs[heroIdx];
+  if(heroProducts[heroBgIdx]) heroProducts[heroBgIdx].classList.remove('active');
+  if(heroDotEls[heroBgIdx]) heroDotEls[heroBgIdx].classList.remove('active');
+  heroBgIdx=n;
+  if(heroProducts[heroBgIdx]) heroProducts[heroBgIdx].classList.add('active');
+  if(heroDotEls[heroBgIdx]) heroDotEls[heroBgIdx].classList.add('active');
+  if(heroBgEl) heroBgEl.style.background = heroBgs[heroBgIdx];
   resetHeroTimer();
 }
 
 function resetHeroTimer(){
   clearInterval(heroTimer);
-  heroTimer=setInterval(()=>goToSlide((heroIdx+1)%heroProducts.length), 7000);
+  heroTimer=setInterval(()=>goToSlide((heroBgIdx+1)%Math.max(heroProducts.length,1)), 7000);
 }
 resetHeroTimer();
 
@@ -2979,57 +2746,14 @@ setInterval(() => {
 
 </script>
 <script>
-
-
-// ─── HERO PANEL SWITCHER (ChatLabs-style) ───
-let heroPanelIdx = 0;
-let heroPanelTimer = null;
-
-const stageSlides = document.querySelectorAll('.hero-stage-slide');
-const thumbEls = document.querySelectorAll('.hero-thumb');
-const dotEls = document.querySelectorAll('.hero-panel-dot');
-const labelEl = document.getElementById('heroPanelLabel');
-
-function switchHeroPanel(idx) {
-  // deactivate all
-  stageSlides.forEach(s => s.classList.remove('active'));
-  thumbEls.forEach(t => t.classList.remove('active'));
-  dotEls.forEach(d => d.classList.remove('active'));
-
-  stageSlides[idx].classList.add('active');
-  thumbEls[idx].classList.add('active');
-  dotEls[idx].classList.add('active');
-  if (labelEl) labelEl.textContent = stageSlides[idx].dataset.label;
-
-  heroPanelIdx = idx;
-}
-
-function switchHeroTab(idx, el) {
-  document.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  switchHeroPanel(idx);
-  resetPanelAuto();
-}
-
-function resetPanelAuto() {
-  clearInterval(heroPanelTimer);
-  heroPanelTimer = setInterval(() => {
-    const next = (heroPanelIdx + 1) % stageSlides.length;
-    switchHeroPanel(next);
-    // sync tab
-    document.querySelectorAll('.hero-tab').forEach((t, i) => t.classList.toggle('active', i === next));
-  }, 4000);
-}
-
-// start auto
-resetPanelAuto();
-
-// pause on hover
-const panel = document.getElementById('heroPanel');
-if (panel) {
-  panel.addEventListener('mouseenter', () => clearInterval(heroPanelTimer));
-  panel.addEventListener('mouseleave', () => resetPanelAuto());
-}
+// ─── HERO AUTO-SLIDER ───
+const heroSlides = document.querySelectorAll('.hero-slide');
+let heroIdx = 0;
+setInterval(() => {
+  heroSlides[heroIdx].classList.remove('active');
+  heroIdx = (heroIdx + 1) % heroSlides.length;
+  heroSlides[heroIdx].classList.add('active');
+}, 4000);
 </script>
 </body>
 </html>
