@@ -813,7 +813,8 @@ opacity: 0;
   }
   .feature-card:hover { transform:translateY(-5px);box-shadow:0 20px 50px rgba(232,115,154,0.2);border-color:var(--pink-light); }
   .feature-card:hover::before { transform:scaleX(1); }
-  .feature-icon { font-size:1.8rem;margin-bottom:0.8rem; }
+  .feature-icon { width:48px;height:48px;margin-bottom:0.8rem;border-radius:10px;overflow:hidden;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+  .feature-icon img { width:100%;height:100%;object-fit:cover;display:block; }
   .feature-title { font-size:0.85rem;font-weight:700;margin-bottom:0.4rem;color:var(--dark); }
   .feature-desc { font-size:0.73rem;color:var(--text-light);line-height:1.65; }
 
@@ -830,22 +831,34 @@ opacity: 0;
     position: absolute; inset: 0;
     opacity: 0; transition: opacity 0.8s ease;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    font-size: 8rem;
     background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
-    flex-direction: column;
-    gap: 1rem;
+    overflow: hidden;
   }
   .why-slide.active { opacity: 1; }
+  .why-slide-photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
   .why-slide-label {
+    position: relative; z-index: 1;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1rem;
     font-weight: 700;
     font-style: italic;
     letter-spacing: 0.1em;
-    color: var(--pink-deep);
+    color: white;
     text-transform: uppercase;
+    background: rgba(26,15,22,0.55);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1.2rem;
+    border-radius: 99px;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
 
   .why-slide-dots {
@@ -906,8 +919,8 @@ opacity: 0;
     background:linear-gradient(135deg,var(--pink-pale),rgba(232,115,154,0.15));
     display:flex;align-items:center;justify-content:center;
   }
-  .product-emoji { font-size:clamp(3rem,7vw,4.5rem);transition:transform 0.4s var(--ease); }
-  .product-card:hover .product-emoji { transform:scale(1.12) rotate(-5deg); }
+  .product-img-wrap img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s var(--ease); }
+  .product-card:hover .product-img-wrap img { transform:scale(1.06); }
 
   .product-badge {
     position:absolute;top:0.8rem;left:0.8rem;
@@ -979,8 +992,9 @@ opacity: 0;
   .modal-img {
     background:linear-gradient(135deg,var(--pink-pale),rgba(232,115,154,0.2));
     display:flex;align-items:center;justify-content:center;font-size:6rem;
-    border-radius:20px 0 0 20px;padding:2rem;min-height:280px;
+    border-radius:20px 0 0 20px;overflow:hidden;min-height:280px;
   }
+  .modal-img img { width:100%;height:100%;object-fit:cover;display:block; }
   .modal-info { padding:2rem 1.8rem 2rem 1.5rem; }
   .modal-cat { font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--pink);font-weight:700; }
   .modal-name { font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;font-style:italic;margin:0.4rem 0 0.7rem;line-height:1.1; }
@@ -1020,10 +1034,11 @@ opacity: 0;
     background:rgba(232,115,154,0.12);border:1.5px solid rgba(232,115,154,0.3);
     border-radius:50%;display:flex;align-items:center;justify-content:center;
     font-size:1.5rem;margin:0 auto 1.3rem;transition:all 0.4s;
+    overflow:hidden;
   }
-  .process-step:hover .step-circle {
-    background:var(--pink);border-color:var(--pink);transform:scale(1.1);box-shadow:0 0 28px rgba(232,115,154,0.5);
-  }
+  .step-circle img { width:38px;height:38px;object-fit:contain;display:block;transition:transform 0.4s; }
+  .process-step:hover .step-circle { background:var(--pink);border-color:var(--pink);transform:scale(1.1);box-shadow:0 0 28px rgba(232,115,154,0.5); }
+  .process-step:hover .step-circle img { transform:scale(1.15); }
   .step-label { font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);font-weight:700;margin-bottom:0.4rem; }
   .step-title { font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;font-style:italic;color:var(--white);margin-bottom:0.5rem; }
   .step-desc { font-size:0.72rem;color:rgba(255,255,255,0.4);line-height:1.65; }
@@ -1104,7 +1119,8 @@ opacity: 0;
     border-radius:var(--radius);transition:all 0.4s;text-align:center;
   }
   .cert-card:hover { border-color:var(--pink);background:var(--pink-pale);transform:translateY(-4px); }
-  .cert-icon { font-size:2.2rem;margin-bottom:0.7rem; }
+  .cert-icon { width:60px;height:60px;margin:0 auto 0.7rem;display:flex;align-items:center;justify-content:center; }
+  .cert-icon img { width:100%;height:100%;object-fit:contain;display:block; }
   .cert-title { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:1rem;color:var(--dark);margin-bottom:0.3rem; }
   .cert-desc { font-size:0.72rem;color:var(--text-light);line-height:1.6; }
 
@@ -1172,7 +1188,8 @@ opacity: 0;
     transform: translateY(-3px);
     box-shadow: 0 12px 30px rgba(232,115,154,0.2);
   }
-  .qo-emoji { font-size: 1.8rem; flex-shrink: 0; }
+  .qo-emoji { width:44px;height:44px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--pink-pale); }
+  .qo-emoji img { width:100%;height:100%;object-fit:cover;display:block; }
   .qo-text { font-size: 0.85rem; font-weight: 600; color: var(--dark); line-height: 1.4; padding-top: 0.2rem; }
 
   .quiz-result-card {
@@ -1187,10 +1204,13 @@ opacity: 0;
   }
 
   .quiz-result-emoji {
-    font-size: 5rem;
+    width: 100px; height: 100px;
     flex-shrink: 0;
-    animation: floatEmoji 4s ease-in-out infinite;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--pink-pale);
   }
+  .quiz-result-emoji img { width:100%;height:100%;object-fit:cover;display:block; }
 
   .quiz-result-label {
     font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
@@ -1370,10 +1390,13 @@ opacity: 0;
   .footer-social { display:flex;gap:0.6rem;margin-top:1.3rem; }
   .social-btn {
     width:34px;height:34px;background:rgba(255,255,255,0.07);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-size:0.82rem;
+    display:flex;align-items:center;justify-content:center;
     text-decoration:none;color:rgba(255,255,255,0.55);transition:all 0.3s;
+    overflow:hidden;
   }
-  .social-btn:hover { background:var(--pink);color:white;transform:translateY(-2px); }
+  .social-btn img { width:18px;height:18px;object-fit:contain;display:block;opacity:0.6;transition:opacity 0.3s; }
+  .social-btn:hover { background:var(--pink);transform:translateY(-2px); }
+  .social-btn:hover img { opacity:1;filter:brightness(0) invert(1); }
   .footer-col-title { color:var(--white);font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1.1rem; }
   .footer-links { list-style:none;display:flex;flex-direction:column;gap:0.55rem; }
   .footer-links a { text-decoration:none;font-size:0.77rem;color:rgba(255,255,255,0.4);transition:color 0.2s; }
@@ -1456,10 +1479,9 @@ opacity: 0;
   .ba-img-wrap {
     aspect-ratio: 3/2;
     background: linear-gradient(135deg, #2a1520, #3a1f2c);
-    display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
-    font-size: 3.5rem;
   }
+  .ba-img-wrap img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block; }
   .ba-weeks {
     position: absolute; top: 0.7rem; right: 0.7rem;
     background: var(--pink);
@@ -1486,7 +1508,8 @@ opacity: 0;
     background: var(--cream);
   }
   .ingredient-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(232,115,154,0.15); border-color: var(--pink-light); }
-  .ingredient-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+  .ingredient-icon { width:56px;height:56px;margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center; }
+  .ingredient-icon img { width:100%;height:100%;object-fit:contain;display:block; }
   .ingredient-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; font-style: italic; color: var(--dark); margin-bottom: 0.4rem; }
   .ingredient-role { font-size: 0.68rem; color: var(--pink); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
   .ingredient-desc { font-size: 0.7rem; color: var(--text-light); line-height: 1.6; }
@@ -1505,7 +1528,8 @@ opacity: 0;
     transition: all 0.3s; display: block;
   }
   .marketplace-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(232,115,154,0.18); border-color: var(--pink); }
-  .marketplace-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .marketplace-icon { width:56px;height:56px;margin:0 auto 0.6rem;display:flex;align-items:center;justify-content:center; }
+  .marketplace-icon img { width:100%;height:100%;object-fit:contain;display:block; }
   .marketplace-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); margin-bottom: 0.2rem; }
   .marketplace-sub { font-size: 0.65rem; color: var(--text-light); letter-spacing: 0.05em; }
 
@@ -1952,22 +1976,26 @@ opacity: 0;
       <p class="section-desc">LashBoss hadir dengan teknologi terdepan &amp; bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
       <div class="why-features">
         <div class="feature-card reveal">
-          <div class="feature-icon">🧴</div>
+          <!-- 📸 FOTO: icon fitur "Oil Serum" → ganti src dengan path foto/icon kamu, ukuran ideal 96x96px -->
+          <div class="feature-icon"><img src="./images/icon-oil.png" alt="Oil Serum"></div>
           <div class="feature-title">Oil-Concentrated Serum</div>
           <div class="feature-desc">100% ingredients aktif, vitamin &amp; fatty acid tanpa pengencer air.</div>
         </div>
         <div class="feature-card reveal" style="transition-delay:0.1s">
-          <div class="feature-icon">🔬</div>
+          <!-- 📸 FOTO: icon fitur "Biotin" → ganti src dengan path foto/icon kamu, ukuran ideal 96x96px -->
+          <div class="feature-icon"><img src="./images/icon-biotin.png" alt="Encapsulated Biotin"></div>
           <div class="feature-title">Encapsulated Biotin</div>
           <div class="feature-desc">7× lebih efektif — diserap langsung ke akar bulu mata.</div>
         </div>
         <div class="feature-card reveal" style="transition-delay:0.2s">
-          <div class="feature-icon">🌻</div>
+          <!-- 📸 FOTO: icon fitur "Natural Oils" → ganti src dengan path foto/icon kamu, ukuran ideal 96x96px -->
+          <div class="feature-icon"><img src="./images/icon-naturaloils.png" alt="Natural Oils"></div>
           <div class="feature-title">Natural Oils Blend</div>
           <div class="feature-desc">Sunflower, Almond &amp; Camellia Seed Oil untuk kelembapan maksimal.</div>
         </div>
         <div class="feature-card reveal" style="transition-delay:0.3s">
-          <div class="feature-icon">👁️</div>
+          <!-- 📸 FOTO: icon fitur "Sensitive Eyes" → ganti src dengan path foto/icon kamu, ukuran ideal 96x96px -->
+          <div class="feature-icon"><img src="./images/icon-sensitive.png" alt="Sensitive Eyes"></div>
           <div class="feature-title">Safe for Sensitive Eyes</div>
           <div class="feature-desc">Aman untuk mata sensitif &amp; pengguna eyelash extension.</div>
         </div>
@@ -1976,22 +2004,31 @@ opacity: 0;
 
     <div class="why-visual reveal-right">
       <div class="why-img-slider" id="whySlider">
+
+        <!-- 📸 FOTO: foto produk Rapunzel Serum untuk slider "Kenapa LashBoss" → ganti src, ukuran ideal 600x750px portrait -->
         <div class="why-slide active">
-          <div>✨</div>
+          <img class="why-slide-photo" src="./images/why-rapunzel.jpg" alt="Rapunzel Serum">
           <div class="why-slide-label">Rapunzel Serum</div>
         </div>
+
+        <!-- 📸 FOTO: foto produk Gel-Based Serum → ganti src, ukuran ideal 600x750px portrait -->
         <div class="why-slide">
-          <div>💧</div>
+          <img class="why-slide-photo" src="./images/why-gel.jpg" alt="Gel-Based Serum">
           <div class="why-slide-label">Gel-Based Serum</div>
         </div>
+
+        <!-- 📸 FOTO: foto produk Sensitive Eyes Serum → ganti src, ukuran ideal 600x750px portrait -->
         <div class="why-slide">
-          <div>👁️</div>
+          <img class="why-slide-photo" src="./images/why-sensitive.jpg" alt="Sensitive Formula">
           <div class="why-slide-label">Sensitive Formula</div>
         </div>
+
+        <!-- 📸 FOTO: foto produk itCurl Curler → ganti src, ukuran ideal 600x750px portrait -->
         <div class="why-slide">
-          <div>💄</div>
+          <img class="why-slide-photo" src="./images/why-itcurl.jpg" alt="itCurl Curler">
           <div class="why-slide-label">itCurl Curler</div>
         </div>
+
       </div>
       <div class="why-slide-dots" id="whyDots">
         <div class="why-dot active" onclick="goToWhySlide(0)"></div>
@@ -2055,25 +2092,29 @@ opacity: 0;
   </div>
   <div class="process-steps">
     <div class="process-step reveal" style="transition-delay:0.1s">
-      <div class="step-circle">🧼</div>
+      <!-- 📸 FOTO: icon step 1 "Bersihkan Wajah" → ganti src, ukuran ideal 80x80px, background transparan (PNG) -->
+      <div class="step-circle"><img src="./images/step-clean.png" alt="Bersihkan Wajah"></div>
       <div class="step-label">Step 01</div>
       <div class="step-title">Bersihkan Wajah</div>
       <div class="step-desc">Pastikan area mata bersih dari makeup dan kotoran sebelum aplikasi.</div>
     </div>
     <div class="process-step reveal" style="transition-delay:0.2s">
-      <div class="step-circle">💧</div>
+      <!-- 📸 FOTO: icon step 2 "Ambil Serum" → ganti src, ukuran ideal 80x80px, background transparan (PNG) -->
+      <div class="step-circle"><img src="./images/step-drop.png" alt="Ambil Serum"></div>
       <div class="step-label">Step 02</div>
       <div class="step-title">Ambil Sedikit Serum</div>
       <div class="step-desc">Cukup 1 tetes kecil — karena highly concentrated, sedikit sudah cukup!</div>
     </div>
     <div class="process-step reveal" style="transition-delay:0.3s">
-      <div class="step-circle">✨</div>
+      <!-- 📸 FOTO: icon step 3 "Aplikasikan" → ganti src, ukuran ideal 80x80px, background transparan (PNG) -->
+      <div class="step-circle"><img src="./images/step-apply.png" alt="Aplikasikan"></div>
       <div class="step-label">Step 03</div>
       <div class="step-title">Aplikasikan ke Bulu Mata</div>
       <div class="step-desc">Oleskan dari akar hingga ujung bulu mata dan alis secara merata.</div>
     </div>
     <div class="process-step reveal" style="transition-delay:0.4s">
-      <div class="step-circle">🌙</div>
+      <!-- 📸 FOTO: icon step 4 "Biarkan Semalaman" → ganti src, ukuran ideal 80x80px, background transparan (PNG) -->
+      <div class="step-circle"><img src="./images/step-night.png" alt="Biarkan Semalaman"></div>
       <div class="step-label">Step 04</div>
       <div class="step-title">Biarkan Semalaman</div>
       <div class="step-desc">Gunakan malam hari &amp; biarkan serum bekerja saat tidur. Lihat hasilnya!</div>
@@ -2102,10 +2143,30 @@ opacity: 0;
     <p class="section-desc" style="margin:0 auto">LashBoss berkomitmen memberikan produk yang aman, halal, dan berkualitas tinggi.</p>
   </div>
   <div class="cert-grid">
-    <div class="cert-card reveal"><div class="cert-icon">🏅</div><div class="cert-title">BPOM Certified</div><div class="cert-desc">Terdaftar resmi di Badan Pengawas Obat &amp; Makanan Indonesia.</div></div>
-    <div class="cert-card reveal" style="transition-delay:0.1s"><div class="cert-icon">☪️</div><div class="cert-title">Halal MUI</div><div class="cert-desc">Bersertifikat Halal dari Majelis Ulama Indonesia.</div></div>
-    <div class="cert-card reveal" style="transition-delay:0.2s"><div class="cert-icon">🌿</div><div class="cert-title">Dermatologically Tested</div><div class="cert-desc">Teruji secara dermatologis, aman untuk kulit sensitif.</div></div>
-    <div class="cert-card reveal" style="transition-delay:0.3s"><div class="cert-icon">🥇</div><div class="cert-title">No.1 Indonesia</div><div class="cert-desc">Terlaris di Indonesia dengan ribuan ulasan positif.</div></div>
+    <div class="cert-card reveal">
+      <!-- 📸 FOTO: logo/badge BPOM → ganti src, ukuran ideal 120x120px, PNG transparan -->
+      <div class="cert-icon"><img src="./images/cert-bpom.png" alt="BPOM Certified"></div>
+      <div class="cert-title">BPOM Certified</div>
+      <div class="cert-desc">Terdaftar resmi di Badan Pengawas Obat &amp; Makanan Indonesia.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.1s">
+      <!-- 📸 FOTO: logo/badge Halal MUI → ganti src, ukuran ideal 120x120px, PNG transparan -->
+      <div class="cert-icon"><img src="./images/cert-halal.png" alt="Halal MUI"></div>
+      <div class="cert-title">Halal MUI</div>
+      <div class="cert-desc">Bersertifikat Halal dari Majelis Ulama Indonesia.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.2s">
+      <!-- 📸 FOTO: badge "Dermatologically Tested" → ganti src, ukuran ideal 120x120px, PNG transparan -->
+      <div class="cert-icon"><img src="./images/cert-derma.png" alt="Dermatologically Tested"></div>
+      <div class="cert-title">Dermatologically Tested</div>
+      <div class="cert-desc">Teruji secara dermatologis, aman untuk kulit sensitif.</div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:0.3s">
+      <!-- 📸 FOTO: badge/award "No.1 Indonesia" → ganti src, ukuran ideal 120x120px, PNG transparan -->
+      <div class="cert-icon"><img src="./images/cert-no1.png" alt="No.1 Indonesia"></div>
+      <div class="cert-title">No.1 Indonesia</div>
+      <div class="cert-desc">Terlaris di Indonesia dengan ribuan ulasan positif.</div>
+    </div>
   </div>
 </section>
 
@@ -2122,19 +2183,23 @@ opacity: 0;
       <div class="quiz-question">Apa kondisi bulu mata &amp; alis kamu saat ini?</div>
       <div class="quiz-options">
         <button class="quiz-option" onclick="selectQuiz('rapunzel')">
-          <span class="qo-emoji">✨</span>
+          <!-- 📸 FOTO: foto kondisi "bulu mata tipis/normal" → ganti src, ukuran ideal 88x88px -->
+          <span class="qo-emoji"><img src="./images/quiz-normal.jpg" alt="Bulu mata normal"></span>
           <div><div class="qo-text">Tipis, jarang &amp; ingin lebih lebat dan panjang</div></div>
         </button>
         <button class="quiz-option" onclick="selectQuiz('gel')">
-          <span class="qo-emoji">💅</span>
+          <!-- 📸 FOTO: foto kondisi "pakai extension" → ganti src, ukuran ideal 88x88px -->
+          <span class="qo-emoji"><img src="./images/quiz-extension.jpg" alt="Pakai extension"></span>
           <div><div class="qo-text">Sering pakai eyelash extension &amp; ingin bulu mata tetap sehat</div></div>
         </button>
         <button class="quiz-option" onclick="selectQuiz('sensitive')">
-          <span class="qo-emoji">👁️</span>
+          <!-- 📸 FOTO: foto kondisi "mata sensitif" → ganti src, ukuran ideal 88x88px -->
+          <span class="qo-emoji"><img src="./images/quiz-sensitive.jpg" alt="Mata sensitif"></span>
           <div><div class="qo-text">Mata mudah iritasi &amp; sensitif terhadap produk biasa</div></div>
         </button>
         <button class="quiz-option" onclick="selectQuiz('itcurl')">
-          <span class="qo-emoji">💄</span>
+          <!-- 📸 FOTO: foto kondisi "bulu mata lurus" → ganti src, ukuran ideal 88x88px -->
+          <span class="qo-emoji"><img src="./images/quiz-curl.jpg" alt="Bulu mata lurus"></span>
           <div><div class="qo-text">Bulu mata lurus &amp; susah dilentik meski pakai mascara</div></div>
         </button>
       </div>
