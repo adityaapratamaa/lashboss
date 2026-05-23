@@ -97,104 +97,127 @@
     100%{opacity:0;transform:translateY(100vh) rotate(360deg)}
   }
 
-  /* ─── NAVBAR ─── */
-  nav{
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
+  /* ─── NAVBAR (ChatLabs-style) ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8, 4, 7, 0.92);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(8, 4, 7, 0.98);
+    border-bottom-color: rgba(255,255,255,0.09);
+  }
 
-  width: calc(100% - 40px);
-  max-width: 1620px;
-
-  height: 62px;
-
-  padding: 0 28px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  background: rgba(10,10,10,0.88);
-
-  border: 1px solid rgba(255,255,255,0.06);
-
-  border-radius: 18px;
-
-  backdrop-filter: blur(12px);
-
-  z-index: 1000;
-}
-  .nav-logo{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:900;
-  font-style:italic;
-
-  font-size:1.45rem;
-
-  letter-spacing:0.03em;
-
-  color:white;
-
-  text-decoration:none;
-}
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
   .nav-logo .pink { color: var(--pink); }
 
-  .nav-links{
-  display:flex;
-  align-items:center;
+  .nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
 
-  gap:2.4rem;
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.62);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .nav-links a:hover {
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
 
-  list-style:none;
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
 
-  margin-left:auto;
-  margin-right:2rem;
-}
-  .nav-links a{
-  color:rgba(255,255,255,0.72);
+  .nav-btn-ghost {
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+  }
+  .nav-btn-ghost:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.28);
+    color: white;
+  }
 
-  font-size:0.82rem;
-
-  font-weight:500;
-
-  text-decoration:none;
-
-  transition:0.2s ease;
-}
-  .nav-links a:hover{
-  color:white;
-}
-
-  .nav-cta{
-  height:42px;
-
-  padding:0 22px;
-
-  border-radius:12px;
-
-  background:#161616;
-
-  border:1px solid rgba(255,255,255,0.08);
-
-  color:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:0.74rem;
-
-  font-weight:700;
-
-  text-decoration:none;
-
-  transition:0.25s ease;
-}
-  .nav-cta:hover{
-  background:#ea5d92;
-  transform:translateY(-2px);
-}
+  .nav-cta {
+    height: 38px;
+    padding: 0 20px;
+    border-radius: 8px;
+    background: var(--pink);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+    box-shadow: 0 0 0 0 rgba(232,115,154,0);
+  }
+  .nav-cta:hover {
+    background: var(--pink-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(232,115,154,0.4);
+  }
 
   .hamburger {
     display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;
@@ -352,7 +375,7 @@ animation: heroGradientMove 12s ease infinite;
 
   margin: 0 auto;
 
-  padding: 120px 5% 5rem;
+  padding: 140px 5% 5rem;
 
   display: flex;
   align-items: center;
@@ -488,77 +511,197 @@ opacity: 0;
   will-change: transform;
 }
 
-  /* ─── HERO PREMIUM VISUAL ─── */
+  /* ─── HERO CHATLABS-STYLE VISUAL ─── */
+  .hero-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 560px;
+  }
 
-.hero-visual{
-  flex: 1;
+  .hero-panel {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(232,115,154,0.08) inset;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Top tab bar */
+  .hero-panel-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 1rem;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    height: 44px;
+  }
+  .hero-tab {
+    padding: 0 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .hero-tab.active {
+    color: white;
+    border-bottom-color: var(--pink);
+  }
+  .hero-tab:hover:not(.active) {
+    color: rgba(255,255,255,0.7);
+  }
 
-  position: relative;
-}
+  /* Main image stage */
+  .hero-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+  }
 
-.hero-slider{
-  position: relative;
+  .hero-stage-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    transform: scale(1.04);
+  }
+  .hero-stage-slide.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-stage-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
 
-  width: 100%;
-  max-width: 520px;
+  /* Thumbnail strip on right side (ChatLabs-style) */
+  .hero-thumbs {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 5;
+  }
+  .hero-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.15);
+    transition: all 0.2s ease;
+    opacity: 0.65;
+    flex-shrink: 0;
+  }
+  .hero-thumb.active {
+    border-color: var(--pink);
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(232,115,154,0.5);
+  }
+  .hero-thumb:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+  .hero-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
 
-  height: 560px;
+  /* Bottom label strip */
+  .hero-panel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.1rem;
+    background: rgba(0,0,0,0.4);
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .hero-panel-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .hero-panel-label.active-label {
+    color: var(--pink-light);
+  }
+  .hero-panel-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .hero-panel-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .hero-panel-dot.active {
+    background: var(--pink);
+    width: 16px;
+    border-radius: 3px;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  /* Floating badge top-left of panel */
+  .hero-panel-badge {
+    position: absolute;
+    top: 56px;
+    left: 12px;
+    background: rgba(10,4,8,0.85);
+    border: 1px solid rgba(232,115,154,0.3);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    z-index: 5;
+    animation: badgeFloat 4s ease-in-out infinite;
+  }
+  .hero-panel-badge-title {
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .hero-panel-badge-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--pink-light);
+    line-height: 1;
+  }
+  @keyframes badgeFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+  }
 
-.hero-slide{
-  position:absolute;
-
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%, -50%);
-
-  width:420px;
-  max-width:100%;
-
-  border-radius:24px;
-
-  object-fit:contain;
-
-  opacity:0;
-
-  transition:
-    opacity 1.5s ease,
-    transform 1.5s ease;
-
-}
-.hero-slide.active{
-  opacity:1;
-
-  transform:
-    translate(-50%, -50%)
-    scale(1);
-}
-.hero-slide:not(.active){
-  transform:
-    translate(-50%, -50%)
-    scale(0.92);
-}
-.hero-slide:first-child{
-  opacity:1;
-}
-
-.hero-product-img {
-  width: 380px;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 40px 60px rgba(0,0,0,0.45));
-  position: relative;
-  z-index: 2;
-}
+  /* old hero-slider kept for JS compatibility but hidden */
+  .hero-slider { display: none; }
 
 
 
@@ -1500,11 +1643,10 @@ opacity: 0;
   /* ─── RESPONSIVE ─── */
   @media(max-width:968px) {
     nav {
-  width: calc(100% - 24px);
-  top: 12px;
-  padding: 0.9rem 1rem;
-  border-radius: 18px;
-}
+      padding: 0 1rem;
+    }
+    .nav-center { display: none; }
+    .nav-btn-ghost { display: none; }
     /* HERO — completely new mobile layout */
     #hero { min-height: 100svh; align-items: flex-start; }
     .hero-inner {
@@ -1564,6 +1706,13 @@ opacity: 0;
     .ba-grid { grid-template-columns: 1fr; gap: 1rem; }
     .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
     .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    /* Hero panel mobile */
+    .hero-visual { min-height: unset; }
+    .hero-panel { max-width: 100%; }
+    .hero-stage { aspect-ratio: 3/4; }
+    .hero-thumb { width: 44px; height: 44px; }
+    .hero-panel-tabs { overflow-x: auto; scrollbar-width: none; }
+    .hero-panel-tabs::-webkit-scrollbar { display: none; }
   }
   @media(max-width:600px) {
     section { padding:4rem 5%; }
@@ -1627,14 +1776,22 @@ opacity: 0;
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">LASH<span class="pink">BOSS</span></a>
-  <ul class="nav-links">
-    <li><a href="#why">Tentang Kami</a></li>
-    <li><a href="#catalog">Produk</a></li>
-    <li><a href="#process">Cara Pakai</a></li>
-    <li><a href="#testimonials">Testimoni</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-cta">🛍 Shopee</a></li>
-  </ul>
+
+  <div class="nav-center">
+    <ul class="nav-links">
+      <li><a href="#why">Tentang Kami</a></li>
+      <li><a href="#catalog">Produk</a></li>
+      <li><a href="#process">Cara Pakai</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-actions">
+    <a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-btn-ghost">Lihat Katalog</a>
+    <a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-cta">🛍 Shopee</a>
+  </div>
+
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
@@ -1682,25 +1839,68 @@ opacity: 0;
     </div>
 
    <div class="hero-visual">
+  <!-- ChatLabs-style panel -->
+  <div class="hero-panel" id="heroPanel">
+    <!-- Tab bar -->
+    <div class="hero-panel-tabs">
+      <div class="hero-tab active" onclick="switchHeroTab(0, this)">Serum Bulu Mata</div>
+      <div class="hero-tab" onclick="switchHeroTab(1, this)">Serum Alis</div>
+      <div class="hero-tab" onclick="switchHeroTab(2, this)">Hair Growth</div>
+    </div>
+
+    <!-- Main image stage -->
+    <div class="hero-stage" id="heroStage">
+      <div class="hero-stage-slide active" data-label="Oil-Based Serum">
+        <img src="./images/product1.jpeg" alt="LashBoss Serum Bulu Mata">
+      </div>
+      <div class="hero-stage-slide" data-label="Gel-Based Serum">
+        <img src="./images/product2.jpeg" alt="LashBoss Serum Alis">
+      </div>
+      <div class="hero-stage-slide" data-label="Rosemary Hair Oil">
+        <img src="./images/product3.jpeg" alt="LashBoss Hair Growth Oil">
+      </div>
+
+      <!-- Floating badge -->
+      <div class="hero-panel-badge">
+        <div class="hero-panel-badge-title">Rating</div>
+        <div class="hero-panel-badge-val">4.9★ · 50K+</div>
+      </div>
+
+      <!-- Thumbnail strip (right side like ChatLabs) -->
+      <div class="hero-thumbs" id="heroThumbs">
+        <div class="hero-thumb active" onclick="switchHeroPanel(0)" data-idx="0">
+          <img src="./images/product1.jpeg" alt="thumb 1">
+        </div>
+        <div class="hero-thumb" onclick="switchHeroPanel(1)" data-idx="1">
+          <img src="./images/product2.jpeg" alt="thumb 2">
+        </div>
+        <div class="hero-thumb" onclick="switchHeroPanel(2)" data-idx="2">
+          <img src="./images/product3.jpeg" alt="thumb 3">
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer strip -->
+    <div class="hero-panel-footer">
+      <span class="hero-panel-label active-label" id="heroPanelLabel">Oil-Based Serum</span>
+      <div class="hero-panel-dots" id="heroPanelDots">
+        <div class="hero-panel-dot active" onclick="switchHeroPanel(0)"></div>
+        <div class="hero-panel-dot" onclick="switchHeroPanel(1)"></div>
+        <div class="hero-panel-dot" onclick="switchHeroPanel(2)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep old slider hidden for legacy JS -->
   <div class="hero-slider">
-
-    <img src="./images/product1.jpeg"
-         class="hero-slide active"
-         alt="Product 1">
-
-    <img src="./images/product2.jpeg"
-         class="hero-slide"
-         alt="Product 2">
-
-    <img src="./images/product3.jpeg"
-         class="hero-slide"
-         alt="Product 3">
-
+    <img src="./images/product1.jpeg" class="hero-slide active" alt="Product 1">
+    <img src="./images/product2.jpeg" class="hero-slide" alt="Product 2">
+    <img src="./images/product3.jpeg" class="hero-slide" alt="Product 3">
   </div>
 </div>
 
-  <!-- Slide dots -->
-  <div class="hero-dots" id="heroDots">
+  <!-- Slide dots (hidden, replaced by panel dots) -->
+  <div class="hero-dots" id="heroDots" style="display:none">
     <div class="hero-dot active" onclick="goToSlide(0)"></div>
     <div class="hero-dot" onclick="goToSlide(1)"></div>
     <div class="hero-dot" onclick="goToSlide(2)"></div>
@@ -2776,6 +2976,64 @@ setInterval(() => {
 
 }, 5000);
 
+</script>
+<script>
+// ─── NAVBAR SCROLL ───
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+}, { passive: true });
+
+// ─── HERO PANEL SWITCHER (ChatLabs-style) ───
+let heroPanelIdx = 0;
+let heroPanelTimer = null;
+
+const stageSlides = document.querySelectorAll('.hero-stage-slide');
+const thumbEls = document.querySelectorAll('.hero-thumb');
+const dotEls = document.querySelectorAll('.hero-panel-dot');
+const labelEl = document.getElementById('heroPanelLabel');
+
+function switchHeroPanel(idx) {
+  // deactivate all
+  stageSlides.forEach(s => s.classList.remove('active'));
+  thumbEls.forEach(t => t.classList.remove('active'));
+  dotEls.forEach(d => d.classList.remove('active'));
+
+  stageSlides[idx].classList.add('active');
+  thumbEls[idx].classList.add('active');
+  dotEls[idx].classList.add('active');
+  if (labelEl) labelEl.textContent = stageSlides[idx].dataset.label;
+
+  heroPanelIdx = idx;
+}
+
+function switchHeroTab(idx, el) {
+  document.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  switchHeroPanel(idx);
+  resetPanelAuto();
+}
+
+function resetPanelAuto() {
+  clearInterval(heroPanelTimer);
+  heroPanelTimer = setInterval(() => {
+    const next = (heroPanelIdx + 1) % stageSlides.length;
+    switchHeroPanel(next);
+    // sync tab
+    document.querySelectorAll('.hero-tab').forEach((t, i) => t.classList.toggle('active', i === next));
+  }, 4000);
+}
+
+// start auto
+resetPanelAuto();
+
+// pause on hover
+const panel = document.getElementById('heroPanel');
+if (panel) {
+  panel.addEventListener('mouseenter', () => clearInterval(heroPanelTimer));
+  panel.addEventListener('mouseleave', () => resetPanelAuto());
+}
 </script>
 </body>
 </html>
