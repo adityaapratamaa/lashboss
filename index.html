@@ -26,13 +26,14 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   body {
     font-family: 'Barlow', sans-serif;
     background: var(--white);
     color: var(--dark);
     overflow-x: hidden;
     cursor: default;
+    width: 100%;
   }
 
   /* ─── LOADER ─── */
@@ -317,25 +318,24 @@
 
 
   .hero-inner {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  max-width: 1280px;
-
-  margin: 0 auto;
-
-  padding: 120px 5% 5rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4rem;
-}
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 5%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
 
   .hero-text {
     flex: 1;
     min-width: 0;
+    padding-top: 72px;
   }
 
   @media(max-width:968px){
@@ -511,18 +511,19 @@
 
   /* ─── HERO VISUAL — premium cinematic slider ─── */
   .hero-visual {
-    flex: 1.1;
+    flex: 1.05;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    padding-top: 72px;
   }
 
   .hero-slider {
     position: relative;
     width: 100%;
-    max-width: 500px;
-    aspect-ratio: 1/1;
+    max-width: 480px;
+    aspect-ratio: 4/5;
     perspective: 1000px;
   }
 
@@ -1558,7 +1559,7 @@
 
     /* NAV */
     nav { padding: 0 1.2rem; }
-    .nav-center, .nav-btn-ghost, .nav-links { display: none; }
+    .nav-center, .nav-btn-ghost, .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
 
     /* HERO */
@@ -1589,12 +1590,14 @@
       justify-content: center;
       padding: 68px 15% 0;
       overflow: hidden;
+      padding-top: 68px;
     }
-    .hero-slider { max-width: 240px; width: 100%; aspect-ratio: 1/1; }
+    .hero-slider { max-width: 240px; width: 100%; aspect-ratio: 4/5; }
     .hero-text {
       order: 2;
       flex: 1;
       padding: 1.2rem 5% 2.5rem;
+      padding-top: 1.2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
