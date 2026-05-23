@@ -238,12 +238,11 @@
 
   .hero-bg {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 80% at 65% 50%, rgba(196,82,122,0.4) 0%, rgba(232,115,154,0.15) 45%, transparent 70%),
-                linear-gradient(160deg, #1A0F16 0%, #2A1520 50%, #1f0d18 100%);
+    background: radial-gradient(ellipse 80% 70% at 70% 35%, #f9b8d4 0%, #f472a8 30%, #e8579a 60%, #cc3d7e 100%);
     transition: background 1.2s ease;
     overflow: hidden;
     background-size: 200% 200%;
-animation: heroGradientMove 12s ease infinite;
+    animation: heroGradientMove 12s ease infinite;
   }
 
   /* cinematic noise */
@@ -391,8 +390,7 @@ animation: heroGradientMove 12s ease infinite;
 
   @media(max-width:968px){
     .hero-bg {
-      background: radial-gradient(ellipse 80% 55% at 50% 30%, rgba(196,82,122,0.5) 0%, rgba(232,115,154,0.2) 40%, transparent 70%),
-                  linear-gradient(180deg, #1A0F16 0%, #2A1520 55%, #1f0d18 100%) !important;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, #f9b8d4 0%, #f472a8 35%, #e8579a 65%, #cc3d7e 100%) !important;
     }
   }
 
@@ -443,9 +441,9 @@ animation: heroGradientMove 12s ease infinite;
     animation: heroText 0.9s ease forwards;
     opacity: 0;
   }
-  /* Pink accent — same weight, no italic, just color */
+  /* Pink accent — white on bright pink bg for contrast */
   .hero-title .pink {
-    color: var(--pink);
+    color: white;
     font-style: normal;
   }
   .hero-title .outline {
@@ -461,24 +459,24 @@ animation: heroGradientMove 12s ease infinite;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.9);
     margin-bottom: 1.4rem;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.18);
     padding: 6px 14px;
     border-radius: 6px;
     backdrop-filter: blur(6px);
   }
   .hero-eyebrow-dot {
     width: 5px; height: 5px;
-    background: var(--pink);
+    background: white;
     border-radius: 50%;
     animation: blink 1.8s infinite;
   }
 
   .hero-desc {
     font-size: clamp(1rem, 1.9vw, 1.15rem);
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.85);
     line-height: 1.7;
     font-weight: 400;
     margin-bottom: 2rem;
@@ -491,15 +489,15 @@ animation: heroGradientMove 12s ease infinite;
     align-items: center;
     gap: 0;
     margin-bottom: 2rem;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.35);
     border-radius: 10px;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.18);
     width: fit-content;
     overflow: hidden;
   }
   .hero-stat-item {
     padding: 0.7rem 1.3rem;
-    border-right: 1px solid rgba(255,255,255,0.07);
+    border-right: 1px solid rgba(255,255,255,0.25);
     text-align: center;
   }
   .hero-stat-item:last-child { border-right: none; }
@@ -514,7 +512,7 @@ animation: heroGradientMove 12s ease infinite;
   }
   .stat-label {
     font-size: 0.58rem;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.75);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-top: 3px;
@@ -523,32 +521,33 @@ animation: heroGradientMove 12s ease infinite;
 
   .hero-btns { display:flex;gap:0.8rem;flex-wrap:wrap; }
 
-  /* Primary button — pink filled, square-ish like ChatLabs */
+  /* Primary button — white filled on bright bg */
   .btn-primary {
     display: inline-flex;align-items:center;gap:0.5rem;
-    background: var(--pink);color:var(--white);
+    background: white;color: #c93c7a;
     padding: 0.85rem 2rem;
     border-radius: 8px;
     font-size: 0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
     text-decoration:none;transition:all 0.25s var(--ease);
     font-family: 'Barlow', sans-serif;
     border: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   }
-  .btn-primary:hover { background:var(--pink-deep); transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,115,154,0.4); }
+  .btn-primary:hover { background: #fff0f6; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.18); }
 
-  /* Outline button — dark border, square-ish */
+  /* Outline button — white border on bright bg */
   .btn-outline {
     display:inline-flex;align-items:center;gap:0.5rem;
-    border:1.5px solid rgba(255,255,255,0.18);
-    color:rgba(255,255,255,0.8);
+    border:1.5px solid rgba(255,255,255,0.6);
+    color:white;
     padding:0.85rem 2rem;
     border-radius:8px;
     font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
     text-decoration:none;transition:all 0.25s;
-    background: rgba(255,255,255,0.03);
+    background: rgba(255,255,255,0.12);
     font-family: 'Barlow', sans-serif;
   }
-  .btn-outline:hover { border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.07);color:var(--white); }
+  .btn-outline:hover { border-color:white;background:rgba(255,255,255,0.25);color:white; }
 
   /* magnetic button */
 
