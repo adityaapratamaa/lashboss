@@ -597,97 +597,7 @@ opacity: 0;
 
   /* gradient overlay bottom of card */
   .hero-slider-inner::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 45%;
-    background: linear-gradient(to top, rgba(26,15,22,0.85) 0%, transparent 100%);
-    z-index: 3;
-    pointer-events: none;
-  }
-
-  /* slide label inside card */
-  .hero-slide-label {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    z-index: 4;
-    padding: 1.4rem 1.2rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .hero-slide-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 800;
-    font-style: italic;
-    color: white;
-    letter-spacing: 0.03em;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
-  }
-  .hero-slide-sub {
-    font-size: 0.65rem;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
-  }
-  .hero-slide.active .hero-slide-name,
-  .hero-slide.active .hero-slide-sub {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* progress bar strip */
-  .hero-progress {
-    position: absolute;
-    bottom: -20px;
-    left: 0; right: 0;
-    display: flex;
-    gap: 6px;
-    z-index: 5;
-  }
-  .hero-progress-bar {
-    flex: 1;
-    height: 2px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 2px;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .hero-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--pink);
-    border-radius: 2px;
-    transition: width 0.1s linear;
-  }
-  .hero-progress-bar.done .hero-progress-fill { width: 100%; }
-  .hero-progress-bar.active .hero-progress-fill {
-    animation: progressFill var(--duration, 5s) linear forwards;
-  }
-  @keyframes progressFill { from { width:0% } to { width:100% } }
-
-  /* slide counter top-right */
-  .hero-counter {
-    position: absolute;
-    top: 14px; right: 14px;
-    z-index: 5;
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 0.2rem 0.65rem;
-    font-size: 0.62rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 0.1em;
-    font-family: 'Barlow Condensed', sans-serif;
+    display: none;
   }
 
 
@@ -1811,57 +1721,28 @@ opacity: 0;
 
    <div class="hero-visual">
   <div class="hero-slider" id="heroSlider">
-    <div class="hero-counter" id="heroCounter">1 / 5</div>
     <div class="hero-slider-inner">
 
       <div class="hero-slide active">
         <img src="./images/product1.jpeg" alt="LashBoss Product 1">
-        <div class="hero-slide-label">
-          <div class="hero-slide-name">Rosemary Hair Growth Oil</div>
-          <div class="hero-slide-sub">Encapsulated Biotin · Anti Rontok</div>
-        </div>
       </div>
 
       <div class="hero-slide">
         <img src="./images/product2.jpeg" alt="LashBoss Product 2">
-        <div class="hero-slide-label">
-          <div class="hero-slide-name">Calm Care Growth Set</div>
-          <div class="hero-slide-sub">Bundle Spesial · Hemat 30%</div>
-        </div>
       </div>
 
       <div class="hero-slide">
         <img src="./images/product3.jpeg" alt="LashBoss Product 3">
-        <div class="hero-slide-label">
-          <div class="hero-slide-name">Lash Perfect Duo</div>
-          <div class="hero-slide-sub">Serum + Curler · Paket Lengkap</div>
-        </div>
       </div>
 
       <div class="hero-slide">
         <img src="./images/product4.jpeg" alt="LashBoss Product 4">
-        <div class="hero-slide-label">
-          <div class="hero-slide-name">All Variant Lash Serum</div>
-          <div class="hero-slide-sub">Pilih Sesuai Kebutuhanmu</div>
-        </div>
       </div>
 
       <div class="hero-slide">
         <img src="./images/product5.jpeg" alt="LashBoss Product 5">
-        <div class="hero-slide-label">
-          <div class="hero-slide-name">Lash & Brow Serum</div>
-          <div class="hero-slide-sub">For Sensitive Eye · Anti Iritasi</div>
-        </div>
       </div>
 
-    </div>
-
-    <div class="hero-progress" id="heroProgress">
-      <div class="hero-progress-bar active" style="--duration:5s"><div class="hero-progress-fill"></div></div>
-      <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
-      <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
-      <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
-      <div class="hero-progress-bar"><div class="hero-progress-fill"></div></div>
     </div>
   </div>
 </div>
@@ -2941,64 +2822,27 @@ setInterval(() => {
 // ─── HERO PREMIUM SLIDER ───
 (function() {
   const slides = document.querySelectorAll('.hero-slide');
-  const bars = document.querySelectorAll('.hero-progress-bar');
-  const counter = document.getElementById('heroCounter');
   const DURATION = 5000;
   let current = 0;
   let timer = null;
   let paused = false;
 
   function goTo(next) {
-    const prev = current;
-    if (next === prev) return;
-
-    // exit current
-    slides[prev].classList.remove('active');
-    slides[prev].classList.add('exit');
-    setTimeout(() => slides[prev].classList.remove('exit'), 800);
-
-    // enter next
+    if (next === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => slides[current].classList.remove('exit'), 800);
     current = next;
     slides[current].classList.add('active');
-
-    // progress bars
-    bars[prev].classList.remove('active');
-    bars[prev].classList.add('done');
-    bars[current].classList.remove('done');
-    // force reflow to restart animation
-    bars[current].querySelector('.hero-progress-fill').style.animation = 'none';
-    bars[current].offsetHeight;
-    bars[current].querySelector('.hero-progress-fill').style.animation = '';
-    bars[current].classList.add('active');
-
-    // counter
-    if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
-  }
-
-  function next() {
-    goTo((current + 1) % slides.length);
   }
 
   function start() {
     clearInterval(timer);
-    timer = setInterval(() => { if (!paused) next(); }, DURATION);
+    timer = setInterval(() => {
+      if (!paused) goTo((current + 1) % slides.length);
+    }, DURATION);
   }
 
-  // click bar to jump
-  bars.forEach((bar, i) => {
-    bar.addEventListener('click', () => {
-      if (i === current) return;
-      // reset all bars before jumped index as done
-      bars.forEach((b, j) => {
-        b.classList.remove('active', 'done');
-        if (j < i) b.classList.add('done');
-      });
-      goTo(i);
-      start();
-    });
-  });
-
-  // pause on hover
   const slider = document.getElementById('heroSlider');
   if (slider) {
     slider.addEventListener('mouseenter', () => paused = true);
