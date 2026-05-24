@@ -200,28 +200,27 @@
   }
 
   .nav-cta {
-    height: 40px;
-    padding: 0 22px;
-    border-radius: 99px;
-    background: white;
+    height: 38px;
+    padding: 0 20px;
+    border-radius: 8px;
+    background: var(--pink);
     border: none;
-    color: var(--pink-deep);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-decoration: none;
     transition: all 0.22s ease;
     white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    font-family: 'Barlow', sans-serif;
+    box-shadow: 0 0 0 0 rgba(232,115,154,0);
   }
   .nav-cta:hover {
-    background: #fff0f6;
+    background: var(--pink-deep);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(232,115,154,0.4);
   }
 
   .hamburger {
@@ -385,59 +384,44 @@
   }
 }
 
-  /* ── HERO TITLE ── */
+  /* ── HERO TITLE — ChatLabs style: massive, tight, editorial ── */
   .hero-title {
     font-family: 'Barlow', sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: clamp(3.2rem, 8.5vw, 6.8rem);
+    font-size: clamp(3.4rem, 9vw, 7.2rem);
     line-height: 1.0;
     color: var(--white);
     letter-spacing: -0.03em;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.6rem;
     animation: heroText 0.9s ease forwards;
     opacity: 0;
   }
+  /* Pink accent — white on bright pink bg for contrast */
   .hero-title .pink {
-    color: var(--pink);
-    font-style: normal;
-    display: block;
-  }
-  .hero-title .italic-white {
     color: white;
-    font-style: italic;
-    font-size: 0.85em;
-    display: block;
-    letter-spacing: -0.01em;
+    font-style: normal;
+  }
+  .hero-title .outline {
+    color: var(--white);
+    -webkit-text-stroke: 0;
   }
 
-  /* ── HERO EYEBROW — 2 separate pills like reference ── */
+  /* ── HERO EYEBROW — small label above title ── */
   .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.4rem;
-  }
-  .hero-eyebrow-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.68rem;
+    gap: 8px;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--dark);
-    background: rgba(255,255,255,0.92);
-    padding: 5px 14px;
-    border-radius: 99px;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.4rem;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.18);
+    padding: 6px 14px;
+    border-radius: 6px;
     backdrop-filter: blur(6px);
-    white-space: nowrap;
-  }
-  .hero-eyebrow-pill .pill-dot {
-    width: 5px; height: 5px;
-    background: var(--pink);
-    border-radius: 50%;
-    flex-shrink: 0;
   }
   .hero-eyebrow-dot {
     width: 5px; height: 5px;
@@ -446,44 +430,13 @@
     animation: blink 1.8s infinite;
   }
 
-  /* ── HERO FEATURE PILLS ── */
-  .hero-features {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-  .hero-feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: rgba(255,255,255,0.92);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-  }
-  .hero-feature-icon {
-    width: 32px; height: 32px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-  .hero-feature-sep {
-    width: 1px; height: 20px;
-    background: rgba(255,255,255,0.3);
-  }
-
   .hero-desc {
-    font-size: clamp(0.9rem, 1.7vw, 1.05rem);
-    color: rgba(255,255,255,0.88);
+    font-size: clamp(1rem, 1.9vw, 1.15rem);
+    color: rgba(255,255,255,0.85);
     line-height: 1.7;
     font-weight: 400;
-    margin-bottom: 1.8rem;
-    max-width: 420px;
+    margin-bottom: 2rem;
+    max-width: 460px;
   }
 
   /* ── HERO STATS — inline, minimal ── */
@@ -522,82 +475,36 @@
     font-weight: 500;
   }
 
-  .hero-btns { display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center; }
+  .hero-btns { display:flex;gap:0.8rem;flex-wrap:wrap; }
 
-  /* Primary button — white pill */
+  /* Primary button — white filled on bright bg */
   .btn-primary {
     display: inline-flex;align-items:center;gap:0.5rem;
-    background: white;color: var(--pink-deep);
-    padding: 0.88rem 2.2rem;
-    border-radius: 99px;
-    font-size: 0.8rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;
+    background: white;color: #c93c7a;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
     text-decoration:none;transition:all 0.25s var(--ease);
     font-family: 'Barlow', sans-serif;
     border: none;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   }
-  .btn-primary:hover { background: #fff0f6; transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+  .btn-primary:hover { background: #fff0f6; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.18); }
 
-  /* Outline button — ghost pill with play icon */
+  /* Outline button — white border on bright bg */
   .btn-outline {
-    display:inline-flex;align-items:center;gap:0.6rem;
-    border:2px solid rgba(255,255,255,0.5);
+    display:inline-flex;align-items:center;gap:0.5rem;
+    border:1.5px solid rgba(255,255,255,0.6);
     color:white;
-    padding:0.88rem 1.8rem;
-    border-radius:99px;
-    font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    padding:0.85rem 2rem;
+    border-radius:8px;
+    font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
     text-decoration:none;transition:all 0.25s;
     background: rgba(255,255,255,0.12);
     font-family: 'Barlow', sans-serif;
   }
-  .btn-outline:hover { border-color:white;background:rgba(255,255,255,0.22);color:white; }
-  .btn-play-icon {
-    width: 22px; height: 22px;
-    background: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--pink-deep);
-    font-size: 0.55rem;
-    flex-shrink: 0;
-  }
+  .btn-outline:hover { border-color:white;background:rgba(255,255,255,0.25);color:white; }
 
-  /* ── HERO STATS STRIP — full width below hero ── */
-  #stats-strip {
-    background: white;
-    border-top: 1px solid rgba(232,115,154,0.1);
-    border-bottom: 1px solid rgba(232,115,154,0.1);
-    padding: 1.4rem 5%;
-    box-shadow: 0 4px 24px rgba(232,115,154,0.08);
-  }
-  .stats-strip-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-  .strip-stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.9rem;
-    padding: 0.5rem 1rem;
-    border-right: 1px solid rgba(232,115,154,0.15);
-  }
-  .strip-stat:last-child { border-right: none; }
-  .strip-icon {
-    font-size: 1.5rem;
-    color: var(--pink);
-    flex-shrink: 0;
-  }
-  .strip-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 900;
-    font-style: italic;
-    color: var(--dark);
-    line-height: 1;
-  }
   /* magnetic button */
 
 .magnetic-btn {
@@ -883,24 +790,14 @@
   }
 
   /* ─── WHY LASHBOSS ─── */
-  #why { background: var(--cream); }
-  .why-header { text-align: center; margin-bottom: 3rem; }
-  .why-header .section-label { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-  .why-header .section-title { margin: 0 auto 0.6rem; }
-  .why-header .section-desc { margin: 0 auto; }
-  .why-features-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  #why { background:var(--cream); }
+  .why-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
+  .why-features { display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem; }
 
   .feature-card {
-    background:var(--white);border-radius:var(--radius);padding:1.8rem 1.4rem;
+    background:var(--white);border-radius:var(--radius);padding:1.5rem;
     border:1px solid rgba(232,115,154,0.1);
     transition:all 0.4s var(--ease);position:relative;overflow:hidden;
-    display: flex; flex-direction: column; align-items: flex-start;
   }
   .feature-card::before {
     content:'';position:absolute;top:0;left:0;right:0;height:3px;
@@ -909,17 +806,8 @@
   }
   .feature-card:hover { transform:translateY(-5px);box-shadow:0 20px 50px rgba(232,115,154,0.2);border-color:var(--pink-light); }
   .feature-card:hover::before { transform:scaleX(1); }
-  .feature-icon-wrap {
-    width: 52px; height: 52px;
-    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.15));
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    flex-shrink: 0;
-  }
   .feature-icon { font-size:1.8rem;margin-bottom:0.8rem; }
-  .feature-title { font-size:0.88rem;font-weight:700;margin-bottom:0.5rem;color:var(--dark);line-height:1.3; }
+  .feature-title { font-size:0.85rem;font-weight:700;margin-bottom:0.4rem;color:var(--dark); }
   .feature-desc { font-size:0.73rem;color:var(--text-light);line-height:1.65; }
 
   .why-visual { position:relative; }
@@ -1724,11 +1612,8 @@
       box-sizing: border-box;
     }
     /* Hide eyebrow on mobile — saves space, image more prominent */
-    .hero-eyebrow { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem; margin-bottom: 0.8rem; }
-    .hero-eyebrow-pill { font-size: 0.6rem; padding: 4px 10px; }
+    .hero-eyebrow { display: none; }
     .slide-badge { display: none; }
-    .hero-features { justify-content: center; gap: 0.7rem; }
-    .hero-feature-sep { display: none; }
     .hero-title {
       font-size: clamp(2.6rem, 13vw, 4.2rem);
       margin-bottom: 0.8rem;
@@ -1736,6 +1621,18 @@
       letter-spacing: -0.02em;
     }
     .hero-desc { margin: 0 auto 1.2rem; font-size: 0.88rem; max-width: 340px; line-height: 1.6; }
+    .hero-stats {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 12px;
+    }
+    .hero-stat-item { padding: 0.65rem 0.8rem; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .hero-stat-item:nth-child(1), .hero-stat-item:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .hero-stat-item:nth-child(1), .hero-stat-item:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.2); }
+    .hero-stat-item:nth-child(3), .hero-stat-item:nth-child(4) { border-bottom: none; }
     .stat-num { font-size: 1.1rem; }
     .stat-label { font-size: 0.5rem; }
     .hero-btns { justify-content: center; gap: 0.5rem; width: 100%; flex-wrap: wrap; }
@@ -1750,13 +1647,10 @@
     .result-num { font-size: 2.8rem; }
 
     /* WHY */
-    .why-features-row { grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* STATS STRIP */
-    .stats-strip-inner { grid-template-columns: 1fr 1fr; gap: 0; }
-    .strip-stat { padding: 0.8rem 0.5rem; border-right: none; border-bottom: 1px solid rgba(232,115,154,0.12); }
-    .strip-stat:nth-child(1), .strip-stat:nth-child(3) { border-right: 1px solid rgba(232,115,154,0.12); }
-    .strip-stat:nth-child(3), .strip-stat:nth-child(4) { border-bottom: none; }
+    .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .why-visual { order: -1; }
+    .why-img-slider { max-width: 360px; margin: 0 auto; aspect-ratio: 4/3; }
+    .why-features { grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
 
     /* PROCESS */
     .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
@@ -1841,13 +1735,9 @@
     .proof-card-label { font-size: 0.6rem; letter-spacing: 0.1em; }
 
     /* WHY */
-    .why-features-row { grid-template-columns: 1fr; gap: 0.8rem; }
+    .why-features { grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.6rem; }
     .feature-card { padding: 1.2rem; }
-
-    /* STATS STRIP */
-    .strip-stat { flex-direction: column; gap: 0.3rem; text-align: center; padding: 0.8rem 0.4rem; }
-    .strip-num { font-size: 1.1rem; }
-    .strip-label { font-size: 0.52rem; }
+    .why-img-slider { max-width: 100%; aspect-ratio: 3/2; }
 
     /* PROCESS — vertical list */
     .process-steps {
@@ -1979,17 +1869,19 @@
 
   <div class="nav-center">
     <ul class="nav-links">
-      <li><a href="#hero">Beranda</a></li>
+      <li><a href="#why">Tentang Kami</a></li>
       <li><a href="#catalog">Produk</a></li>
-      <li><a href="#ingredients">Kandungan</a></li>
+      <li><a href="#process">Cara Pakai</a></li>
       <li><a href="#testimonials">Testimoni</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
   </div>
 
   <div class="nav-actions">
+    <a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-btn-ghost">Lihat Katalog</a>
+    <!-- GANTI: logo Shopee (16x16px) di folder images/icons/shopee-icon.png -->
     <a href="https://shopee.co.id/lashboss.id" target="_blank" class="nav-cta">
-      SHOP NOW &nbsp;🛒
+      <img src="./images/icons/shopee-icon.png" alt="Shopee" width="16" height="16" style="vertical-align:middle;margin-right:5px;object-fit:contain;"> Shopee
     </a>
   </div>
 
@@ -2012,62 +1904,47 @@
   <div class="hero-inner">
     <!-- Static text — never changes -->
     <div class="hero-text">
-      <!-- 2 separate pills like reference -->
+      <!-- Eyebrow pill — gaya ChatLabs -->
       <div class="hero-eyebrow">
-        <div class="hero-eyebrow-pill">
-          <span class="pill-dot"></span>
-          ✨ No.1 Serum Bulu Mata &amp; Alis di Indonesia
-        </div>
-        <div class="hero-eyebrow-pill">
-          <span class="pill-dot"></span>
-          BPOM &amp; Halal Certified
-        </div>
+        <div class="hero-eyebrow-dot"></div>
+        No.1 Serum Bulu Mata &amp; Alis Indonesia &nbsp;·&nbsp; BPOM &amp; Halal Certified
       </div>
 
-      <!-- Title: Bulu mata (white), impianmu. (pink), Mulai malam ini. (italic white) -->
+      <!-- Title: besar, putih, clean — satu kata saja pink -->
       <h1 class="hero-title">
         Bulu mata<br>
-        <span class="pink">impianmu.</span>
-        <span class="italic-white">Mulai malam ini.</span>
+        <span class="pink">impianmu.</span><br>
+        Mulai malam ini.
       </h1>
 
       <p class="hero-desc">Formula eksklusif Oil-Concentrated — lebih panjang, tebal &amp; lentik dalam 2 minggu pertama. Atau uang kembali.</p>
 
-      <!-- 3 feature pills -->
-      <div class="hero-features">
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon">💧</div>
-          <div>
-            <div style="font-weight:700;font-size:0.72rem;">Oil Based</div>
-            <div style="font-size:0.62rem;opacity:0.8;">Serum</div>
-          </div>
+      <!-- Stats: inline minimal row -->
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Customers</div>
         </div>
-        <div class="hero-feature-sep"></div>
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon">🔬</div>
-          <div>
-            <div style="font-weight:700;font-size:0.72rem;">Biotin</div>
-            <div style="font-size:0.62rem;opacity:0.8;">Technology</div>
-          </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Rating</div>
         </div>
-        <div class="hero-feature-sep"></div>
-        <div class="hero-feature-item">
-          <div class="hero-feature-icon">👁️</div>
-          <div>
-            <div style="font-weight:700;font-size:0.72rem;">Lentik &amp; Curl</div>
-            <div style="font-size:0.62rem;opacity:0.8;">Tahan Lama</div>
-          </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">2 Minggu</div>
+          <div class="stat-label">Hasil Nyata</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="stat-num">105K</div>
+          <div class="stat-label">Followers</div>
         </div>
       </div>
 
       <div class="hero-btns">
+        <!-- GANTI: icon keranjang belanja di images/icons/cart-icon.png -->
         <a href="https://shopee.co.id/lashboss.id" target="_blank" class="btn-primary magnetic-btn">
-          SHOP NOW &nbsp;→
+          <img src="./images/icons/cart-icon.png" alt="" width="16" height="16" style="vertical-align:middle;margin-right:5px;object-fit:contain;filter:brightness(0) invert(1);"> Belanja Sekarang
         </a>
-        <a href="#catalog" class="btn-outline magnetic-btn">
-          <span class="btn-play-icon">▶</span>
-          LIHAT VIDEO
-        </a>
+        <a href="#catalog" class="btn-outline magnetic-btn">Lihat Katalog &nbsp;→</a>
       </div>
     </div>
 
@@ -2099,40 +1976,6 @@
   </div>
 </div>
 </section>
-
-<!-- STATS STRIP — full width below hero -->
-<div id="stats-strip">
-  <div class="stats-strip-inner">
-    <div class="strip-stat">
-      <div class="strip-icon">👥</div>
-      <div class="strip-text">
-        <div class="strip-num">50K+</div>
-        <div class="strip-label">Customers</div>
-      </div>
-    </div>
-    <div class="strip-stat">
-      <div class="strip-icon">⭐</div>
-      <div class="strip-text">
-        <div class="strip-num">4.9★</div>
-        <div class="strip-label">Rating</div>
-      </div>
-    </div>
-    <div class="strip-stat">
-      <div class="strip-icon">❤️</div>
-      <div class="strip-text">
-        <div class="strip-num">2 Minggu</div>
-        <div class="strip-label">Hasil Nyata</div>
-      </div>
-    </div>
-    <div class="strip-stat">
-      <div class="strip-icon">👤</div>
-      <div class="strip-text">
-        <div class="strip-num">105K+</div>
-        <div class="strip-label">Followers</div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
@@ -2199,32 +2042,69 @@
 
 <!-- WHY LASHBOSS -->
 <section id="why">
-  <div class="why-header reveal">
-    <div class="section-label">✦ KENAPA LASHBOSS? ✦</div>
-    <h2 class="section-title">Bukan Sekadar <em>Serum Biasa</em></h2>
-    <p class="section-desc" style="margin:0 auto;">Dirancang khusus untuk bulu mata &amp; alis wanita Asia dengan bahan aktif terbaik dan teknologi terkini.</p>
-  </div>
+  <div class="why-grid">
+    <div class="reveal-left">
+      <div class="section-label">Kenapa LashBoss?</div>
+      <h2 class="section-title">Formula <em>Premium</em><br>Bulu Mata Impianmu</h2>
+      <p class="section-desc">LashBoss hadir dengan teknologi terdepan &amp; bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
+      <div class="why-features">
+        <div class="feature-card reveal">
+          <!-- GANTI: icon botol serum di images/icons/serum-icon.png (48x48px) -->
+          <img src="./images/icons/serum-icon.png" alt="Oil Serum" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
+          <div class="feature-title">Oil-Concentrated Serum</div>
+          <div class="feature-desc">100% ingredients aktif, vitamin &amp; fatty acid tanpa pengencer air.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.1s">
+          <!-- GANTI: icon laboratorium/science di images/icons/biotin-icon.png (48x48px) -->
+          <img src="./images/icons/biotin-icon.png" alt="Biotin" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
+          <div class="feature-title">Encapsulated Biotin</div>
+          <div class="feature-desc">7× lebih efektif — diserap langsung ke akar bulu mata.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.2s">
+          <!-- GANTI: icon bunga/daun alami di images/icons/natural-icon.png (48x48px) -->
+          <img src="./images/icons/natural-icon.png" alt="Natural Oils" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
+          <div class="feature-title">Natural Oils Blend</div>
+          <div class="feature-desc">Sunflower, Almond &amp; Camellia Seed Oil untuk kelembapan maksimal.</div>
+        </div>
+        <div class="feature-card reveal" style="transition-delay:0.3s">
+          <!-- GANTI: icon mata di images/icons/eye-icon.png (48x48px) -->
+          <img src="./images/icons/eye-icon.png" alt="Sensitive Eyes" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
+          <div class="feature-title">Safe for Sensitive Eyes</div>
+          <div class="feature-desc">Aman untuk mata sensitif &amp; pengguna eyelash extension.</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="why-features-row">
-    <div class="feature-card reveal" style="transition-delay:0s">
-      <div class="feature-icon-wrap">💧</div>
-      <div class="feature-title">Oil-Concentrated Formula</div>
-      <div class="feature-desc">Nutrisi lebih pekat untuk hasil maksimal sejak pemakaian pertama.</div>
-    </div>
-    <div class="feature-card reveal" style="transition-delay:0.1s">
-      <div class="feature-icon-wrap">🔬</div>
-      <div class="feature-title">Encapsulated Biotin</div>
-      <div class="feature-desc">Teknologi mikroenkapsulasi menjaga biotin tetap stabil dan terserap sempurna.</div>
-    </div>
-    <div class="feature-card reveal" style="transition-delay:0.2s">
-      <div class="feature-icon-wrap">👁️</div>
-      <div class="feature-title">Lentik &amp; Tebal Alami</div>
-      <div class="feature-desc">Membantu memanjangkan, menebalkan, dan melentikkan secara alami.</div>
-    </div>
-    <div class="feature-card reveal" style="transition-delay:0.3s">
-      <div class="feature-icon-wrap">🛡️</div>
-      <div class="feature-title">Aman &amp; Teruji</div>
-      <div class="feature-desc">BPOM, Halal, teruji klinis, tanpa iritasi. Aman untuk pemakaian harian.</div>
+    <div class="why-visual reveal-right">
+      <div class="why-img-slider" id="whySlider">
+        <!-- GANTI FOTO: why-slide menggunakan foto produk asli -->
+        <div class="why-slide active">
+          <!-- GANTI: foto produk Rapunzel Serum di images/why/why-rapunzel.jpg -->
+          <img src="./images/why/why-rapunzel.jpg" alt="Rapunzel Serum" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="why-slide-label" style="position:relative;z-index:1;background:rgba(196,82,122,0.7);padding:0.5rem 1rem;border-radius:8px;">Rapunzel Serum</div>
+        </div>
+        <div class="why-slide">
+          <!-- GANTI: foto produk Gel-Based Serum di images/why/why-gel.jpg -->
+          <img src="./images/why/why-gel.jpg" alt="Gel-Based Serum" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="why-slide-label" style="position:relative;z-index:1;background:rgba(196,82,122,0.7);padding:0.5rem 1rem;border-radius:8px;">Gel-Based Serum</div>
+        </div>
+        <div class="why-slide">
+          <!-- GANTI: foto produk Sensitive Formula di images/why/why-sensitive.jpg -->
+          <img src="./images/why/why-sensitive.jpg" alt="Sensitive Formula" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="why-slide-label" style="position:relative;z-index:1;background:rgba(196,82,122,0.7);padding:0.5rem 1rem;border-radius:8px;">Sensitive Formula</div>
+        </div>
+        <div class="why-slide">
+          <!-- GANTI: foto produk itCurl Curler di images/why/why-itcurl.jpg -->
+          <img src="./images/why/why-itcurl.jpg" alt="itCurl Curler" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          <div class="why-slide-label" style="position:relative;z-index:1;background:rgba(196,82,122,0.7);padding:0.5rem 1rem;border-radius:8px;">itCurl Curler</div>
+        </div>
+      </div>
+      <div class="why-slide-dots" id="whyDots">
+        <div class="why-dot active" onclick="goToWhySlide(0)"></div>
+        <div class="why-dot" onclick="goToWhySlide(1)"></div>
+        <div class="why-dot" onclick="goToWhySlide(2)"></div>
+        <div class="why-dot" onclick="goToWhySlide(3)"></div>
+      </div>
     </div>
   </div>
 </section>
