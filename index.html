@@ -17,8 +17,6 @@
     --dark: #1A0F16;
     --dark2: #2A1520;
     --dark3: #3A1F2C;
-    --rose-deep: #6B1A3A;
-    --rose-mid: #8B2550;
     --white: #FFFBFD;
     --cream: #FDF5F8;
     --gold: #C9A96E;
@@ -667,14 +665,14 @@
 
   /* ─── HASIL NYATA (NEW) ─── */
   #results {
-    background: linear-gradient(160deg, #fff5f9 0%, #fde8f0 40%, #fff0f6 100%);
+    background: var(--dark);
     position: relative;
     overflow: hidden;
   }
   #results::before {
     content:'';position:absolute;inset:0;
-    background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(232,115,154,0.08), transparent 65%),
-                radial-gradient(ellipse 50% 40% at 80% 20%, rgba(244,167,192,0.1), transparent 60%);
+    background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(232,115,154,0.12), transparent 65%),
+                radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,169,110,0.07), transparent 60%);
   }
 
   .results-inner {
@@ -688,10 +686,10 @@
     text-align: center;
     margin-bottom: 4rem;
   }
-  .results-header .section-title { color: var(--dark); }
-  .results-header .section-label { color: var(--pink); }
+  .results-header .section-title { color: var(--white); }
+  .results-header .section-label { color: rgba(255,255,255,0.5); }
   .results-header .section-desc {
-    color: var(--text-light);
+    color: rgba(255,255,255,0.4);
     margin: 0 auto;
     max-width: 480px;
   }
@@ -731,13 +729,13 @@
   }
   .result-label {
     font-size: 0.82rem;
-    color: var(--text-light);
+    color: rgba(255,255,255,0.55);
     margin-bottom: 0.8rem;
     line-height: 1.5;
   }
   .result-bar {
     height: 4px;
-    background: rgba(196,82,122,0.12);
+    background: rgba(255,255,255,0.08);
     border-radius: 99px;
     overflow: hidden;
   }
@@ -757,27 +755,25 @@
     gap: 1.2rem;
   }
   .proof-card {
-    background: rgba(255,255,255,0.75);
-    border: 1px solid rgba(232,115,154,0.2);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(232,115,154,0.15);
     border-radius: 20px;
     padding: 1.8rem 1.4rem;
     text-align: center;
     transition: all 0.4s;
     backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(232,115,154,0.08);
   }
   .proof-card:hover {
-    border-color: rgba(232,115,154,0.5);
-    background: rgba(255,255,255,0.95);
+    border-color: rgba(232,115,154,0.4);
+    background: rgba(232,115,154,0.07);
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(232,115,154,0.18);
   }
   .proof-card-num {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 2.8rem;
     font-weight: 900;
     font-style: italic;
-    color: var(--pink-deep);
+    color: var(--pink-light);
     line-height: 1;
     margin-bottom: 0.3rem;
   }
@@ -785,7 +781,7 @@
     font-size: 0.68rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-light);
+    color: rgba(255,255,255,0.4);
     font-weight: 600;
   }
 
@@ -993,10 +989,10 @@
   .modal-shopee-btn:hover { background:#D93B1E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(238,77,45,0.35); }
 
   /* ─── PROCESS ─── */
-  #process { background: linear-gradient(135deg, var(--pink-deep) 0%, #a83868 50%, var(--rose-mid) 100%); color:var(--white);position:relative;overflow:hidden; }
+  #process { background:var(--dark);color:var(--white);position:relative;overflow:hidden; }
   #process::before {
     content:'';position:absolute;inset:0;
-    background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(255,200,220,0.15),transparent);
+    background:radial-gradient(ellipse 60% 50% at 50% 100%,rgba(232,115,154,0.12),transparent);
   }
   #process .section-title { color:var(--white); }
 
@@ -1010,16 +1006,16 @@
   .process-step { text-align:center;padding:0 1.2rem; }
   .step-circle {
     width:68px;height:68px;
-    background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.35);
+    background:rgba(232,115,154,0.12);border:1.5px solid rgba(232,115,154,0.3);
     border-radius:50%;display:flex;align-items:center;justify-content:center;
     font-size:1.5rem;margin:0 auto 1.3rem;transition:all 0.4s;
   }
   .process-step:hover .step-circle {
-    background:white;border-color:white;transform:scale(1.1);box-shadow:0 0 28px rgba(255,255,255,0.4);
+    background:var(--pink);border-color:var(--pink);transform:scale(1.1);box-shadow:0 0 28px rgba(232,115,154,0.5);
   }
-  .step-label { font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-weight:700;margin-bottom:0.4rem; }
+  .step-label { font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink);font-weight:700;margin-bottom:0.4rem; }
   .step-title { font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;font-style:italic;color:var(--white);margin-bottom:0.5rem; }
-  .step-desc { font-size:0.72rem;color:rgba(255,255,255,0.6);line-height:1.65; }
+  .step-desc { font-size:0.72rem;color:rgba(255,255,255,0.4);line-height:1.65; }
 
   /* ─── TESTIMONIALS (REBUILT — Smooth Infinite Auto-slide) ─── */
   #testimonials { background:var(--cream); }
@@ -1281,16 +1277,16 @@
 
   /* ─── CTA ─── */
   #cta {
-    background: linear-gradient(135deg, var(--pink-deep) 0%, #b84570 40%, var(--rose-mid) 100%);
+    background:linear-gradient(135deg,var(--dark),var(--dark2),#3a1528);
     color:var(--white);text-align:center;padding:6.5rem 5%;position:relative;overflow:hidden;
   }
   #cta::before {
     content:'';position:absolute;inset:0;
-    background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(255,200,220,0.18),transparent);
+    background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(232,115,154,0.2),transparent);
   }
   #cta .section-title { color:var(--white); }
-  #cta .section-label { color:rgba(255,255,255,0.75); }
-  .cta-desc { font-size:0.95rem;color:rgba(255,255,255,0.8);line-height:1.8;max-width:480px;margin:0 auto 2rem; }
+  #cta .section-label { color:rgba(255,255,255,0.6); }
+  .cta-desc { font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.8;max-width:480px;margin:0 auto 2rem; }
 
   /* ─── CTA AWARDS STRIP ─── */
   .cta-awards-strip {
@@ -1301,8 +1297,8 @@
     flex-wrap: wrap;
     margin: 0 auto 2.2rem;
     padding: 1.2rem 2rem;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(232,115,154,0.2);
     border-radius: 16px;
     backdrop-filter: blur(8px);
     max-width: 640px;
@@ -1341,8 +1337,8 @@
     gap: 0;
     margin: 0 auto 2rem;
     max-width: 520px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(232,115,154,0.15);
     border-radius: 14px;
     overflow: hidden;
   }
@@ -1350,17 +1346,17 @@
     flex: 1;
     padding: 1.1rem 0.8rem;
     text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.15);
+    border-right: 1px solid rgba(255,255,255,0.07);
   }
   .cta-mini-stat:last-child { border-right: none; }
   .cta-mini-num {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.6rem; font-weight: 900; font-style: italic;
-    color: white; line-height: 1;
+    color: var(--pink-light); line-height: 1;
   }
   .cta-mini-label {
     font-size: 0.57rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 0.2rem;
+    color: rgba(255,255,255,0.38); font-weight: 600; margin-top: 0.2rem;
   }
 
   /* ─── CTA GUARANTEE BADGE ─── */
@@ -1371,12 +1367,12 @@
     gap: 0.5rem;
     margin: 1.6rem auto 0;
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.38);
     letter-spacing: 0.05em;
   }
   .cta-guarantee-dot {
     width: 4px; height: 4px;
-    background: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.2);
     border-radius: 50%;
   }
 
@@ -1400,18 +1396,18 @@
   .btn-outline-white:hover { background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.35); }
 
   /* ─── FOOTER ─── */
-  footer { background: linear-gradient(160deg, var(--rose-deep) 0%, #7e1f40 60%, var(--rose-mid) 100%); color:rgba(255,255,255,0.55);padding:4rem 5% 2rem; }
-  .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.1); }
+  footer { background:var(--dark);color:rgba(255,255,255,0.5);padding:4rem 5% 2rem; }
+  .footer-grid { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,0.07); }
   .footer-brand-name { font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:1.9rem;color:var(--white);letter-spacing:0.06em;margin-bottom:0.7rem;line-height:1; }
   .footer-brand-name .pink { color:var(--pink); }
   .footer-desc { font-size:0.77rem;line-height:1.8;max-width:250px; }
   .footer-social { display:flex;gap:0.6rem;margin-top:1.3rem; }
   .social-btn {
-    width:34px;height:34px;background:rgba(255,255,255,0.1);border-radius:50%;
+    width:34px;height:34px;background:rgba(255,255,255,0.07);border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-size:0.82rem;
-    text-decoration:none;color:rgba(255,255,255,0.65);transition:all 0.3s;
+    text-decoration:none;color:rgba(255,255,255,0.55);transition:all 0.3s;
   }
-  .social-btn:hover { background:var(--pink-light);color:var(--rose-deep);transform:translateY(-2px); }
+  .social-btn:hover { background:var(--pink);color:white;transform:translateY(-2px); }
   .footer-col-title { color:var(--white);font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1.1rem; }
   .footer-links { list-style:none;display:flex;flex-direction:column;gap:0.55rem; }
   .footer-links a { text-decoration:none;font-size:0.77rem;color:rgba(255,255,255,0.4);transition:color 0.2s; }
@@ -1423,7 +1419,7 @@
 
   /* ─── MOBILE MENU ─── */
   .mobile-menu {
-    position:fixed;inset:0;background: linear-gradient(160deg, var(--rose-deep) 0%, var(--rose-mid) 100%);z-index:999;
+    position:fixed;inset:0;background:var(--dark);z-index:999;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
     transform:translateX(100%);transition:transform 0.4s var(--ease);
   }
@@ -1473,28 +1469,27 @@
 
 
   /* ─── BEFORE/AFTER TOGGLE (new premium) ─── */
-  #beforeafter { background: linear-gradient(160deg, #fde8f0 0%, #fff0f6 60%, #fdf5f8 100%); color: var(--dark); overflow: hidden; position: relative; }
+  #beforeafter { background: var(--dark); color: var(--white); overflow: hidden; position: relative; }
   #beforeafter::before {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232,115,154,0.07), transparent);
+    background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232,115,154,0.1), transparent);
   }
-  #beforeafter .section-title { color: var(--dark); }
+  #beforeafter .section-title { color: var(--white); }
   .ba-grid {
     display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
     margin-top: 3rem;
     position: relative; z-index: 1;
   }
   .ba-card {
-    background: rgba(255,255,255,0.85);
-    border: 1px solid rgba(232,115,154,0.18);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(232,115,154,0.12);
     border-radius: 20px; overflow: hidden;
     transition: all 0.4s;
-    box-shadow: 0 4px 16px rgba(232,115,154,0.08);
   }
-  .ba-card:hover { border-color: rgba(232,115,154,0.4); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(232,115,154,0.18); }
+  .ba-card:hover { border-color: rgba(232,115,154,0.35); transform: translateY(-4px); }
   .ba-img-wrap {
     aspect-ratio: 3/2;
-    background: linear-gradient(135deg, #fde8f0, rgba(232,115,154,0.2));
+    background: linear-gradient(135deg, #2a1520, #3a1f2c);
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
     font-size: 3.5rem;
@@ -1507,9 +1502,9 @@
     letter-spacing: 0.1em;
   }
   .ba-info { padding: 1rem 1.2rem 1.2rem; }
-  .ba-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; font-style: italic; color: var(--dark); margin-bottom: 0.25rem; }
-  .ba-detail { font-size: 0.72rem; color: var(--text-light); line-height: 1.6; }
-  .ba-result { font-size: 0.75rem; color: var(--pink-deep); font-weight: 600; margin-top: 0.4rem; }
+  .ba-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; font-style: italic; color: var(--white); margin-bottom: 0.25rem; }
+  .ba-detail { font-size: 0.72rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+  .ba-result { font-size: 0.75rem; color: var(--pink-light); font-weight: 600; margin-top: 0.4rem; }
 
   /* ─── INGREDIENT HIGHLIGHT (new premium) ─── */
   #ingredients { background: var(--white); }
