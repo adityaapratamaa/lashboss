@@ -1049,37 +1049,124 @@
   }
   .modal-close:hover { background: var(--pink); color: white; }
 
-  /* ─────────────────────────────────────────────────────────
-     MODAL GRID — Desktop: 2 kolom sejajar (foto | info)
-     Foto mengisi seluruh tinggi kolom kiri tanpa terpotong.
-     ───────────────────────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════════
+     MODAL GRID — Desktop: 2 kolom (gallery kiri | info kanan)
+     ═══════════════════════════════════════════════════════ */
   .modal-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* <-- EDIT: misal "55% 45%" jika foto lebih besar */
+    grid-template-columns: 1fr 1fr;   /* <-- EDIT: mis. "55% 45%" */
     align-items: stretch;
     clear: both;
   }
 
-  /* ─────────────────────────────────────────────────────────
-     MODAL IMAGE AREA — Desktop
-     • Tidak pakai aspect-ratio agar mengikuti tinggi konten info
-     • object-fit: contain → foto tampil utuh, tidak terpotong
-     ───────────────────────────────────────────────────────── */
-  .modal-img {
-    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
+  /* ═══════════════════════════════════════════════════════
+     MODAL GALLERY — area kiri (foto utama + thumbnail)
+     ═══════════════════════════════════════════════════════ */
+  .modal-gallery {
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.15));
+    border-radius: 20px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem 1.25rem 1rem;
+    min-height: 320px;
+  }
+
+  /* ── Foto utama (besar) ── */
+  .modal-main-img-wrap {
+    position: relative;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px 0 0 20px;
-    padding: 1.5rem;
-    min-height: 320px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: white;
+    min-height: 200px;
   }
-  .modal-img img {
+  .modal-main-img {
     width: 100%;
-    max-height: 480px;                /* <-- EDIT: batas tinggi foto di desktop */
+    height: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.2s ease;
+  }
+  .modal-main-img.switching { opacity: 0; }
+
+  /* Panah navigasi kiri/kanan */
+  .modal-gallery-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.92);
+    border: none; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 0.85rem; color: var(--dark);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: all 0.2s; z-index: 2;
+    opacity: 0;
+  }
+  .modal-main-img-wrap:hover .modal-gallery-arrow { opacity: 1; }
+  .modal-gallery-arrow:hover { background: var(--pink); color: white; }
+  .modal-gallery-arrow.prev { left: 0.5rem; }
+  .modal-gallery-arrow.next { right: 0.5rem; }
+
+  /* Counter "1 / 3" pojok kanan bawah */
+  .modal-img-counter {
+    position: absolute;
+    bottom: 0.5rem; right: 0.6rem;
+    background: rgba(0,0,0,0.38);
+    color: white;
+    font-size: 0.62rem; font-weight: 600;
+    padding: 0.18rem 0.5rem;
+    border-radius: 99px;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+  }
+
+  /* ── Thumbnail strip ── */
+  .modal-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .modal-thumbs::-webkit-scrollbar { display: none; }
+  .modal-thumb {
+    flex: 0 0 52px;
+    height: 52px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+    background: white;
+  }
+  .modal-thumb img {
+    width: 100%; height: 100%;
     object-fit: contain;
     display: block;
   }
+  .modal-thumb.active {
+    border-color: var(--pink);
+    transform: scale(1.06);
+  }
+  .modal-thumb:hover:not(.active) { border-color: var(--pink-light); }
+
+  /* Dot indicator bawah thumbnail */
+  .modal-img-dots {
+    display: flex; justify-content: center; gap: 5px;
+  }
+  .modal-img-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(196,82,122,0.25);
+    cursor: pointer; transition: all 0.25s;
+  }
+  .modal-img-dot.active { background: var(--pink); width: 14px; border-radius: 99px; }
+
   .modal-info { padding:2rem 1.8rem 2rem 1.5rem; }
   .modal-cat { font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--pink);font-weight:700; }
   .modal-name { font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;font-style:italic;margin:0.4rem 0 0.7rem;line-height:1.1; }
@@ -1777,7 +1864,7 @@
       border-radius: 20px 20px 0 0;
       max-height: 92svh;
     }
-    /* 1 kolom: foto atas, info bawah */
+    /* 1 kolom: gallery atas, info bawah */
     .modal-grid {
       grid-template-columns: 1fr;
       align-items: start;
@@ -1786,18 +1873,14 @@
       position: absolute; top: 0.75rem; right: 0.75rem;
       float: none; margin: 0;
     }
-    /* Foto: tampil penuh secara portrait, tidak terpotong */
-    .modal-img {
+    .modal-gallery {
       border-radius: 20px 20px 0 0;
       min-height: unset;
-      padding: 1.5rem 2rem;
+      padding: 1.25rem 1rem 0.75rem;
     }
-    .modal-img img {
-      max-height: 300px;           /* <-- EDIT: tinggi foto di tablet */
-      width: 100%;
-      object-fit: contain;
-    }
-    .modal-info { padding: 1.4rem 1.4rem 2rem; }
+    .modal-main-img { max-height: 260px; }  /* <-- EDIT: tinggi foto utama di tablet */
+    .modal-gallery-arrow { opacity: 1; }    /* panah selalu tampil di mobile */
+    .modal-info { padding: 1.2rem 1.2rem 2rem; }
 
     /* QUIZ */
     .quiz-result-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 1.5rem; }
@@ -1951,23 +2034,17 @@
     .modal-price { font-size: 1.3rem; }
     .modal-desc { font-size: 0.75rem; }
     .modal-benefit { font-size: 0.7rem; }
-    /* Tombol beli lebih besar agar mudah diklik di HP */
+    /* Tombol beli lebih besar agar mudah diklik */
     .modal-shopee-btn {
       padding: 1rem;
       font-size: 0.85rem;
       border-radius: 12px;
       min-height: 52px;
     }
-    /* Foto modal di HP: tinggi otomatis mengikuti foto, tidak terpotong */
-    .modal-img {
-      min-height: unset;
-      padding: 1.2rem 1.5rem;     /* <-- EDIT: padding "mat" di sekitar foto */
-    }
-    .modal-img img {
-      max-height: 260px;           /* <-- EDIT: tinggi foto di HP kecil */
-      width: 100%;
-      object-fit: contain;
-    }
+    /* Gallery di HP kecil */
+    .modal-main-img { max-height: 220px; }  /* <-- EDIT: tinggi foto HP kecil */
+    .modal-thumb { flex: 0 0 44px; height: 44px; }
+    .modal-gallery-arrow { width: 26px; height: 26px; font-size: 0.7rem; }
   }
 
   /* ══════════════════════════════════════════
@@ -2298,26 +2375,55 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
-    <!--
-      Drag handle bar — hanya tampil di mobile (bottom sheet)
-      Memudahkan user tahu modal bisa di-swipe/ditap untuk tutup
-    -->
+    <!-- Drag handle: hanya tampil di mobile -->
     <div class="modal-drag-handle" aria-hidden="true"></div>
     <button class="modal-close" onclick="closeModalBtn()">&#x2715;</button>
+
     <div class="modal-grid">
-      <div class="modal-img" id="modalImg"></div>
+
+      <!-- ═══ GALLERY KIRI ═══
+           Untuk menambah foto produk: tambahkan path di array "images"
+           di data produk (field images:[]) di bagian JS products[] di bawah.
+           Jika tidak ada images[], otomatis pakai img sebagai 1 foto. -->
+      <div class="modal-gallery" id="modalGallery">
+
+        <!-- Foto utama besar -->
+        <div class="modal-main-img-wrap" id="modalMainImgWrap">
+          <img class="modal-main-img" id="modalMainImg" src="" alt="">
+
+          <!-- Panah kiri/kanan (muncul saat hover desktop, selalu tampil mobile) -->
+          <button class="modal-gallery-arrow prev" id="modalArrowPrev" onclick="galleryNav(-1)" aria-label="Foto sebelumnya">&#8249;</button>
+          <button class="modal-gallery-arrow next" id="modalArrowNext" onclick="galleryNav(1)" aria-label="Foto berikutnya">&#8250;</button>
+
+          <!-- Counter "1 / 3" -->
+          <div class="modal-img-counter" id="modalImgCounter">1 / 1</div>
+        </div>
+
+        <!-- Thumbnail strip — otomatis disembunyikan jika hanya 1 foto -->
+        <div class="modal-thumbs" id="modalThumbs"></div>
+
+        <!-- Dot indicator -->
+        <div class="modal-img-dots" id="modalImgDots"></div>
+      </div>
+
+      <!-- ═══ INFO KANAN ═══ -->
       <div class="modal-info">
         <div class="modal-cat" id="modalCat"></div>
         <div class="modal-name" id="modalName"></div>
-        <div class="modal-stars"><span style="color:#F5A623">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span style="font-size:0.7rem;color:var(--text-light)" id="modalRating"></span></div>
+        <div class="modal-stars">
+          <span style="color:#F5A623">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span style="font-size:0.7rem;color:var(--text-light)" id="modalRating"></span>
+        </div>
         <div class="modal-price" id="modalPrice"></div>
         <div class="modal-desc" id="modalDesc"></div>
         <div class="modal-benefits" id="modalBenefits"></div>
         <!-- GANTI: icon Shopee di images/icons/shopee-icon.png -->
-    <a href="#" target="_blank" class="modal-shopee-btn" id="modalShopeeBtn">
-      <img src="./images/icons/shopee-icon.png" alt="Shopee" width="18" height="18" style="vertical-align:middle;margin-right:6px;object-fit:contain;filter:brightness(0) invert(1);"> Beli di Shopee
-    </a>
+        <a href="#" target="_blank" class="modal-shopee-btn" id="modalShopeeBtn">
+          <img src="./images/icons/shopee-icon.png" alt="Shopee" width="18" height="18"
+               style="vertical-align:middle;margin-right:6px;object-fit:contain;filter:brightness(0) invert(1);"> Beli di Shopee
+        </a>
       </div>
+
     </div>
   </div>
 </div>
@@ -2877,19 +2983,141 @@ const resultsObserver=new IntersectionObserver((entries)=>{
 document.querySelectorAll('.result-num,.result-bar-fill').forEach(el=>resultsObserver.observe(el));
 
 // ─── PRODUCTS DATA ───
+// ═══════════════════════════════════════════════════════════════════════
+// CARA MENAMBAH FOTO GALLERY PRODUK:
+//   Setiap produk punya field "images" berisi array path foto.
+//   Foto pertama = foto utama (tampil di card & gallery).
+//   Tambah path foto sebanyak yang kamu mau — otomatis jadi thumbnail.
+//
+//   Contoh:
+//   images: [
+//     './images/products/produk-1.jpg',   // foto utama
+//     './images/products/produk-2.jpg',   // foto ke-2
+//     './images/products/produk-3.jpg',   // foto ke-3
+//   ]
+//
+//   Field "img" tetap diisi sama dengan images[0] (untuk card thumbnail).
+// ═══════════════════════════════════════════════════════════════════════
 const products=[
-  // ─────────────────────────────────────────────────────────────────────
-// FOTO PRODUK: ganti path img di setiap produk sesuai file foto kamu
-// Format: ./images/products/nama-file.jpg (letakkan di folder images/products/)
-// ─────────────────────────────────────────────────────────────────────
-{id:1,name:'itCurl Eyelash Curler',fullName:'LashBoss itCurl Eyelash Curler',cat:'tools',catLabel:'Beauty Tools',img:'./images/penjepitbulumata.jpeg',emoji:'💄',badge:'Best Seller',badgeClass:'dark',price:'Rp 79.000',priceOrig:'Rp 110.000',rating:'4.8 (890 ulasan)',shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',benefits:['Desain C-Curl untuk mata Asia','Bebas sudut tumpul yang menyakitkan','Silicone pad premium food-grade','Pegangan ergonomis anti-slip','Bisa digunakan ratusan kali','Tersedia pouch cantik'],shopeeUrl:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'},
-  {id:2,name:'Gel-Based Serum',fullName:'LashBoss Gel-Based Serum',cat:'serum',catLabel:'Serum Gel-Based',img:'./images/products/gel-based-serum.jpg',emoji:'💧',badge:'For Extension',badgeClass:'gold',price:'Rp 99.000',priceOrig:'Rp 130.000',rating:'4.8 (1.9k ulasan)',shortDesc:'Serum gel khusus pengguna eyelash extension. Anti-rontok & memperkuat bulu mata.',fullDesc:'LashBoss Gel-Based Serum didesain spesifik untuk pengguna eyelash extension. Formula gel-nya membantu mengurangi kerusakan akibat pemasangan extension, mendorong pertumbuhan bulu mata baru, memperkuat akar, dan membuat extension tahan lebih lama.',benefits:['Khusus pengguna eyelash extension','Mengurangi kerusakan akibat extension','Extension tahan lebih lama','Anti rontok & kebotakan bulu mata','Peptides untuk regenerasi folikel','Aman untuk mata sensitif'],shopeeUrl:'https://shopee.co.id/LashBoss-Lash-and-Brow-Serum-for-Eyelash-Extension-(Gel-Based)-Serum-Penumbuh-Bulu-Mata-dan-Alis-Anti-Rontok-dan-Botak-untuk-Eyelash-Extension-i.17525438.19577664595'},
-  {id:3,name:'Sensitive Eyes Serum',fullName:'LashBoss Serum Sensitive Eyes',cat:'serum',catLabel:'Serum Sensitive',img:'./images/products/sensitive-serum.jpg',emoji:'👁️',badge:'Gentle Formula',badgeClass:'dark',price:'Rp 109.000',priceOrig:'Rp 145.000',rating:'4.9 (1.2k ulasan)',shortDesc:'Formula lembut khusus untuk mata sensitif. Bebas iritasi, maksimal hasilnya.',fullDesc:'Formulasi eksklusif LashBoss khusus untuk kamu yang punya mata sensitif. Dibuat dengan Aloe Barbadensis & ekstrak tumbuhan alami yang menenangkan, serum ini memaksimalkan pertumbuhan bulu mata tanpa risiko iritasi.',benefits:['Cocok untuk mata sangat sensitif','Aloe & ekstrak tumbuhan menenangkan','Bebas alkohol tinggi & pewangi keras','Aman pengguna lensa kontak','pH balanced formula','Dermatologically tested'],shopeeUrl:'https://shopee.co.id/lashboss.id'},
-  {id:4,name:'itCurl Eyelash Curler',fullName:'LashBoss itCurl Eyelash Curler',cat:'tools',catLabel:'Beauty Tools',img:'./images/products/itcurl-curler.jpg',emoji:'💄',badge:'New Arrival',badgeClass:'dark',price:'Rp 79.000',priceOrig:'Rp 110.000',rating:'4.8 (890 ulasan)',shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',benefits:['Desain C-Curl untuk mata Asia','Bebas sudut tumpul yang menyakitkan','Silicone pad premium food-grade','Pegangan ergonomis anti-slip','Bisa digunakan ratusan kali','Tersedia pouch cantik'],shopeeUrl:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'},
-  {id:5,name:'Bundle Special',fullName:'LashBoss Bundle Special Set',cat:'bundle',catLabel:'Bundle Package',img:'./images/products/bundle-special.jpg',emoji:'🎀',badge:'Best Value',badgeClass:'',price:'Rp 185.000',priceOrig:'Rp 240.000',rating:'4.9 (3.1k ulasan)',shortDesc:'Paket lengkap itCurl + Rapunzel Serum. Hemat lebih banyak, hasil lebih sempurna!',fullDesc:'Bundle Special LashBoss menghadirkan paket komplit terbaik: itCurl Eyelash Curler + Rapunzel Serum dalam satu paket ekonomis. Lengkapi rutinitas kecantikanmu dengan alat pelentik premium dan serum penumbuh terbaik.',benefits:['Hemat hingga 23% dibanding beli satuan','itCurl Curler + Rapunzel Serum','Paket gift-ready eksklusif','Cocok untuk hadiah ulang tahun','Free pouch eksklusif LashBoss','Hasil optimal dalam 2 minggu'],shopeeUrl:'https://shopee.co.id/-BUNDLE-SPECIAL-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Rapunzel-Serum-Bulu-Mata-dan-Alis-Serum-Bulu-Mata-No.-1-di-Indonesia-Serum-Bulu-Mata-Penjepit-Bulu-Mata-Menumbuhkan-Bulu-Mata-dan-Alis-Pelentik-Bulu-Mata-i.17525438.29827745416'},
-  {id:6,name:'Bundle Gel + Curler',fullName:'LashBoss Bundle Gel + itCurl',cat:'bundle',catLabel:'Bundle Package',img:'./images/products/bundle-gel-curler.jpg',emoji:'✨',badge:'Hemat 20%',badgeClass:'gold',price:'Rp 165.000',priceOrig:'Rp 209.000',rating:'4.8 (780 ulasan)',shortDesc:'Paket Gel-Based Serum + itCurl untuk pengguna extension. Komplit & hemat!',fullDesc:'Bundle eksklusif LashBoss untuk pengguna eyelash extension! Dapatkan Gel-Based Serum yang dirancang khusus untuk extension + itCurl Curler dalam satu paket hemat.',benefits:['Gel-Based Serum + itCurl Curler','Khusus pengguna eyelash extension','Hemat 20% dibanding beli satuan','Paket cantik siap kado','Free pouch premium','Gratis bonus mini serum'],shopeeUrl:'https://shopee.co.id/lashboss.id'},
-  {id:7,name:'Pouch itCurl',fullName:'LashBoss Pouch itCurl',cat:'tools',catLabel:'Aksesori',img:'./images/products/pouch-itcurl.jpg',emoji:'👜',badge:'Cute!',badgeClass:'gold',price:'Rp 35.000',priceOrig:'Rp 55.000',rating:'4.7 (450 ulasan)',shortDesc:'Tempat curler imut & fungsional. Jaga curler-mu tetap bersih dan aman.',fullDesc:'Pouch eksklusif LashBoss untuk menyimpan itCurl Eyelash Curler-mu. Dibuat dari bahan berkualitas dengan branding LashBoss yang cantik.',benefits:['Material premium & tahan lama','Ukuran compact masuk tas kecil','Design eksklusif LashBoss','Cocok untuk hadiah','Tersedia dalam berbagai warna','Mudah dibersihkan'],shopeeUrl:'https://shopee.co.id/lashboss.id'},
-  {id:8,name:'Starter Kit',fullName:'LashBoss Starter Kit (3 in 1)',cat:'bundle',catLabel:'Starter Bundle',img:'./images/products/starter-kit.jpg',emoji:'💝',badge:'Terlengkap',badgeClass:'',price:'Rp 299.000',priceOrig:'Rp 395.000',rating:'5.0 (210 ulasan)',shortDesc:'Rapunzel Serum + Gel Serum + itCurl Curler. Paket terlengkap untuk pemula!',fullDesc:'LashBoss Starter Kit adalah paket terlengkap untuk kamu yang baru mulai. Dapatkan tiga produk unggulan: Rapunzel Serum, Gel-Based Serum, dan itCurl Curler dalam satu paket eksklusif.',benefits:['3 produk unggulan dalam 1 paket','Hemat hingga Rp 96.000','Rapunzel + Gel Serum + itCurl','Panduan penggunaan lengkap','Gift box eksklusif LashBoss','Pengiriman aman & cepat'],shopeeUrl:'https://shopee.co.id/lashboss.id'},
+  {
+    id:1, name:'itCurl Eyelash Curler', fullName:'LashBoss itCurl Eyelash Curler',
+    cat:'tools', catLabel:'Beauty Tools',
+    img:'./images/penjepitbulumata.jpeg',
+    // ▼ TAMBAH/KURANGI FOTO DI SINI ▼
+    images:[
+      './images/penjepitbulumata.jpeg',
+      './images/products/itcurl-detail1.jpg',
+      './images/products/itcurl-detail2.jpg',
+    ],
+    emoji:'💄', badge:'Best Seller', badgeClass:'dark',
+    price:'Rp 79.000', priceOrig:'Rp 110.000', rating:'4.8 (890 ulasan)',
+    shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',
+    fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',
+    benefits:['Desain C-Curl untuk mata Asia','Bebas sudut tumpul yang menyakitkan','Silicone pad premium food-grade','Pegangan ergonomis anti-slip','Bisa digunakan ratusan kali','Tersedia pouch cantik'],
+    shopeeUrl:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'
+  },
+  {
+    id:2, name:'Gel-Based Serum', fullName:'LashBoss Gel-Based Serum',
+    cat:'serum', catLabel:'Serum Gel-Based',
+    img:'./images/products/gel-based-serum.jpg',
+    images:[
+      './images/products/gel-based-serum.jpg',
+      './images/products/gel-based-detail1.jpg',
+      './images/products/gel-based-detail2.jpg',
+    ],
+    emoji:'💧', badge:'For Extension', badgeClass:'gold',
+    price:'Rp 99.000', priceOrig:'Rp 130.000', rating:'4.8 (1.9k ulasan)',
+    shortDesc:'Serum gel khusus pengguna eyelash extension. Anti-rontok & memperkuat bulu mata.',
+    fullDesc:'LashBoss Gel-Based Serum didesain spesifik untuk pengguna eyelash extension. Formula gel-nya membantu mengurangi kerusakan akibat pemasangan extension, mendorong pertumbuhan bulu mata baru, memperkuat akar, dan membuat extension tahan lebih lama.',
+    benefits:['Khusus pengguna eyelash extension','Mengurangi kerusakan akibat extension','Extension tahan lebih lama','Anti rontok & kebotakan bulu mata','Peptides untuk regenerasi folikel','Aman untuk mata sensitif'],
+    shopeeUrl:'https://shopee.co.id/LashBoss-Lash-and-Brow-Serum-for-Eyelash-Extension-(Gel-Based)-Serum-Penumbuh-Bulu-Mata-dan-Alis-Anti-Rontok-dan-Botak-untuk-Eyelash-Extension-i.17525438.19577664595'
+  },
+  {
+    id:3, name:'Sensitive Eyes Serum', fullName:'LashBoss Serum Sensitive Eyes',
+    cat:'serum', catLabel:'Serum Sensitive',
+    img:'./images/products/sensitive-serum.jpg',
+    images:[
+      './images/products/sensitive-serum.jpg',
+      './images/products/sensitive-detail1.jpg',
+      './images/products/sensitive-detail2.jpg',
+    ],
+    emoji:'👁️', badge:'Gentle Formula', badgeClass:'dark',
+    price:'Rp 109.000', priceOrig:'Rp 145.000', rating:'4.9 (1.2k ulasan)',
+    shortDesc:'Formula lembut khusus untuk mata sensitif. Bebas iritasi, maksimal hasilnya.',
+    fullDesc:'Formulasi eksklusif LashBoss khusus untuk kamu yang punya mata sensitif. Dibuat dengan Aloe Barbadensis & ekstrak tumbuhan alami yang menenangkan, serum ini memaksimalkan pertumbuhan bulu mata tanpa risiko iritasi.',
+    benefits:['Cocok untuk mata sangat sensitif','Aloe & ekstrak tumbuhan menenangkan','Bebas alkohol tinggi & pewangi keras','Aman pengguna lensa kontak','pH balanced formula','Dermatologically tested'],
+    shopeeUrl:'https://shopee.co.id/lashboss.id'
+  },
+  {
+    id:4, name:'itCurl Eyelash Curler', fullName:'LashBoss itCurl Eyelash Curler',
+    cat:'tools', catLabel:'Beauty Tools',
+    img:'./images/products/itcurl-curler.jpg',
+    images:[
+      './images/products/itcurl-curler.jpg',
+      './images/products/itcurl-detail1.jpg',
+      './images/products/itcurl-detail2.jpg',
+    ],
+    emoji:'💄', badge:'New Arrival', badgeClass:'dark',
+    price:'Rp 79.000', priceOrig:'Rp 110.000', rating:'4.8 (890 ulasan)',
+    shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',
+    fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',
+    benefits:['Desain C-Curl untuk mata Asia','Bebas sudut tumpul yang menyakitkan','Silicone pad premium food-grade','Pegangan ergonomis anti-slip','Bisa digunakan ratusan kali','Tersedia pouch cantik'],
+    shopeeUrl:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'
+  },
+  {
+    id:5, name:'Bundle Special', fullName:'LashBoss Bundle Special Set',
+    cat:'bundle', catLabel:'Bundle Package',
+    img:'./images/products/bundle-special.jpg',
+    images:[
+      './images/products/bundle-special.jpg',
+      './images/products/bundle-special-detail1.jpg',
+    ],
+    emoji:'🎀', badge:'Best Value', badgeClass:'',
+    price:'Rp 185.000', priceOrig:'Rp 240.000', rating:'4.9 (3.1k ulasan)',
+    shortDesc:'Paket lengkap itCurl + Rapunzel Serum. Hemat lebih banyak, hasil lebih sempurna!',
+    fullDesc:'Bundle Special LashBoss menghadirkan paket komplit terbaik: itCurl Eyelash Curler + Rapunzel Serum dalam satu paket ekonomis. Lengkapi rutinitas kecantikanmu dengan alat pelentik premium dan serum penumbuh terbaik.',
+    benefits:['Hemat hingga 23% dibanding beli satuan','itCurl Curler + Rapunzel Serum','Paket gift-ready eksklusif','Cocok untuk hadiah ulang tahun','Free pouch eksklusif LashBoss','Hasil optimal dalam 2 minggu'],
+    shopeeUrl:'https://shopee.co.id/-BUNDLE-SPECIAL-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Rapunzel-Serum-Bulu-Mata-dan-Alis-Serum-Bulu-Mata-No.-1-di-Indonesia-Serum-Bulu-Mata-Penjepit-Bulu-Mata-Menumbuhkan-Bulu-Mata-dan-Alis-Pelentik-Bulu-Mata-i.17525438.29827745416'
+  },
+  {
+    id:6, name:'Bundle Gel + Curler', fullName:'LashBoss Bundle Gel + itCurl',
+    cat:'bundle', catLabel:'Bundle Package',
+    img:'./images/products/bundle-gel-curler.jpg',
+    images:['./images/products/bundle-gel-curler.jpg'],
+    emoji:'✨', badge:'Hemat 20%', badgeClass:'gold',
+    price:'Rp 165.000', priceOrig:'Rp 209.000', rating:'4.8 (780 ulasan)',
+    shortDesc:'Paket Gel-Based Serum + itCurl untuk pengguna extension. Komplit & hemat!',
+    fullDesc:'Bundle eksklusif LashBoss untuk pengguna eyelash extension! Dapatkan Gel-Based Serum yang dirancang khusus untuk extension + itCurl Curler dalam satu paket hemat.',
+    benefits:['Gel-Based Serum + itCurl Curler','Khusus pengguna eyelash extension','Hemat 20% dibanding beli satuan','Paket cantik siap kado','Free pouch premium','Gratis bonus mini serum'],
+    shopeeUrl:'https://shopee.co.id/lashboss.id'
+  },
+  {
+    id:7, name:'Pouch itCurl', fullName:'LashBoss Pouch itCurl',
+    cat:'tools', catLabel:'Aksesori',
+    img:'./images/products/pouch-itcurl.jpg',
+    images:['./images/products/pouch-itcurl.jpg'],
+    emoji:'👜', badge:'Cute!', badgeClass:'gold',
+    price:'Rp 35.000', priceOrig:'Rp 55.000', rating:'4.7 (450 ulasan)',
+    shortDesc:'Tempat curler imut & fungsional. Jaga curler-mu tetap bersih dan aman.',
+    fullDesc:'Pouch eksklusif LashBoss untuk menyimpan itCurl Eyelash Curler-mu. Dibuat dari bahan berkualitas dengan branding LashBoss yang cantik.',
+    benefits:['Material premium & tahan lama','Ukuran compact masuk tas kecil','Design eksklusif LashBoss','Cocok untuk hadiah','Tersedia dalam berbagai warna','Mudah dibersihkan'],
+    shopeeUrl:'https://shopee.co.id/lashboss.id'
+  },
+  {
+    id:8, name:'Starter Kit', fullName:'LashBoss Starter Kit (3 in 1)',
+    cat:'bundle', catLabel:'Starter Bundle',
+    img:'./images/products/starter-kit.jpg',
+    images:[
+      './images/products/starter-kit.jpg',
+      './images/products/starter-kit-detail1.jpg',
+    ],
+    emoji:'💝', badge:'Terlengkap', badgeClass:'',
+    price:'Rp 299.000', priceOrig:'Rp 395.000', rating:'5.0 (210 ulasan)',
+    shortDesc:'Rapunzel Serum + Gel Serum + itCurl Curler. Paket terlengkap untuk pemula!',
+    fullDesc:'LashBoss Starter Kit adalah paket terlengkap untuk kamu yang baru mulai. Dapatkan tiga produk unggulan: Rapunzel Serum, Gel-Based Serum, dan itCurl Curler dalam satu paket eksklusif.',
+    benefits:['3 produk unggulan dalam 1 paket','Hemat hingga Rp 96.000','Rapunzel + Gel Serum + itCurl','Panduan penggunaan lengkap','Gift box eksklusif LashBoss','Pengiriman aman & cepat'],
+    shopeeUrl:'https://shopee.co.id/lashboss.id'
+  },
 ];
 
 // ─── CAROUSEL STATE ───
@@ -3024,39 +3252,161 @@ renderCarousel();
 
 
 
-// ─── MODAL ───
-function openModal(id){
-  const p=products.find(x=>x.id===id);
-  if(!p) return;
+// ═══════════════════════════════════════════════════════════════════════
+// MODAL + GALLERY + BACK BUTTON MOBILE
+// ═══════════════════════════════════════════════════════════════════════
 
-  // ── Tampilkan foto produk di area modal ──
-  // object-fit:contain = foto tampil penuh, tidak terpotong
-  const modalImgEl = document.getElementById('modalImg');
-  modalImgEl.innerHTML = '';
-  if(p.img){
-    const mImg = document.createElement('img');
-    mImg.src = p.img;
-    mImg.alt = p.fullName;
-    // Styling via CSS class, bukan inline — lebih mudah diedit di CSS
-    modalImgEl.appendChild(mImg);
+// State gallery saat ini
+let galleryImages = [];    // array path foto produk aktif
+let galleryIdx = 0;        // index foto yang sedang ditampilkan
+let modalIsOpen = false;
+
+// ── Render gallery (foto utama + thumbnail + dots) ──
+function renderGallery(idx) {
+  const imgs = galleryImages;
+  if (!imgs || !imgs.length) return;
+
+  // Clamp index
+  galleryIdx = Math.max(0, Math.min(idx, imgs.length - 1));
+
+  const mainImg  = document.getElementById('modalMainImg');
+  const counter  = document.getElementById('modalImgCounter');
+  const thumbsEl = document.getElementById('modalThumbs');
+  const dotsEl   = document.getElementById('modalImgDots');
+  const prevBtn  = document.getElementById('modalArrowPrev');
+  const nextBtn  = document.getElementById('modalArrowNext');
+
+  // ── Fade ganti foto utama ──
+  mainImg.classList.add('switching');
+  setTimeout(() => {
+    mainImg.src = imgs[galleryIdx];
+    mainImg.classList.remove('switching');
+  }, 120);
+
+  // ── Counter ──
+  counter.textContent = `${galleryIdx + 1} / ${imgs.length}`;
+  counter.style.display = imgs.length > 1 ? '' : 'none';
+
+  // ── Sembunyikan panah jika hanya 1 foto ──
+  const showArrow = imgs.length > 1;
+  prevBtn.style.display = showArrow ? '' : 'none';
+  nextBtn.style.display = showArrow ? '' : 'none';
+
+  // ── Thumbnail strip — sembunyikan jika hanya 1 foto ──
+  if (imgs.length > 1) {
+    thumbsEl.style.display = 'flex';
+    thumbsEl.innerHTML = imgs.map((src, i) => `
+      <div class="modal-thumb ${i === galleryIdx ? 'active' : ''}" onclick="galleryGoTo(${i})">
+        <img src="${src}" alt="Foto ${i+1}" loading="lazy"
+             onerror="this.parentElement.style.display='none'">
+      </div>
+    `).join('');
+
+    // ── Dots ──
+    dotsEl.style.display = 'flex';
+    dotsEl.innerHTML = imgs.map((_, i) =>
+      `<div class="modal-img-dot ${i === galleryIdx ? 'active' : ''}" onclick="galleryGoTo(${i})"></div>`
+    ).join('');
   } else {
-    // Fallback emoji jika tidak ada foto
-    modalImgEl.textContent = p.emoji || '📦';
-    modalImgEl.style.fontSize = '5rem';
+    thumbsEl.style.display = 'none';
+    dotsEl.style.display = 'none';
   }
-  document.getElementById('modalCat').textContent=p.catLabel;
-  document.getElementById('modalName').textContent=p.fullName;
-  document.getElementById('modalRating').textContent=' '+p.rating;
-  document.getElementById('modalPrice').innerHTML=`${p.price}<span class="modal-price-orig">${p.priceOrig}</span>`;
-  document.getElementById('modalDesc').textContent=p.fullDesc;
-  document.getElementById('modalBenefits').innerHTML=p.benefits.map(b=>`<div class="modal-benefit"><div class="benefit-dot"></div>${b}</div>`).join('');
-  document.getElementById('modalShopeeBtn').href=p.shopeeUrl;
-  document.getElementById('modalOverlay').classList.add('active');
-  document.body.style.overflow='hidden';
 }
-function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalBtn();}
-function closeModalBtn(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalBtn();});
+
+// Navigasi panah kiri/kanan
+function galleryNav(dir) {
+  galleryGoTo(galleryIdx + dir);
+}
+function galleryGoTo(idx) {
+  const len = galleryImages.length;
+  galleryGoToRaw((idx + len) % len);
+}
+function galleryGoToRaw(idx) {
+  renderGallery(idx);
+}
+
+// ── Touch swipe pada foto utama ──
+(function(){
+  const wrap = document.getElementById('modalMainImgWrap');
+  if (!wrap) return;
+  let tx = 0;
+  wrap.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const diff = tx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) galleryNav(diff > 0 ? 1 : -1);
+  });
+})();
+
+// ── openModal ──
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+
+  // Siapkan array foto (pakai images[] jika ada, fallback ke img)
+  galleryImages = (p.images && p.images.length) ? p.images : [p.img];
+  galleryIdx = 0;
+
+  // Set foto utama langsung (tanpa fade saat pertama buka)
+  const mainImg = document.getElementById('modalMainImg');
+  mainImg.src = galleryImages[0];
+  mainImg.alt = p.fullName;
+
+  // Render gallery (thumbnail, dots, counter)
+  renderGallery(0);
+
+  // Isi info produk
+  document.getElementById('modalCat').textContent = p.catLabel;
+  document.getElementById('modalName').textContent = p.fullName;
+  document.getElementById('modalRating').textContent = ' ' + p.rating;
+  document.getElementById('modalPrice').innerHTML = `${p.price}<span class="modal-price-orig">${p.priceOrig}</span>`;
+  document.getElementById('modalDesc').textContent = p.fullDesc;
+  document.getElementById('modalBenefits').innerHTML = p.benefits
+    .map(b => `<div class="modal-benefit"><div class="benefit-dot"></div>${b}</div>`).join('');
+  document.getElementById('modalShopeeBtn').href = p.shopeeUrl;
+
+  // Buka modal
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  modalIsOpen = true;
+
+  // ── HISTORY API: push state agar tombol BACK HP menutup modal ──
+  // Saat modal dibuka, push state baru ke history.
+  // Saat user tekan back, popstate terpicu → modal tertutup, TIDAK keluar website.
+  history.pushState({ modal: true, productId: id }, '', `#produk-${id}`);
+}
+
+// ── closeModalBtn: tutup modal ──
+function closeModalBtn() {
+  if (!modalIsOpen) return;
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  modalIsOpen = false;
+
+  // Jika URL masih punya hash modal, kembali ke state sebelumnya
+  if (location.hash.startsWith('#produk-')) {
+    history.back();
+  }
+}
+
+// ── closeModal: klik overlay ──
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+
+// ── BACK BUTTON HANDLER ──
+// Saat user tekan tombol back (HP/browser), jika modal terbuka → tutup modal.
+// Jika modal sudah tutup → biarkan browser navigasi normal (keluar halaman / back biasa).
+window.addEventListener('popstate', function(e) {
+  if (modalIsOpen) {
+    // Tutup modal tanpa history.back() lagi (sudah di-pop)
+    document.getElementById('modalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    modalIsOpen = false;
+  }
+});
+
+// ── ESC tutup modal ──
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
 
 // ─── TESTIMONIALS — SMOOTH AUTO-SLIDE, NO CLIP FIX ───
