@@ -808,44 +808,89 @@
   .feature-desc { font-size:0.73rem;color:var(--text-light);line-height:1.65; }
 
   .why-visual { position:relative; }
-  .why-img-slider {
+
+  /* ─── WHY VIDEO WRAPPER ─── */
+  /* Mengganti image slider dengan video player testimoni */
+  .why-video-wrap {
     width: 100%;
-    aspect-ratio: 4/5;
+    aspect-ratio: 9/16; /* Rasio vertikal untuk video testimoni mobile/TikTok style */
     border-radius: 24px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.18),
+      0 0 0 1px rgba(255,77,148,0.18);
+    background: var(--dark);
+    max-height: 520px; /* Batas tinggi di desktop */
   }
-  .why-slide {
-    position: absolute; inset: 0;
-    opacity: 0; transition: opacity 0.8s ease;
+
+  /* Video testimoni utama */
+  .why-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 24px;
+  }
+
+  /* Overlay gradient bawah untuk branding */
+  .why-video-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.2rem 1.4rem;
+    background: linear-gradient(to top, rgba(61,26,46,0.75) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Label "Testimoni Real" di pojok bawah video */
+  .why-video-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,77,148,0.85);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 99px;
+  }
+  .why-video-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  /* Custom play button overlay (tampil saat video belum diplay di mobile) */
+  .why-video-play-hint {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 8rem;
-    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
-    flex-direction: column;
-    gap: 1rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-  .why-slide.active { opacity: 1; }
-  .why-slide-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.1em;
-    color: var(--pink-deep);
-    text-transform: uppercase;
+  .why-video-wrap:not(.playing) .why-video-play-hint {
+    opacity: 1;
   }
-
-  .why-slide-dots {
-    display:flex;gap:0.4rem;justify-content:center;margin-top:1rem;
+  .play-circle {
+    width: 64px; height: 64px;
+    background: rgba(255,77,148,0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(255,77,148,0.4);
   }
-  .why-dot {
-    width:6px;height:6px;border-radius:50%;
-    background:rgba(196,82,122,0.2);cursor:pointer;transition:all 0.3s;
-  }
-  .why-dot.active { background:var(--pink);width:18px;border-radius:99px; }
+  .play-circle svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
 
   /* ─── PRODUCTS ─── */
   #catalog { background:var(--white); }
@@ -1736,7 +1781,10 @@
     /* WHY */
     .why-features { grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.6rem; }
     .feature-card { padding: 1.2rem; }
-    .why-img-slider { max-width: 100%; aspect-ratio: 3/2; }
+    /* Video testimoni mobile: aspect ratio vertikal lebih compact */
+    .why-video-wrap { max-height: 400px; aspect-ratio: 9/16; }
+    .play-circle { width: 52px; height: 52px; }
+    .play-circle svg { width: 22px; height: 22px; }
 
     /* PROCESS — vertical list */
     .process-steps {
@@ -2075,35 +2123,46 @@
     </div>
 
     <div class="why-visual reveal-right">
-      <div class="why-img-slider" id="whySlider">
-        <!-- GANTI FOTO: why-slide menggunakan foto produk asli -->
-        <div class="why-slide active">
-          <!-- GANTI: foto produk Rapunzel Serum di images/why/why-rapunzel.jpg -->
-          <img src="./images/rapunzelserum.jpeg" alt="Rapunzel Serum" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          
+
+      <!-- ════════════════════════════════════════════════════
+           VIDEO TESTIMONI — CARA GANTI VIDEO:
+           1. Upload file MP4 kamu ke folder: ./videos/
+           2. Ganti nilai src di tag <source> di bawah ini
+              Contoh: src="./videos/testimoni-baru.mp4"
+           3. Pastikan format file adalah .mp4 (H.264)
+           4. Resolusi ideal: 1080x1920 (vertikal/portrait)
+           Catatan: poster= adalah gambar thumbnail saat video belum diplay
+           Ganti juga poster: poster="./images/why/video-thumbnail.jpg"
+      ════════════════════════════════════════════════════ -->
+      <div class="why-video-wrap" id="whyVideoWrap">
+
+        <video
+          id="whyVideo"
+          playsinline
+          autoplay
+          loop
+          muted
+          preload="auto"
+          poster="./images/why/video-thumbnail.jpg"
+        >
+          <!-- GANTI src ini dengan path video MP4 testimoni kamu -->
+          <source src="./videos/testimoni.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video HTML5.
+        </video>
+
+        <!-- Play hint icon — hilang otomatis saat video playing -->
+        <div class="why-video-play-hint" id="whyPlayHint">
+          <div class="play-circle">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
         </div>
-        <div class="why-slide">
-          <!-- GANTI: foto produk Gel-Based Serum di images/why/why-gel.jpg -->
-          <img src="./images/extensionserum.jpeg" alt="Gel-Based Serum" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          
-        </div>
-        <div class="why-slide">
-          <!-- GANTI: foto produk Sensitive Formula di images/why/why-sensitive.jpg -->
-          <img src="./images/sensitifoil.jpeg" alt="Sensitive Formula" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          
-        </div>
-        <div class="why-slide">
-          <!-- GANTI: foto produk itCurl Curler di images/why/why-itcurl.jpg -->
-          <img src="./images/penjepitbulumata.jpeg" alt="itCurl Curler" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-         
-        </div>
+
+
+
       </div>
-      <div class="why-slide-dots" id="whyDots">
-        <div class="why-dot active" onclick="goToWhySlide(0)"></div>
-        <div class="why-dot" onclick="goToWhySlide(1)"></div>
-        <div class="why-dot" onclick="goToWhySlide(2)"></div>
-        <div class="why-dot" onclick="goToWhySlide(3)"></div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -2652,18 +2711,34 @@ const observer=new IntersectionObserver((entries)=>{
 },{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
 revealEls.forEach(el=>observer.observe(el));
 
-// ─── WHY SLIDER ───
-let whyIdx=0;
-const whySlides=document.querySelectorAll('.why-slide');
-const whyDots=document.querySelectorAll('.why-dot');
-function goToWhySlide(n){
-  whySlides[whyIdx].classList.remove('active');
-  whyDots[whyIdx].classList.remove('active');
-  whyIdx=n;
-  whySlides[whyIdx].classList.add('active');
-  whyDots[whyIdx].classList.add('active');
-}
-setInterval(()=>goToWhySlide((whyIdx+1)%whySlides.length), 5000);
+// ─── WHY VIDEO PLAYER ───
+// Autoplay muted otomatis saat halaman load & saat masuk viewport.
+// Muted diperlukan agar browser mengizinkan autoplay tanpa interaksi user.
+(function(){
+  const videoWrap = document.getElementById('whyVideoWrap');
+  const video     = document.getElementById('whyVideo');
+  if (!video || !videoWrap) return;
+
+  // Tandai langsung sebagai playing agar play hint tidak muncul
+  videoWrap.classList.add('playing');
+
+  // ── Fallback: play via IntersectionObserver jika autoplay HTML gagal ──
+  const playObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        video.play().then(() => {
+          videoWrap.classList.add('playing');
+        }).catch(() => {});
+      } else {
+        // Pause saat keluar viewport (hemat resource)
+        video.pause();
+        videoWrap.classList.remove('playing');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  playObserver.observe(videoWrap);
+})();
 
 // ─── ANIMATED COUNTERS & BARS ───
 function animateCounter(el, target, duration=1800){
