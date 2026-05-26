@@ -1050,21 +1050,20 @@
   .modal-close:hover { background: var(--pink); color: white; }
 
   /* ─────────────────────────────────────────────────────────
-     MODAL GRID
-     • Desktop: 2 kolom (foto kiri, info kanan)
-     • Mobile: 1 kolom (foto atas, info bawah)
+     MODAL GRID — Desktop: 2 kolom sejajar (foto | info)
+     Foto mengisi seluruh tinggi kolom kiri tanpa terpotong.
      ───────────────────────────────────────────────────────── */
   .modal-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    clear: both;                 /* bersihkan float dari .modal-close */
+    grid-template-columns: 1fr 1fr;   /* <-- EDIT: misal "55% 45%" jika foto lebih besar */
+    align-items: stretch;
+    clear: both;
   }
 
   /* ─────────────────────────────────────────────────────────
-     MODAL IMAGE AREA
+     MODAL IMAGE AREA — Desktop
+     • Tidak pakai aspect-ratio agar mengikuti tinggi konten info
      • object-fit: contain → foto tampil utuh, tidak terpotong
-     • min-height & aspect-ratio menjaga proporsi area foto
-     • Untuk mengubah ukuran area foto: edit min-height / aspect-ratio
      ───────────────────────────────────────────────────────── */
   .modal-img {
     background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
@@ -1073,13 +1072,12 @@
     justify-content: center;
     border-radius: 20px 0 0 20px;
     padding: 1.5rem;
-    min-height: 280px;
-    aspect-ratio: 1 / 1;       /* <-- EDIT untuk mengubah proporsi foto di modal */
+    min-height: 320px;
   }
   .modal-img img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;       /* contain = foto tidak terpotong */
+    max-height: 480px;                /* <-- EDIT: batas tinggi foto di desktop */
+    object-fit: contain;
     display: block;
   }
   .modal-info { padding:2rem 1.8rem 2rem 1.5rem; }
@@ -1771,8 +1769,8 @@
     .catalog-filter { gap: 0.35rem; }
     .filter-btn { padding: 0.4rem 0.9rem; font-size: 0.68rem; }
 
-    /* MODAL — bottom sheet di tablet */
-    .modal-drag-handle { display: block; }  /* tampilkan drag handle */
+    /* MODAL — bottom sheet di tablet & HP */
+    .modal-drag-handle { display: block; }
     .modal-overlay { align-items: flex-end; padding: 0; }
     .modal {
       max-width: 100%;
@@ -1780,17 +1778,24 @@
       max-height: 92svh;
     }
     /* 1 kolom: foto atas, info bawah */
-    .modal-grid { grid-template-columns: 1fr; }
+    .modal-grid {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
     .modal-close {
-      /* Di bottom sheet: tombol X di pojok kanan atas modal */
       position: absolute; top: 0.75rem; right: 0.75rem;
       float: none; margin: 0;
     }
+    /* Foto: tampil penuh secara portrait, tidak terpotong */
     .modal-img {
       border-radius: 20px 20px 0 0;
-      min-height: 220px;           /* <-- EDIT untuk tinggi foto di tablet */
-      aspect-ratio: 16 / 9;        /* <-- Lebih landscape di tablet */
-      padding: 1.5rem;
+      min-height: unset;
+      padding: 1.5rem 2rem;
+    }
+    .modal-img img {
+      max-height: 300px;           /* <-- EDIT: tinggi foto di tablet */
+      width: 100%;
+      object-fit: contain;
     }
     .modal-info { padding: 1.4rem 1.4rem 2rem; }
 
@@ -1940,24 +1945,28 @@
     footer { padding: 3rem 5% 2rem; }
     .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; font-size: 0.65rem; }
 
-    /* MODAL */
+    /* MODAL di HP kecil */
     .modal-info { padding: 1.2rem 1.2rem 2.5rem; }
     .modal-name { font-size: 1.3rem; }
     .modal-price { font-size: 1.3rem; }
     .modal-desc { font-size: 0.75rem; }
     .modal-benefit { font-size: 0.7rem; }
-    /* Tombol beli lebih besar di HP agar mudah diklik */
+    /* Tombol beli lebih besar agar mudah diklik di HP */
     .modal-shopee-btn {
       padding: 1rem;
       font-size: 0.85rem;
       border-radius: 12px;
-      min-height: 52px;          /* touch target minimal 48px */
+      min-height: 52px;
     }
-    /* Foto modal di HP: kotak, pas */
+    /* Foto modal di HP: tinggi otomatis mengikuti foto, tidak terpotong */
     .modal-img {
-      aspect-ratio: 1 / 1;      /* <-- Kembali kotak di HP kecil */
-      min-height: 180px;
-      padding: 1.2rem;
+      min-height: unset;
+      padding: 1.2rem 1.5rem;     /* <-- EDIT: padding "mat" di sekitar foto */
+    }
+    .modal-img img {
+      max-height: 260px;           /* <-- EDIT: tinggi foto di HP kecil */
+      width: 100%;
+      object-fit: contain;
     }
   }
 
