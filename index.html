@@ -936,10 +936,21 @@
     .product-card { flex:0 0 calc(25% - 0.75rem); }
   }
 
+  /* ─────────────────────────────────────────────────────────
+     PRODUCT CARD IMAGE
+     • aspect-ratio: ubah 1/1 → 4/5 agar gambar portrait muat
+     • object-fit: contain  → foto tidak terpotong sama sekali
+     • background tetap pink pale sebagai "mat"
+     Untuk mengubah rasio: ganti angka di aspect-ratio saja.
+     ───────────────────────────────────────────────────────── */
   .product-img-wrap {
-    position:relative;aspect-ratio:1;overflow:hidden;
-    background:linear-gradient(135deg,var(--pink-pale),rgba(232,115,154,0.15));
-    display:flex;align-items:center;justify-content:center;
+    position: relative;
+    aspect-ratio: 4 / 5;          /* <-- EDIT SINI untuk ubah rasio card */
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.15));
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .product-emoji { font-size:clamp(3rem,7vw,4.5rem);transition:transform 0.4s var(--ease); }
   .product-card:hover .product-emoji { transform:scale(1.12) rotate(-5deg); }
@@ -988,33 +999,88 @@
   }
   .carousel-dot.active { background:var(--pink);width:18px;border-radius:99px; }
 
-  /* ─── MODAL ─── */
+  /* Drag handle — bar abu kecil di atas modal (hanya terlihat di mobile) */
+  .modal-drag-handle {
+    display: none;               /* disembunyikan di desktop */
+    width: 40px; height: 4px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 99px;
+    margin: 10px auto 0;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     MODAL
+     • max-height: 92vh agar muat di layar kecil
+     • overflow-y: auto di modal, bukan di grid
+     ───────────────────────────────────────────────────────── */
   .modal-overlay {
-    position:fixed;inset:0;
-    background:rgba(217,26,107,0.45);
-    backdrop-filter:blur(8px);
-    z-index:2000;display:flex;align-items:center;justify-content:center;padding:1.5rem;
-    opacity:0;visibility:hidden;transition:all 0.4s;
+    position: fixed; inset: 0;
+    background: rgba(217,26,107,0.45);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; visibility: hidden; transition: all 0.4s;
   }
-  .modal-overlay.active { opacity:1;visibility:visible; }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+
   .modal {
-    background:var(--white);border-radius:20px;max-width:680px;width:100%;
-    max-height:88vh;overflow-y:auto;position:relative;
-    transform:scale(0.88) translateY(24px);transition:transform 0.4s var(--ease);
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 680px; width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.88) translateY(24px);
+    transition: transform 0.4s var(--ease);
   }
-  .modal-overlay.active .modal { transform:scale(1) translateY(0); }
+  .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
   .modal-close {
-    position:absolute;top:1rem;right:1rem;
-    width:34px;height:34px;background:var(--cream);border:none;border-radius:50%;
-    font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    transition:all 0.2s;z-index:1;
+    position: sticky;          /* sticky agar tetap terlihat saat scroll */
+    top: 0.75rem;
+    float: right;
+    margin: 0.75rem 0.75rem 0 0;
+    width: 34px; height: 34px;
+    background: var(--cream); border: none; border-radius: 50%;
+    font-size: 0.95rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; z-index: 10;
   }
-  .modal-close:hover { background:var(--pink);color:white; }
-  .modal-grid { display:grid;grid-template-columns:1fr 1fr; }
+  .modal-close:hover { background: var(--pink); color: white; }
+
+  /* ─────────────────────────────────────────────────────────
+     MODAL GRID
+     • Desktop: 2 kolom (foto kiri, info kanan)
+     • Mobile: 1 kolom (foto atas, info bawah)
+     ───────────────────────────────────────────────────────── */
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    clear: both;                 /* bersihkan float dari .modal-close */
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     MODAL IMAGE AREA
+     • object-fit: contain → foto tampil utuh, tidak terpotong
+     • min-height & aspect-ratio menjaga proporsi area foto
+     • Untuk mengubah ukuran area foto: edit min-height / aspect-ratio
+     ───────────────────────────────────────────────────────── */
   .modal-img {
-    background:linear-gradient(135deg,var(--pink-pale),rgba(232,115,154,0.2));
-    display:flex;align-items:center;justify-content:center;font-size:6rem;
-    border-radius:20px 0 0 20px;padding:2rem;min-height:280px;
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px 0 0 20px;
+    padding: 1.5rem;
+    min-height: 280px;
+    aspect-ratio: 1 / 1;       /* <-- EDIT untuk mengubah proporsi foto di modal */
+  }
+  .modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* contain = foto tidak terpotong */
+    display: block;
   }
   .modal-info { padding:2rem 1.8rem 2rem 1.5rem; }
   .modal-cat { font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--pink);font-weight:700; }
@@ -1705,11 +1771,27 @@
     .catalog-filter { gap: 0.35rem; }
     .filter-btn { padding: 0.4rem 0.9rem; font-size: 0.68rem; }
 
-    /* MODAL — bottom sheet */
+    /* MODAL — bottom sheet di tablet */
+    .modal-drag-handle { display: block; }  /* tampilkan drag handle */
     .modal-overlay { align-items: flex-end; padding: 0; }
-    .modal { max-width: 100%; border-radius: 20px 20px 0 0; max-height: 92svh; }
+    .modal {
+      max-width: 100%;
+      border-radius: 20px 20px 0 0;
+      max-height: 92svh;
+    }
+    /* 1 kolom: foto atas, info bawah */
     .modal-grid { grid-template-columns: 1fr; }
-    .modal-img { border-radius: 20px 20px 0 0; min-height: 180px; font-size: 5rem; }
+    .modal-close {
+      /* Di bottom sheet: tombol X di pojok kanan atas modal */
+      position: absolute; top: 0.75rem; right: 0.75rem;
+      float: none; margin: 0;
+    }
+    .modal-img {
+      border-radius: 20px 20px 0 0;
+      min-height: 220px;           /* <-- EDIT untuk tinggi foto di tablet */
+      aspect-ratio: 16 / 9;        /* <-- Lebih landscape di tablet */
+      padding: 1.5rem;
+    }
     .modal-info { padding: 1.4rem 1.4rem 2rem; }
 
     /* QUIZ */
@@ -1864,7 +1946,19 @@
     .modal-price { font-size: 1.3rem; }
     .modal-desc { font-size: 0.75rem; }
     .modal-benefit { font-size: 0.7rem; }
-    .modal-shopee-btn { padding: 0.85rem; font-size: 0.78rem; }
+    /* Tombol beli lebih besar di HP agar mudah diklik */
+    .modal-shopee-btn {
+      padding: 1rem;
+      font-size: 0.85rem;
+      border-radius: 12px;
+      min-height: 52px;          /* touch target minimal 48px */
+    }
+    /* Foto modal di HP: kotak, pas */
+    .modal-img {
+      aspect-ratio: 1 / 1;      /* <-- Kembali kotak di HP kecil */
+      min-height: 180px;
+      padding: 1.2rem;
+    }
   }
 
   /* ══════════════════════════════════════════
@@ -2195,6 +2289,11 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
+    <!--
+      Drag handle bar — hanya tampil di mobile (bottom sheet)
+      Memudahkan user tahu modal bisa di-swipe/ditap untuk tutup
+    -->
+    <div class="modal-drag-handle" aria-hidden="true"></div>
     <button class="modal-close" onclick="closeModalBtn()">&#x2715;</button>
     <div class="modal-grid">
       <div class="modal-img" id="modalImg"></div>
@@ -2812,8 +2911,20 @@ function renderCarousel(){
   track.innerHTML=filteredProducts.map(p=>`
     <div class="product-card" onclick="openModal(${p.id})">
       <div class="product-img-wrap">
-        <!-- Foto produk: ganti p.emoji dengan p.img di data produk di bawah -->
-        <img src="${p.img}" alt="${p.name}" class="product-emoji" style="width:60%;height:60%;object-fit:contain;display:block;margin:auto;">
+        <!--
+          FOTO PRODUK DI CARD:
+          - object-fit:contain  → foto tidak terpotong, tampil penuh
+          - width/height 100%   → mengisi area card sepenuhnya
+          - background pink pale sudah diset di CSS .product-img-wrap
+          Untuk ganti foto: edit field "img" di data produk di atas
+        -->
+        <img
+          src="${p.img}"
+          alt="${p.name}"
+          loading="lazy"
+          style="width:100%;height:100%;object-fit:contain;display:block;"
+          onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\\'font-size:3.5rem;line-height:1;\\'>${p.emoji}</div>';"
+        >
         <div class="product-badge ${p.badgeClass}">${p.badge}</div>
       </div>
       <div class="product-info">
@@ -2908,14 +3019,22 @@ renderCarousel();
 function openModal(id){
   const p=products.find(x=>x.id===id);
   if(!p) return;
-  // GANTI: tampilkan foto produk di modal
+
+  // ── Tampilkan foto produk di area modal ──
+  // object-fit:contain = foto tampil penuh, tidak terpotong
   const modalImgEl = document.getElementById('modalImg');
-  modalImgEl.innerHTML = ''; // kosongkan
-  const mImg = document.createElement('img');
-  mImg.src = p.img; // field img di data produk
-  mImg.alt = p.fullName;
-  mImg.style.cssText = 'width:100%;height:100%;object-fit:contain;padding:1.5rem;';
-  modalImgEl.appendChild(mImg);
+  modalImgEl.innerHTML = '';
+  if(p.img){
+    const mImg = document.createElement('img');
+    mImg.src = p.img;
+    mImg.alt = p.fullName;
+    // Styling via CSS class, bukan inline — lebih mudah diedit di CSS
+    modalImgEl.appendChild(mImg);
+  } else {
+    // Fallback emoji jika tidak ada foto
+    modalImgEl.textContent = p.emoji || '📦';
+    modalImgEl.style.fontSize = '5rem';
+  }
   document.getElementById('modalCat').textContent=p.catLabel;
   document.getElementById('modalName').textContent=p.fullName;
   document.getElementById('modalRating').textContent=' '+p.rating;
