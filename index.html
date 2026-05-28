@@ -1532,16 +1532,19 @@
 
   /* ─── CTA ─── */
   #cta {
-    background:linear-gradient(135deg, #FF4D94 0%, #D91A6B 50%, #FF85C0 100%);
+    background:linear-gradient(135deg, #c4005a 0%, #a8004d 50%, #e0006a 100%);
     color:var(--white);text-align:center;padding:6.5rem 5%;position:relative;overflow:hidden;
   }
   #cta::before {
     content:'';position:absolute;inset:0;
-    background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(232,115,154,0.2),transparent);
+    background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(0,0,0,0.12),transparent);
   }
-  #cta .section-title { color:var(--white); }
-  #cta .section-label { color:rgba(255,255,255,0.92); }
-  .cta-desc { font-size:0.95rem;color:rgba(255,255,255,0.88);line-height:1.8;max-width:480px;margin:0 auto 2rem; }
+  #cta .section-title { color:#fff; text-shadow: 0 1px 4px rgba(0,0,0,0.18); }
+  #cta .section-title em { color: #ffd6ea; font-style:italic; -webkit-text-stroke: 0; }
+  #cta .section-label { color: #ffd6ea; letter-spacing:0.4em; font-weight:800; }
+  .cta-title-fix { color: #fff !important; }
+  .cta-title-fix em { color: #ffd6ea !important; -webkit-text-stroke: 0 !important; }
+  .cta-desc { font-size:0.95rem;color:rgba(255,255,255,0.95);line-height:1.8;max-width:480px;margin:0 auto 2rem; text-shadow: 0 1px 3px rgba(0,0,0,0.15); }
 
   /* ─── CTA AWARDS STRIP ─── */
   .cta-awards-strip {
@@ -1552,8 +1555,8 @@
     flex-wrap: wrap;
     margin: 0 auto 2.2rem;
     padding: 1.2rem 2rem;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 16px;
     backdrop-filter: blur(8px);
     max-width: 640px;
@@ -1562,9 +1565,9 @@
     display: flex;
     align-items: center;
     gap: 0.55rem;
-    color: rgba(255,255,255,0.85);
+    color: #fff;
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.03em;
     white-space: nowrap;
   }
@@ -1592,8 +1595,8 @@
     gap: 0;
     margin: 0 auto 2rem;
     max-width: 520px;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
     border-radius: 14px;
     overflow: hidden;
   }
@@ -1601,17 +1604,18 @@
     flex: 1;
     padding: 1.1rem 0.8rem;
     text-align: center;
-    border-right: 1px solid rgba(255,255,255,0.25);
+    border-right: 1px solid rgba(255,255,255,0.2);
   }
   .cta-mini-stat:last-child { border-right: none; }
   .cta-mini-num {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 1.6rem; font-weight: 900; font-style: italic;
-    color: white; line-height: 1;
+    color: #fff; line-height: 1;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
   .cta-mini-label {
     font-size: 0.57rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.78); font-weight: 600; margin-top: 0.2rem;
+    color: #ffd6ea; font-weight: 700; margin-top: 0.2rem;
   }
 
   /* ─── CTA GUARANTEE BADGE ─── */
@@ -1622,12 +1626,13 @@
     gap: 0.5rem;
     margin: 1.6rem auto 0;
     font-size: 0.7rem;
-    color: rgba(255,255,255,0.75);
+    color: #ffd6ea;
     letter-spacing: 0.05em;
+    font-weight: 600;
   }
   .cta-guarantee-dot {
     width: 4px; height: 4px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.5);
     border-radius: 50%;
   }
 
@@ -2774,24 +2779,24 @@
 <section id="cta">
   <div class="reveal" style="position:relative;z-index:1">
     <div class="section-label">Ribuan Sudah Buktikan</div>
-    <h2 class="section-title" style="margin:0 auto 0.8rem;max-width:600px;color:var(--white)">Bulu Mata Impianmu<br><em>Dimulai Malam Ini</em></h2>
+    <h2 class="section-title cta-title-fix" style="margin:0 auto 0.8rem;max-width:600px;">Bulu Mata Impianmu<br><em>Dimulai Malam Ini</em></h2>
     <p class="cta-desc">Lebih dari 50.000 perempuan Indonesia sudah merasakan sendiri hasilnya — bulu mata lebih tebal, lebih panjang, dalam 2 minggu pertama.</p>
 
     <!-- Awards strip -->
     <div class="cta-awards-strip reveal">
       <div class="award-pill">
         <div class="award-pill-icon">★</div>
-        <span>Popbela Beauty Awards 2025<br><span style="color:rgba(255,255,255,0.82);font-weight:400">Best Eyelashes Product</span></span>
+        <span>Popbela Beauty Awards 2025<br><span style="color:#ffd6ea;font-weight:500">Best Eyelashes Product</span></span>
       </div>
       <div class="award-pill-sep"></div>
       <div class="award-pill">
         <div class="award-pill-icon">★</div>
-        <span>Sociolla Award 2025<br><span style="color:rgba(255,255,255,0.82);font-weight:400">Best Lash Serum</span></span>
+        <span>Sociolla Award 2025<br><span style="color:#ffd6ea;font-weight:500">Best Lash Serum</span></span>
       </div>
       <div class="award-pill-sep"></div>
       <div class="award-pill">
         <div class="award-pill-icon" style="font-size:0.6rem;letter-spacing:0">No.1</div>
-        <span>BPOM &amp; Halal MUI<br><span style="color:rgba(255,255,255,0.82);font-weight:400">Certified Indonesia</span></span>
+        <span>BPOM &amp; Halal MUI<br><span style="color:#ffd6ea;font-weight:500">Certified Indonesia</span></span>
       </div>
     </div>
 
