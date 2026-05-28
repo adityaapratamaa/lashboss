@@ -1848,46 +1848,54 @@
       width: 100%;
       max-width: 100%;
     }
-    /* IMAGE FIRST — takes top portion of screen */
+    /* IMAGE FIRST — full width, foto tidak terpotong */
     .hero-visual {
       order: 1;
       flex: 0 0 auto;
       width: 100%;
       align-self: auto;
       display: flex;
-      align-items: flex-end;
+      align-items: flex-start;
       justify-content: center;
       /* ═══════════════════════════════════════════════════
          📱 TINGGI AREA GAMBAR — MOBILE
-         Ubah angka svh di bawah untuk atur seberapa besar
-         gambar produk di hero section (layar HP):
+         Ubah angka svh untuk atur tinggi area gambar di HP:
          • 52svh → kecil
-         • 58svh → medium (default)
-         • 64svh → besar
-         • 70svh → sangat besar (teks makin mepet bawah)
+         • 62svh → medium (default)
+         • 70svh → besar
+         • 78svh → sangat besar
       ═══════════════════════════════════════════════════ */
-      height: 64svh;
-      min-height: 320px;
-      padding: 50px 5% 0;
+      height: 62svh;
+      min-height: 340px;
+      /* ═══════════════════════════════════════════════════
+         📐 PADDING KIRI-KANAN GAMBAR — MOBILE
+         Ubah angka px untuk atur jarak gambar ke tepi layar:
+         • 0px   → full bleed / tanpa jarak (maksimal lebar)
+         • 12px  → sedikit margin kiri-kanan (default)
+         • 24px  → margin sedang
+      ═══════════════════════════════════════════════════ */
+      padding: 68px 12px 0;
       overflow: visible;
     }
     .hero-slider {
-      width: 100%;
       /* ═══════════════════════════════════════════════════
-         📏 LEBAR MAKSIMUM GAMBAR — MOBILE
-         Ubah max-width untuk atur lebar kartu gambar:
-         • 300px → sempit
-         • 360px → medium (default)
-         • 400px → lebar
-         • 100%  → penuh layar
+         📏 LEBAR GAMBAR — MOBILE
+         • 100% → mengikuti lebar area (disarankan)
       ═══════════════════════════════════════════════════ */
-      max-width: 400px;
+      width: 100%;
+      max-width: 100%;
       height: 100%;
       min-height: 0;
       max-height: none;
     }
-    /* Semua sudut rounded agar gambar tidak terpotong */
-    .hero-slider-inner { border-radius: 20px; }
+    /* Rounded semua sisi agar gambar rapi */
+    .hero-slider-inner { border-radius: 18px; }
+    /* Foto tidak terpotong di mobile — tampil penuh */
+    .hero-slide img {
+      object-fit: contain;
+      object-position: center top;
+      background: transparent;
+    }
     /* TEXT BELOW — compact, centered */
     .hero-text {
       order: 2;
