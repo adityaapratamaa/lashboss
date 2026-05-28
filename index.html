@@ -524,7 +524,7 @@
     position: relative;
     padding-top: 80px;
     align-self: stretch;
-    overflow: hidden; /* clip card that extends below viewport */
+    overflow: visible; /* tidak dipotong — gambar tampil penuh tanpa blur/fade bawah */
   }
 
   .hero-slider {
@@ -1834,7 +1834,7 @@
     .hamburger { display: flex; }
 
     /* HERO */
-    #hero { min-height: 100svh; overflow: hidden; }
+    #hero { min-height: 100svh; overflow: visible; }
     .hero-bg {
       background: radial-gradient(ellipse 100% 80% at 50% 20%, #ffb8d5 0%, #f472a8 35%, #e8579a 65%, #c93c7a 100%) !important;
     }
@@ -1866,7 +1866,7 @@
          • 64svh → besar
          • 70svh → sangat besar (teks makin mepet bawah)
       ═══════════════════════════════════════════════════ */
-      height: 64svh;
+      height: 58svh;
       min-height: 320px;
       padding: 72px 5% 0;
       overflow: visible;
@@ -1881,7 +1881,7 @@
          • 400px → lebar
          • 100%  → penuh layar
       ═══════════════════════════════════════════════════ */
-      max-width: 400px;
+      max-width: 360px;
       height: 100%;
       min-height: 0;
       max-height: none;
