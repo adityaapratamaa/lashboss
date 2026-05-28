@@ -535,6 +535,8 @@
     max-height: 720px;
     min-height: 400px;
     perspective: 1000px;
+    /* Fix: dots harus anchor ke wrapper ini */
+    isolation: isolate;
   }
 
   /* card stack — subtle rotated layers */
@@ -551,6 +553,8 @@
     z-index: 1;
     box-shadow: 0 24px 64px rgba(140, 20, 70, 0.4),
                 0 0 0 1px rgba(255,255,255,0.3) inset;
+    /* Fix: dots harus di-clip tapi tetap tampil di dalam */
+    contain: layout;
   }
 
   .hero-slide {
@@ -622,14 +626,16 @@
   will-change: transform;
 }
 
-  /* Hero dots */
+  /* Hero dots — anchor ke dalam slider card */
   .hero-dots {
     position: absolute;
-    bottom: 2.2rem; left: 50%;
+    bottom: 1.4rem; left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 0.5rem;
     z-index: 10;
+    /* Fix: pastikan dots berada di atas slides */
+    pointer-events: auto;
   }
   .hero-dot {
     width: 6px; height: 6px;
@@ -2406,6 +2412,9 @@
       <div class="hero-slide">
         <img src="./images/product5.jpeg" alt="LashBoss Product 5">
       </div>
+
+      <!-- Dots dipindah ke DALAM slider-inner agar anchor benar -->
+      <div class="hero-dots"></div>
 
     </div>
   </div>
