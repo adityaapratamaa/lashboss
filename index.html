@@ -531,11 +531,11 @@
     position: relative;
     width: 100%;
     max-width: 100%;
-    height: calc(100svh - 80px);
-    max-height: 720px;
-    min-height: 400px;
+    height: auto;
+    min-height: unset;
+    max-height: unset;
     perspective: 1000px;
-  }
+}
 
   /* card stack — subtle rotated layers */
   .hero-slider::before,
@@ -545,7 +545,7 @@
   .hero-slider-inner {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
     border-radius: 20px;
     overflow: hidden;
     z-index: 1;
@@ -557,7 +557,7 @@
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 0;
     transition: none;
     transform: scale(1.04);
