@@ -1848,49 +1848,40 @@
       width: 100%;
       max-width: 100%;
     }
-    /* IMAGE FIRST — full width, foto tidak terpotong */
+    /* ─── IMAGE HERO MOBILE ───
+       Gambar mulai tepat di bawah navbar, lebar penuh, tidak terpotong.
+
+       📱 ATUR UKURAN — ubah nilai berikut sesuai kebutuhan:
+       ┌─────────────────────────────────────────────────────────┐
+       │ height (baris ~+10)  → tinggi area gambar               │
+       │   • 55svh = sedang  • 65svh = besar  • 75svh = XL      │
+       │                                                         │
+       │ padding kiri-kanan (baris ~+14)                         │
+       │   • 0px = full bleed  • 10px = sedikit jarak            │
+       └─────────────────────────────────────────────────────────┘
+    */
     .hero-visual {
       order: 1;
       flex: 0 0 auto;
       width: 100%;
-      align-self: auto;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      /* ═══════════════════════════════════════════════════
-         📱 TINGGI AREA GAMBAR — MOBILE
-         Ubah angka svh untuk atur tinggi area gambar di HP:
-         • 52svh → kecil
-         • 62svh → medium (default)
-         • 70svh → besar
-         • 78svh → sangat besar
-      ═══════════════════════════════════════════════════ */
-      height: 100svh;
-      min-height: 700px;
-      /* ═══════════════════════════════════════════════════
-         📐 PADDING KIRI-KANAN GAMBAR — MOBILE
-         Ubah angka px untuk atur jarak gambar ke tepi layar:
-         • 0px   → full bleed / tanpa jarak (maksimal lebar)
-         • 12px  → sedikit margin kiri-kanan (default)
-         • 24px  → margin sedang
-      ═══════════════════════════════════════════════════ */
-      padding: 68px 24px 0;
+      height: 65svh;           /* ← ubah tinggi gambar di sini */
+      min-height: 360px;
+      padding: 60px 10px 0;    /* 60px = tinggi navbar · 10px = margin kiri-kanan */
       overflow: visible;
+      box-sizing: border-box;
     }
     .hero-slider {
-      /* ═══════════════════════════════════════════════════
-         📏 LEBAR GAMBAR — MOBILE
-         • 100% → mengikuti lebar area (disarankan)
-      ═══════════════════════════════════════════════════ */
       width: 100%;
-      max-width: 100%;
+      max-width: 100%;         /* full lebar area */
       height: 100%;
       min-height: 0;
       max-height: none;
     }
-    /* Rounded semua sisi agar gambar rapi */
-    .hero-slider-inner { border-radius: 18px; }
-    /* Foto tidak terpotong di mobile — tampil penuh */
+    .hero-slider-inner { border-radius: 16px; }
+    /* object-fit: contain = foto tampil penuh, tidak ada yang terpotong */
     .hero-slide img {
       object-fit: contain;
       object-position: center top;
