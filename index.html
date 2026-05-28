@@ -1848,7 +1848,7 @@
       width: 100%;
       max-width: 100%;
     }
-    /* IMAGE FIRST — takes top 48% of screen */
+    /* IMAGE FIRST — takes top portion of screen */
     .hero-visual {
       order: 1;
       flex: 0 0 auto;
@@ -1857,19 +1857,37 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding: 0 8% 0;
-      overflow: hidden;
-      height: 48svh;
-      min-height: 280px;
+      /* ═══════════════════════════════════════════════════
+         📱 TINGGI AREA GAMBAR — MOBILE
+         Ubah angka svh di bawah untuk atur seberapa besar
+         gambar produk di hero section (layar HP):
+         • 52svh → kecil
+         • 58svh → medium (default)
+         • 64svh → besar
+         • 70svh → sangat besar (teks makin mepet bawah)
+      ═══════════════════════════════════════════════════ */
+      height: 58svh;
+      min-height: 320px;
+      padding: 72px 5% 0;
+      overflow: visible;
     }
     .hero-slider {
       width: 100%;
-      max-width: 320px;
+      /* ═══════════════════════════════════════════════════
+         📏 LEBAR MAKSIMUM GAMBAR — MOBILE
+         Ubah max-width untuk atur lebar kartu gambar:
+         • 300px → sempit
+         • 360px → medium (default)
+         • 400px → lebar
+         • 100%  → penuh layar
+      ═══════════════════════════════════════════════════ */
+      max-width: 360px;
       height: 100%;
       min-height: 0;
       max-height: none;
     }
-    .hero-slider-inner { border-radius: 16px 16px 0 0; }
+    /* Semua sudut rounded agar gambar tidak terpotong */
+    .hero-slider-inner { border-radius: 20px; }
     /* TEXT BELOW — compact, centered */
     .hero-text {
       order: 2;
