@@ -894,7 +894,7 @@
 
   /* ─── PRODUCTS ─── */
   #catalog { background:var(--white); }
-  .catalog-header { display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem; }
+  .catalog-header { display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:0.8rem; }
   .catalog-filter { display:flex;gap:0.4rem;flex-wrap:wrap; }
   .filter-btn {
     padding:0.45rem 1.1rem;border-radius:99px;
@@ -904,37 +904,60 @@
   }
   .filter-btn.active,.filter-btn:hover { background:var(--pink);color:var(--white);border-color:var(--pink); }
 
+  /* ── Native scroll-snap container (Sociolla style) ── */
   .products-scroll-wrap {
     position: relative;
-    overflow: visible;
-    padding: 0 24px;
+    /* Side arrows need overflow:visible on outer, inner handles clip */
   }
+
   .products-track-container {
-    overflow: hidden;
-    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* side padding agar peek kartu berikutnya terlihat */
+    padding: 0.5rem 0 1.2rem;
   }
+  .products-track-container::-webkit-scrollbar { display: none; }
+
   .products-track {
     display: flex;
     gap: 1rem;
-    transition: transform 0.5s var(--ease);
-    will-change: transform;
+    /* no translateX needed — native scroll handles it */
+  }
+
+  /* Kartu harus punya padding kiri di awal dan kanan di akhir agar
+     kartu pertama/terakhir tidak nyangkut di tepi */
+  .products-track::before,
+  .products-track::after {
+    content: '';
+    flex: 0 0 0;
   }
 
   .product-card {
-    flex: 0 0 calc(50% - 0.5rem);
+    /* Desktop default: 4 per row */
+    flex: 0 0 calc(25% - 0.75rem);
+    scroll-snap-align: start;
     background:var(--cream);border-radius:var(--radius);
     overflow:hidden;cursor:pointer;
-    transition:all 0.4s var(--ease);
+    transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
     border:1px solid rgba(232,115,154,0.08);
     min-width: 0;
   }
-  .product-card:hover { transform:translateY(-6px);box-shadow:0 20px 50px rgba(232,115,154,0.2); }
+  .product-card:hover { transform:translateY(-4px);box-shadow:0 16px 40px rgba(232,115,154,0.2); }
 
-  @media (min-width:768px) {
-    .product-card { flex:0 0 calc(33.333% - 0.67rem); }
+  @media (max-width:1099px) {
+    .product-card { flex: 0 0 calc(33.333% - 0.67rem); }
   }
-  @media (min-width:1100px) {
-    .product-card { flex:0 0 calc(25% - 0.75rem); }
+  @media (max-width:767px) {
+    /* Tablet: ~2.2 kartu terlihat — terasa seperti carousel */
+    .product-card { flex: 0 0 calc(50% - 0.75rem); }
+  }
+  @media (max-width:599px) {
+    /* Mobile: ~1.4 kartu terlihat — Sociolla style */
+    .product-card { flex: 0 0 calc(72% - 0.5rem); max-width: 260px; }
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -984,20 +1007,21 @@
   .product-buy-btn:hover { background:var(--pink-deep);transform:scale(1.05); }
 
   .carousel-nav {
-    display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.8rem;
+    display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:0.8rem;
   }
   .carousel-btn {
-    width:40px;height:40px;border-radius:50%;
+    width:38px;height:38px;border-radius:50%;
     border:1.5px solid rgba(232,115,154,0.25);background:var(--white);
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;transition:all 0.3s;font-size:1rem;color:var(--pink-deep);
+    flex-shrink: 0;
   }
   .carousel-btn:hover { background:var(--pink);color:var(--white);border-color:var(--pink); }
 
-  /* Floating side arrows on the catalog track */
+  /* Floating side arrows — desktop only */
   .carousel-side-arrow {
     position: absolute;
-    top: 50%; transform: translateY(-50%);
+    top: 42%; transform: translateY(-50%);
     width: 44px; height: 44px;
     background: var(--white);
     border: 1.5px solid rgba(232,115,154,0.25);
@@ -1010,12 +1034,11 @@
     z-index: 10;
   }
   .carousel-side-arrow:hover { background: var(--pink); color: white; border-color: var(--pink); transform: translateY(-50%) scale(1.08); }
-  .carousel-side-prev { left: -22px; }
-  .carousel-side-next { right: -22px; }
-  @media(max-width:768px){
-    .carousel-side-prev { left: -10px; }
-    .carousel-side-next { right: -10px; }
-    .carousel-side-arrow { width: 36px; height: 36px; font-size: 1.1rem; }
+  .carousel-side-prev { left: -18px; }
+  .carousel-side-next { right: -18px; }
+  @media(max-width:767px){
+    /* Mobile: native swipe cukup, sembunyikan floating arrows */
+    .carousel-side-arrow { display: none; }
   }
   .carousel-dots-wrap { display:flex;gap:0.4rem; }
   .carousel-dot {
@@ -1318,7 +1341,14 @@
     border-radius:var(--radius);transition:all 0.4s;text-align:center;
   }
   .cert-card:hover { border-color:var(--pink);background:var(--pink-pale);transform:translateY(-4px); }
-  .cert-icon { font-size:2.2rem;margin-bottom:0.7rem; }
+  /* Fix cert-icon untuk elemen <img> agar tidak melar saat gagal load */
+  .cert-icon {
+    display: block;
+    width: 64px; height: 64px;
+    object-fit: contain;
+    margin: 0 auto 0.7rem;
+    font-size: 0; /* sembunyikan alt text fallback */
+  }
   .cert-title { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:1rem;color:var(--dark);margin-bottom:0.3rem; }
   .cert-desc { font-size:0.72rem;color:var(--text-light);line-height:1.6; }
 
@@ -1932,6 +1962,8 @@
 
     /* CERTIFICATIONS */
     .cert-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .cert-card { padding: 1.4rem 1rem; }
+    .cert-icon { width: 48px; height: 48px; }
 
     /* FOOTER */
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -2000,8 +2032,7 @@
     .step-title { text-align: left; }
     .step-desc { text-align: left; }
 
-    /* PRODUCTS */
-    .product-card { flex: 0 0 76vw !important; max-width: 280px; }
+    /* PRODUCTS — ukuran dihandle oleh CSS card breakpoints */
 
     /* TESTIMONIALS */
     .testi-card { flex: 0 0 82vw !important; }
@@ -2044,8 +2075,12 @@
     .marketplace-icon { font-size: 1.7rem; }
     .marketplace-name { font-size: 0.82rem; }
 
-    /* CERTIFICATIONS */
-    .cert-card { padding: 1.3rem 0.8rem; }
+    /* CERTIFICATIONS — 1 kolom di HP kecil */
+    .cert-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 1.5rem; }
+    .cert-card { padding: 1.1rem 0.8rem; }
+    .cert-icon { width: 40px; height: 40px; margin-bottom: 0.5rem; }
+    .cert-title { font-size: 0.85rem; }
+    .cert-desc { font-size: 0.65rem; }
 
     /* FOOTER */
     .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
@@ -3237,41 +3272,33 @@ const products=[
   },
 ];
 
-// ─── CAROUSEL STATE ───
+// ─── CAROUSEL — Native Scroll (Sociolla style) ───
 let currentFilter='all';
-let carouselIdx=0;
 let filteredProducts=[];
-let cardsPerPage=2;
 
-function getCardsPerPage(){
+function getCardsPerView(){
   if(window.innerWidth>=1100) return 4;
   if(window.innerWidth>=768) return 3;
-  return 2;
+  if(window.innerWidth>=600) return 2;
+  return 1.4; // mobile: show 1.4 cards
 }
 
 function filterProducts(cat,btn){
   currentFilter=cat;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  carouselIdx=0;
   renderCarousel();
+  // Reset scroll position
+  const c=document.getElementById('productsTrackContainer');
+  if(c) c.scrollLeft=0;
 }
 
 function renderCarousel(){
   filteredProducts=currentFilter==='all'?products:products.filter(p=>p.cat===currentFilter);
-  cardsPerPage=getCardsPerPage();
-  const totalPages=Math.ceil(filteredProducts.length/cardsPerPage);
   const track=document.getElementById('productsTrack');
   track.innerHTML=filteredProducts.map(p=>`
     <div class="product-card" onclick="openModal(${p.id})">
       <div class="product-img-wrap">
-        <!--
-          FOTO PRODUK DI CARD:
-          - object-fit:contain  → foto tidak terpotong, tampil penuh
-          - width/height 100%   → mengisi area card sepenuhnya
-          - background pink pale sudah diset di CSS .product-img-wrap
-          Untuk ganti foto: edit field "img" di data produk di atas
-        -->
         <img
           src="${p.img}"
           alt="${p.name}"
@@ -3293,79 +3320,57 @@ function renderCarousel(){
       </div>
     </div>
   `).join('');
-  const dotsWrap=document.getElementById('carouselDots');
-  dotsWrap.innerHTML=Array.from({length:totalPages},(_,i)=>`<div class="carousel-dot${i===carouselIdx?' active':''}" onclick="goToPage(${i})"></div>`).join('');
-  updateCarouselPosition();
+
+  // Buat dots berdasarkan jumlah produk
+  const totalDots = filteredProducts.length;
+  const dotsWrap = document.getElementById('carouselDots');
+  dotsWrap.innerHTML = Array.from({length: totalDots}, (_,i) =>
+    `<div class="carousel-dot${i===0?' active':''}" onclick="carouselScrollToCard(${i})"></div>`
+  ).join('');
+
+  // Update dots saat scroll
+  updateDotFromScroll();
 }
 
-function updateCarouselPosition(){
-  cardsPerPage=getCardsPerPage();
-  const track=document.getElementById('productsTrack');
-  const cardEl=track.querySelector('.product-card');
-  if(!cardEl) return;
-  const totalPages=Math.ceil(filteredProducts.length/cardsPerPage);
-  if(carouselIdx>=totalPages) carouselIdx=totalPages-1;
-  if(carouselIdx<0) carouselIdx=0;
-  const gap=16;
-  const containerW=track.parentElement.offsetWidth;
-  const cardWidth=(containerW-(cardsPerPage-1)*gap)/cardsPerPage;
-  const offset=carouselIdx*(cardWidth*cardsPerPage+(cardsPerPage)*gap);
-  track.style.transform=`translateX(-${offset}px)`;
-  document.querySelectorAll('.carousel-dot').forEach((d,i)=>{d.classList.toggle('active',i===carouselIdx);});
+function getCardScrollWidth(){
+  const container = document.getElementById('productsTrackContainer');
+  const card = container && container.querySelector('.product-card');
+  if (!card) return 0;
+  return card.offsetWidth + 16; // card + gap
 }
 
-function goToPage(n){ carouselIdx=n; updateCarouselPosition(); }
+function carouselScrollToCard(idx){
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  container.scrollTo({ left: idx * getCardScrollWidth(), behavior: 'smooth' });
+}
+
 function carouselPrev(){
-  const totalPages=Math.ceil(filteredProducts.length/getCardsPerPage());
-  carouselIdx=(carouselIdx-1+totalPages)%totalPages;
-  updateCarouselPosition();
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  container.scrollBy({ left: -getCardScrollWidth(), behavior: 'smooth' });
 }
 function carouselNext(){
-  const totalPages=Math.ceil(filteredProducts.length/getCardsPerPage());
-  carouselIdx=(carouselIdx+1)%totalPages;
-  updateCarouselPosition();
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  container.scrollBy({ left: getCardScrollWidth(), behavior: 'smooth' });
 }
-window.addEventListener('resize',()=>{ carouselIdx=0; renderCarousel(); });
+function goToPage(n){ carouselScrollToCard(n); }
+
+// Dots sync saat scroll
+function updateDotFromScroll(){
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  container.addEventListener('scroll', () => {
+    const scrollW = getCardScrollWidth();
+    if (scrollW < 1) return;
+    const idx = Math.round(container.scrollLeft / scrollW);
+    document.querySelectorAll('.carousel-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+  }, { passive: true });
+}
+
+window.addEventListener('resize', renderCarousel);
 renderCarousel();
-
-// ─── PRODUCT TOUCH SWIPE ───
-(function(){
-  const container=document.getElementById('productsTrackContainer');
-  if(!container) return;
-  let startX=0,startScrollX=0,dragging=false;
-  const track=()=>document.getElementById('productsTrack');
-
-  container.addEventListener('touchstart',e=>{
-    startX=e.touches[0].clientX;
-    dragging=true;
-  },{passive:true});
-
-  container.addEventListener('touchend',e=>{
-    if(!dragging) return;
-    dragging=false;
-    const diff=startX-e.changedTouches[0].clientX;
-    if(Math.abs(diff)>40){
-      const totalPages=Math.ceil(filteredProducts.length/getCardsPerPage());
-      if(diff>0) carouselIdx=Math.min(carouselIdx+1,totalPages-1);
-      else carouselIdx=Math.max(carouselIdx-1,0);
-      updateCarouselPosition();
-    }
-  });
-
-  // Mouse drag for desktop
-  container.addEventListener('mousedown',e=>{startX=e.clientX;dragging=true;container.classList.add('dragging');e.preventDefault();});
-  document.addEventListener('mouseup',e=>{
-    if(!dragging) return;
-    dragging=false; container.classList.remove('dragging');
-    const diff=startX-e.clientX;
-    if(Math.abs(diff)>50){
-      const totalPages=Math.ceil(filteredProducts.length/getCardsPerPage());
-      if(diff>0) carouselIdx=Math.min(carouselIdx+1,totalPages-1);
-      else carouselIdx=Math.max(carouselIdx-1,0);
-      updateCarouselPosition();
-    }
-  });
-})();
 
 
 
