@@ -1867,15 +1867,12 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      /* ── TINGGI GAMBAR — ubah nilai svh ini ──
-         60svh = kecil | 72svh = default | 80svh = besar */
-      height: 72svh;
-      min-height: 380px;
-      /* padding 0 atas: navbar posisinya absolute (melayang),
-         jadi gambar mulai dari paling atas tanpa gap.
-         Ubah angka kiri-kanan untuk jarak ke tepi layar:
-         0px = full bleed | 8px = sedikit jarak */
-      padding: 0 8px 0;
+      /* ── TINGGI GAMBAR: ubah angka svh ini ──
+         55svh = kecil | 70svh = besar | 80svh = XL */
+      height: 75svh;
+      min-height: 420px;
+      /* ── JARAK KE TEPI: 60px atas (navbar) | 8px kiri-kanan ── */
+      padding: 60px 8px 0;
       overflow: visible;
       box-sizing: border-box;
     }
@@ -1886,9 +1883,8 @@
       min-height: 0;
       max-height: none;
     }
-    /* border-radius atas saja agar rapi di bawah navbar */
-    .hero-slider-inner { border-radius: 0 0 16px 16px; }
-    /* contain = foto tampil PENUH, tidak ada yang terpotong */
+    .hero-slider-inner { border-radius: 16px; }
+    /* contain = foto tampil PENUH, tidak terpotong */
     .hero-slide img {
       object-fit: contain;
       object-position: center top;
