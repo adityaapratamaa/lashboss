@@ -3952,7 +3952,7 @@ function renderCarousel(){
   filteredProducts=currentFilter==='all'?products:products.filter(p=>p.cat===currentFilter);
   const track=document.getElementById('productsTrack');
   track.innerHTML=filteredProducts.map(p=>`
-    <div class="product-card" onclick="openModal(${p.id})">
+    <div class="product-card" data-id="${p.id}" style="cursor:pointer;">
       <div class="product-img-wrap">
         <img
           src="${p.img}"
@@ -4024,8 +4024,30 @@ function updateDotFromScroll(){
   }, { passive: true });
 }
 
-window.addEventListener('resize', renderCarousel);
-renderCarousel();
+// ─── EVENT DELEGATION untuk klik product-card ───
+// Dipasang di container (bukan inline onclick), agar tetap berfungsi
+// setelah kartu di-render ulang oleh filterProducts / resize.
+(function(){
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  container.addEventListener('click', function(e) {
+    const buyBtn = e.target.closest('.product-buy-btn');
+    if (buyBtn) return; // biarkan tombol Beli handle sendiri
+    const card = e.target.closest('.product-card');
+    if (!card) return;
+    const id = parseInt(card.dataset.id);
+    if (!isNaN(id)) openModal(id);
+  });
+})();
+
+let _resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(renderCarousel, 120);
+});
+// setTimeout 0 memastikan semua fungsi (termasuk openModal) sudah terdefinisi
+// sebelum kartu pertama kali di-render
+setTimeout(renderCarousel, 0);
 
 
 
@@ -4154,10 +4176,10 @@ function openModal(id) {
   modalIsOpen = true;
 
   // ── HISTORY API: push state agar tombol BACK HP menutup modal ──
-  // Saat modal dibuka, push state baru ke history.
-  // Saat user tekan back, popstate terpicu → modal tertutup, TIDAK keluar website.
   history.pushState({ modal: true, productId: id }, '', `#produk-${id}`);
 }
+// Expose ke global scope sebagai safety net
+window.openModal = openModal;
 
 // ── closeModalBtn: tutup modal ──
 function closeModalBtn() {
