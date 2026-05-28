@@ -813,7 +813,16 @@
   /* Mengganti image slider dengan video player testimoni */
   .why-video-wrap {
     width: 100%;
-    aspect-ratio: 9/16; /* Rasio vertikal untuk video testimoni mobile/TikTok style */
+
+    /* ═══════════════════════════════════════════════════════
+       📐 RASIO VIDEO — DESKTOP
+       Ubah nilai di bawah sesuai format video kamu:
+       • Video vertikal TikTok/Reels → aspect-ratio: 9/16
+       • Video horizontal YouTube      → aspect-ratio: 16/9
+       • Video kotak Instagram         → aspect-ratio: 1/1
+    ═══════════════════════════════════════════════════════ */
+    aspect-ratio: 9/16;
+
     border-radius: 24px;
     overflow: hidden;
     position: relative;
@@ -821,7 +830,18 @@
       0 30px 80px rgba(0,0,0,0.18),
       0 0 0 1px rgba(255,77,148,0.18);
     background: var(--dark);
-    max-height: 520px; /* Batas tinggi di desktop */
+
+    /* ═══════════════════════════════════════════════════════
+       📏 TINGGI MAKSIMUM VIDEO — DESKTOP
+       Naikkan atau turunkan angka ini untuk memperbesar /
+       memperkecil tampilan video di layar desktop.
+       Contoh nilai yang bisa dicoba:
+       • 580px  → ukuran medium
+       • 660px  → ukuran besar (default sekarang)
+       • 720px  → ukuran sangat besar
+       • 800px  → hampir penuh tinggi layar
+    ═══════════════════════════════════════════════════════ */
+    max-height: 660px;
   }
 
   /* Video testimoni utama */
@@ -2014,8 +2034,24 @@
     /* WHY */
     .why-features { grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.6rem; }
     .feature-card { padding: 1.2rem; }
-    /* Video testimoni mobile: aspect ratio vertikal lebih compact */
-    .why-video-wrap { max-height: 400px; aspect-ratio: 9/16; }
+
+    /* ═══════════════════════════════════════════════════════
+       📱 UKURAN VIDEO — MOBILE
+       Ubah nilai di bawah untuk menyesuaikan tampilan
+       video di layar HP.
+
+       max-height → tinggi maksimum video di mobile:
+         • 380px  → compact / kecil
+         • 460px  → medium (default sekarang)
+         • 520px  → besar
+         • 580px  → sangat besar
+
+       aspect-ratio → format video:
+         • 9/16   → TikTok / Reels (vertikal)
+         • 16/9   → YouTube (horizontal)
+         • 1/1    → kotak Instagram
+    ═══════════════════════════════════════════════════════ */
+    .why-video-wrap { max-height: 460px; aspect-ratio: 9/16; }
     .play-circle { width: 52px; height: 52px; }
     .play-circle svg { width: 22px; height: 22px; }
 
