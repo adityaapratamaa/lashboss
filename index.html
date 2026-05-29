@@ -9,6 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Black.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
   :root {
     --pink: #FF4D94;
     --pink-light: #FF85C0;
@@ -382,17 +390,19 @@
 
   /* ── HERO TITLE — ChatLabs style: massive, tight, editorial ── */
   .hero-title {
-    font-family: 'Barlow', sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    font-size: clamp(3.4rem, 9vw, 7.2rem);
-    line-height: 1.0;
-    color: var(--white);
-    letter-spacing: -0.03em;
-    margin-bottom: 1.6rem;
-    animation: heroText 0.9s ease forwards;
-    opacity: 0;
-  }
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 900;
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  color: #FFFFFF;
+
+  text-shadow:
+    0 10px 30px rgba(255,255,255,.08),
+    0 20px 60px rgba(255,107,174,.15);
+
+  margin-bottom: 1.6rem;
+}
   /* Pink accent — white on bright pink bg for contrast */
   .hero-title .pink {
     color: white;
@@ -2358,10 +2368,10 @@
 
       <!-- Title: besar, putih, clean — satu kata saja pink -->
       <h1 class="hero-title">
-        Bulu mata<br>
-        <span class="pink">impianmu.</span><br>
-        Mulai malam ini.
-      </h1>
+  Bulu mata<br>
+  impianmu.<br>
+  Mulai hari ini.
+</h1>
 
       <p class="hero-desc">Formula eksklusif Oil-Concentrated — lebih panjang, tebal &amp; lentik dalam 2 minggu pertama. Atau uang kembali.</p>
 
