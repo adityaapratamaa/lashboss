@@ -912,6 +912,158 @@
   }
   .play-circle svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
 
+  /* ─── KOLEKSI 2 KOLOM ─── */
+  #koleksi-split {
+    background: var(--cream);
+    padding: clamp(3rem,7vw,5rem) clamp(1.2rem,5vw,4rem);
+  }
+  .koleksi-split-header {
+    text-align: center;
+    margin-bottom: 2.8rem;
+  }
+  .koleksi-split-header .section-title { margin: 0 auto; }
+
+  .koleksi-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .koleksi-col {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(232,115,154,0.1);
+    box-shadow: 0 4px 24px rgba(232,115,154,0.07);
+  }
+
+  .koleksi-col-header {
+    padding: 1.4rem 1.6rem 1rem;
+    border-bottom: 1px solid rgba(232,115,154,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .koleksi-col-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .koleksi-col-icon.pink-bg { background: linear-gradient(135deg, var(--pink), var(--pink-deep)); }
+  .koleksi-col-icon.gold-bg { background: linear-gradient(135deg, #C9A96E, #a0813f); }
+  .koleksi-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.1;
+  }
+  .koleksi-col-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .koleksi-col-body { padding: 1rem 1rem 1.2rem; }
+
+  /* Mini product list row */
+  .mini-prod-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .mini-prod-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    background: var(--cream);
+    border: 1px solid rgba(232,115,154,0.08);
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+  }
+  .mini-prod-item:hover {
+    border-color: rgba(232,115,154,0.3);
+    background: var(--pink-pale);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(232,115,154,0.14);
+  }
+  .mini-prod-thumb {
+    width: 60px; height: 60px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--pink-pale), rgba(232,115,154,0.2));
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+  }
+  .mini-prod-thumb img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .mini-prod-info { flex: 1; min-width: 0; }
+  .mini-prod-cat {
+    font-size: 0.55rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--pink);
+    font-weight: 700; margin-bottom: 2px;
+  }
+  .mini-prod-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 800; font-style: italic;
+    color: var(--dark); line-height: 1.1; margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .mini-prod-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem; font-weight: 800; font-style: italic;
+    color: var(--pink-deep);
+  }
+  .mini-prod-price-orig {
+    font-size: 0.6rem; color: var(--text-light);
+    text-decoration: line-through; margin-left: 0.2rem;
+  }
+  .mini-prod-badge {
+    flex-shrink: 0;
+    font-size: 0.52rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.2rem 0.55rem;
+    border-radius: 99px; background: var(--pink); color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .mini-prod-badge.gold { background: var(--gold); }
+  .mini-prod-badge.dark { background: var(--dark); }
+
+  .koleksi-col-footer {
+    padding: 0.8rem 1rem 1rem;
+    border-top: 1px solid rgba(232,115,154,0.08);
+    text-align: center;
+  }
+  .koleksi-see-all {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--pink);
+    text-decoration: none; cursor: pointer;
+    background: none; border: none; font-family: 'Barlow', sans-serif;
+    transition: gap 0.2s;
+  }
+  .koleksi-see-all:hover { gap: 0.7rem; color: var(--pink-deep); }
+  .koleksi-see-all svg { width: 14px; height: 14px; }
+
+  @media (max-width: 767px) {
+    .koleksi-split-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    #koleksi-split { padding: 3rem 1.2rem; }
+  }
+  @media (max-width: 480px) {
+    .mini-prod-thumb { width: 52px; height: 52px; }
+    .mini-prod-name { font-size: 0.82rem; }
+  }
+
   /* ─── PRODUCTS ─── */
   #catalog { background:var(--white); }
   .catalog-header { display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:0.8rem; }
@@ -2585,6 +2737,57 @@
   </div>
 </section>
 
+<!-- KOLEKSI 2 KOLOM: BEST SELLER + BUNDLING -->
+<section id="koleksi-split">
+  <div class="koleksi-split-header reveal">
+    <div class="section-label">Koleksi Pilihan</div>
+    <h2 class="section-title">Best Seller & <em>Bundling Paket</em></h2>
+  </div>
+  <div class="koleksi-split-grid">
+
+    <!-- KOLOM KIRI: BEST SELLER -->
+    <div class="koleksi-col reveal">
+      <div class="koleksi-col-header">
+        <div class="koleksi-col-icon pink-bg">⭐</div>
+        <div>
+          <div class="koleksi-col-title">Best Seller</div>
+          <div class="koleksi-col-subtitle">Paling banyak dibeli</div>
+        </div>
+      </div>
+      <div class="koleksi-col-body">
+        <div class="mini-prod-list" id="koleksiBestSeller"></div>
+      </div>
+      <div class="koleksi-col-footer">
+        <button class="koleksi-see-all" onclick="filterProducts('all', document.querySelector('.filter-btn')); document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+          Lihat Semua Produk
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- KOLOM KANAN: BUNDLING PAKET -->
+    <div class="koleksi-col reveal">
+      <div class="koleksi-col-header">
+        <div class="koleksi-col-icon gold-bg">🎁</div>
+        <div>
+          <div class="koleksi-col-title">Bundling Paket</div>
+          <div class="koleksi-col-subtitle">Hemat lebih banyak</div>
+        </div>
+      </div>
+      <div class="koleksi-col-body">
+        <div class="mini-prod-list" id="koleksiBundling"></div>
+      </div>
+      <div class="koleksi-col-footer">
+        <button class="koleksi-see-all" onclick="filterProducts('bundle', document.querySelectorAll('.filter-btn')[3]); document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+          Lihat Semua Bundle
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
@@ -3432,6 +3635,35 @@ function updateDotFromScroll(){
 
 window.addEventListener('resize', renderCarousel);
 renderCarousel();
+
+// ─── RENDER KOLEKSI 2 KOLOM ───
+function renderMiniList(containerId, productList) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = productList.map(p => `
+    <div class="mini-prod-item" onclick="openModal(${p.id})">
+      <div class="mini-prod-thumb">
+        <img src="${p.img}" alt="${p.name}"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:1.6rem\\'>${p.emoji}</span>';">
+      </div>
+      <div class="mini-prod-info">
+        <div class="mini-prod-cat">${p.catLabel}</div>
+        <div class="mini-prod-name">${p.name}</div>
+        <div>
+          <span class="mini-prod-price">${p.price}</span>
+          <span class="mini-prod-price-orig">${p.priceOrig}</span>
+        </div>
+      </div>
+      <div class="mini-prod-badge ${p.badgeClass}">${p.badge}</div>
+    </div>
+  `).join('');
+}
+
+// Best Seller: produk id 1, 2, 3
+const bestSellerIds = [1, 2, 3];
+const bundlingIds = [5, 6, 8];
+renderMiniList('koleksiBestSeller', products.filter(p => bestSellerIds.includes(p.id)));
+renderMiniList('koleksiBundling', products.filter(p => bundlingIds.includes(p.id)));
 
 
 
