@@ -1834,7 +1834,7 @@
     .hamburger { display: flex; }
 
     /* HERO */
-    #hero { min-height: 100svh; overflow: visible; }
+    #hero { min-height: 100svh; overflow: hidden; }
     .hero-bg {
       background: radial-gradient(ellipse 100% 80% at 50% 20%, #ffb8d5 0%, #f472a8 35%, #e8579a 65%, #c93c7a 100%) !important;
     }
@@ -1867,11 +1867,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      /* ── TINGGI GAMBAR: ubah angka svh ini ──
-         55svh = kecil | 70svh = besar | 80svh = XL */
-      height: 75svh;
-      min-height: 420px;
-      /* ── JARAK KE TEPI: 60px atas (navbar) | 8px kiri-kanan ── */
+      height: auto;
+      min-height: 0;
       padding: 60px 8px 0;
       overflow: visible;
       box-sizing: border-box;
@@ -1879,16 +1876,20 @@
     .hero-slider {
       width: 100%;
       max-width: 100%;
-      height: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1.15;
       min-height: 0;
       max-height: none;
     }
-    .hero-slider-inner { border-radius: 16px; }
+    .hero-slider-inner {
+      border-radius: 16px;
+      background: #ffffff;
+    }
     /* contain = foto tampil PENUH, tidak terpotong */
     .hero-slide img {
       object-fit: contain;
       object-position: center top;
-      background: transparent;
+      background: #ffffff;
     }
     /* TEXT BELOW — compact, centered */
     .hero-text {
