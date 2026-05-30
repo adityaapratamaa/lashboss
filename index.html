@@ -1991,13 +1991,13 @@
     .modal {
       max-width: 100%;
       border-radius: 20px 20px 0 0;
-      /* Gunakan height tetap agar tidak ada reflow saat konten dimuat */
-      height: 100svh;
-      max-height: 100svh;
+      /* Height diset via JS pakai window.innerHeight agar akurat di semua browser mobile
+         CSS fallback jaga-jaga kalau JS belum jalan */
+      height: var(--modal-h, 100svh);
+      max-height: var(--modal-h, 100svh);
       /* Override desktop scale transform — pakai slide-up dari bawah layar */
       transform: translateY(100%);
       transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
-      /* will-change membantu GPU compositing agar animasi tidak janky */
       will-change: transform;
     }
     .modal-overlay.active .modal {
@@ -3598,8 +3598,13 @@ function openModal(id) {
 
   // Buka modal
   const modalEl = document.getElementById('modal');
-  // BUGFIX: reset scroll ke atas SEBELUM modal visible
-  // supaya tidak ada gap akibat scroll position tersimpan dari sesi sebelumnya
+  // BUGFIX: set height via JS pakai window.innerHeight (pixel exact)
+  // supaya tidak ada gap di Chrome mobile yang svh-nya tidak akurat saat initial paint
+  if (window.innerWidth <= 968) {
+    const h = window.innerHeight;
+    document.documentElement.style.setProperty('--modal-h', h + 'px');
+  }
+  // Reset scroll ke atas SEBELUM modal visible
   modalEl.scrollTop = 0;
   document.getElementById('modalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -3632,6 +3637,16 @@ function closeModal(e) {
   const overlay = document.getElementById('modalOverlay');
   if (e.target === overlay && !modal.contains(e.target)) closeModalBtn();
 }
+
+// ── Update --modal-h on resize/orientation change ──
+function updateModalHeight() {
+  if (window.innerWidth <= 968) {
+    document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
+  }
+}
+// Set immediately on load
+updateModalHeight();
+window.addEventListener('resize', updateModalHeight);
 
 // Ensure body scroll is restored on page load in case previous session left it locked
 if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
