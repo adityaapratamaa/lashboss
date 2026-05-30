@@ -1135,6 +1135,26 @@
   }
   .modal-overlay.active .modal { transform: scale(1) translateY(0); }
 
+  /* GLOBAL: semua konten dalam modal wajib fit dalam lebar modal */
+  .modal *, .modal-grid *, .modal-info *, .modal-gallery * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  /* Teks tidak boleh overflow */
+  .modal-info {
+    padding: 2rem 1.8rem 2rem 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  .modal-desc {
+    font-size: 0.78rem; color: var(--text-light); line-height: 1.75; margin-bottom: 1.1rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
   .modal-close {
     position: sticky;          /* sticky agar tetap terlihat saat scroll */
     top: 0.75rem;
@@ -1274,7 +1294,7 @@
   }
   .modal-img-dot.active { background: var(--pink); width: 14px; border-radius: 99px; }
 
-  .modal-info { padding:2rem 1.8rem 2rem 1.5rem; overflow-y: auto; }
+  /* .modal-info desktop: handled by global rule above */
   .modal-cat { font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--pink);font-weight:700; }
   .modal-name { font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;font-style:italic;margin:0.4rem 0 0.7rem;line-height:1.1; }
   .modal-stars { display:flex;align-items:center;gap:0.4rem;margin-bottom:0.8rem; }
@@ -2202,21 +2222,51 @@
     .modal-main-img { max-height: 52vw; min-height: unset; width: 100%; }
     .modal-gallery-arrow { opacity: 1; }
     .modal-info {
-      padding: 1rem 1.2rem 2.5rem;
+      padding: 1rem 1rem 3rem;
       overflow-x: hidden;
+      overflow-y: visible;
       width: 100%;
+      max-width: 100%;
       box-sizing: border-box;
       word-break: break-word;
       overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
       flex-shrink: 0;
     }
-    .modal-name, .modal-desc, .modal-benefit, .modal-cat, .modal-price {
+    /* Paksa SEMUA elemen teks dalam info tidak overflow */
+    .modal-info * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .modal-name {
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 1.4rem;
+    }
+    .modal-desc {
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 0.78rem;
+    }
+    .modal-benefit, .modal-cat, .modal-price {
       overflow-wrap: break-word;
       word-break: break-word;
       max-width: 100%;
     }
+    .modal-benefits {
+      width: 100%;
+      max-width: 100%;
+    }
     /* Thumbnails scrollable naturally */
-    .modal-thumbs { max-width: 100%; }
+    .modal-thumbs { max-width: 100%; overflow-x: auto; }
+    /* Gallery tidak overflow */
+    .modal-gallery {
+      max-width: 100%;
+      overflow: hidden;
+    }
 
     /* QUIZ */
     .quiz-result-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 1.5rem; }
@@ -2397,24 +2447,31 @@
     .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; font-size: 0.65rem; }
 
     /* MODAL di HP kecil */
-    .modal-info { padding: 1rem 1rem 3rem; }
-    .modal-name { font-size: 1.25rem; }
-    .modal-price { font-size: 1.25rem; }
-    .modal-desc { font-size: 0.76rem; }
-    .modal-benefit { font-size: 0.72rem; }
-    /* Tombol beli penuh lebar, mudah diklik */
+    .modal-info { padding: 0.9rem 0.9rem 3rem; max-width: 100%; }
+    .modal-name { font-size: 1.2rem; overflow-wrap: break-word; word-break: break-word; }
+    .modal-price { font-size: 1.2rem; }
+    .modal-desc { font-size: 0.75rem; overflow-wrap: break-word; word-break: break-word; }
+    .modal-benefit { font-size: 0.7rem; overflow-wrap: break-word; }
+    /* Tombol beli penuh lebar */
     .modal-shopee-btn {
       padding: 1rem;
       font-size: 0.88rem;
       border-radius: 14px;
       min-height: 54px;
       width: 100%;
+      box-sizing: border-box;
     }
-    /* Gallery di HP kecil */
-    .modal-main-img { max-height: 48vw; min-height: unset; }
-    .modal-thumb { flex: 0 0 42px; height: 42px; }
+    /* Gallery */
+    .modal-main-img { max-height: 50vw; min-height: unset; width: 100%; object-fit: contain; }
+    .modal-thumb { flex: 0 0 40px; height: 40px; }
     .modal-gallery-arrow { width: 28px; height: 28px; font-size: 0.75rem; opacity: 1; }
-    .modal-close { top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; }
+    .modal-close { top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; font-size: 0.85rem; }
+    /* Semua elemen dalam modal tidak boleh lebih lebar dari layar */
+    .modal, .modal-grid, .modal-gallery, .modal-info,
+    .modal-main-img-wrap, .modal-thumbs {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
   }
 
   /* ══════════════════════════════════════════
@@ -3870,109 +3927,80 @@ function openModal(id) {
     .map(b => `<div class="modal-benefit"><div class="benefit-dot"></div>${b}</div>`).join('');
   document.getElementById('modalShopeeBtn').href = p.shopeeUrl;
 
-  // Buka modal
+  // ── Buka modal ──
   const modalEl = document.getElementById('modal');
-  // BUGFIX: set height via JS pakai window.innerHeight (pixel exact)
-  // supaya tidak ada gap di Chrome mobile yang svh-nya tidak akurat saat initial paint
-  if (window.innerWidth <= 968) {
-    const h = window.innerHeight;
-    document.documentElement.style.setProperty('--modal-h', h + 'px');
-  }
+
+  // Set pixel-exact height SEBELUM modal visible (no svh/dvh quirks)
+  const modalH = window.innerHeight;
+  document.documentElement.style.setProperty('--modal-h', modalH + 'px');
+
   // Reset scroll ke atas SEBELUM modal visible
   const modalGrid = modalEl.querySelector('.modal-grid');
   if (modalGrid) modalGrid.scrollTop = 0;
-  modalEl.scrollTop = 0;
 
-  const overlay = document.getElementById('modalOverlay');
-  overlay.classList.add('active');
-
-  // LOCK BODY SCROLL — simpan scrollY lalu fix body di posisi itu
-  const scrollY = window.scrollY;
+  // LOCK BODY: simpan posisi scroll, fix body di sana
+  // Teknik ini mencegah iOS rubber-band scroll bocor ke page
+  const _savedScrollY = window.scrollY || window.pageYOffset;
+  document.documentElement.style.setProperty('--saved-scroll-y', _savedScrollY + 'px');
   document.body.style.overflow = 'hidden';
   document.body.style.position = 'fixed';
-  document.body.style.top = '-' + scrollY + 'px';
-  document.body.style.width = '100%';
-  document.body.dataset.scrollY = scrollY;
+  document.body.style.top = '-' + _savedScrollY + 'px';
+  document.body.style.left = '0';
+  document.body.style.right = '0';
 
+  document.getElementById('modalOverlay').classList.add('active');
   modalIsOpen = true;
-
-  // ── HISTORY API: push state agar tombol BACK HP menutup modal ──
-  // Saat modal dibuka, push state baru ke history.
-  // Saat user tekan back, popstate terpicu → modal tertutup, TIDAK keluar website.
-  history.pushState({ modal: true, productId: id }, '', `#produk-${id}`);
+  // TIDAK pakai history.pushState / hash — menghindari scroll-to-anchor saat back
 }
 
-// ── closeModalBtn: tutup modal ──
-function closeModalBtn() {
+// ── Helper: tutup modal & restore scroll ──
+function _doCloseModal() {
   if (!modalIsOpen) return;
   document.getElementById('modalOverlay').classList.remove('active');
 
-  // RESTORE BODY SCROLL — kembalikan ke posisi scroll semula
-  const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
+  // Restore body scroll ke posisi semula — presisi
+  const savedTop = document.body.style.top; // "-NNNpx"
+  const scrollY = savedTop ? Math.abs(parseInt(savedTop, 10)) : 0;
   document.body.style.overflow = '';
   document.body.style.position = '';
   document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, scrollY);
+  document.body.style.left = '';
+  document.body.style.right = '';
+  // requestAnimationFrame memastikan layout selesai sebelum scroll
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: scrollY, behavior: 'instant' });
+  });
 
   modalIsOpen = false;
-
-  // Jika URL masih punya hash modal, kembali ke state sebelumnya
-  if (location.hash.startsWith('#produk-')) {
-    history.back();
-  }
 }
 
-// ── closeModal: klik overlay ──
+// ── closeModalBtn: tombol X ──
+function closeModalBtn() { _doCloseModal(); }
+
+// ── closeModal: klik overlay (backdrop) ──
 function closeModal(e) {
-  // On mobile the modal fills the screen, so e.target is almost always the modal itself.
-  // Only close if user actually clicked the backdrop (outside the modal box).
-  const modal = document.getElementById('modal');
   const overlay = document.getElementById('modalOverlay');
-  if (e.target === overlay && !modal.contains(e.target)) closeModalBtn();
+  // Hanya tutup jika klik tepat di overlay, bukan di dalam modal
+  if (e.target === overlay) _doCloseModal();
 }
 
-// ── Update --modal-h on resize/orientation change ──
+// ── Update --modal-h saat resize / orientasi berubah ──
 function updateModalHeight() {
-  // Selalu set untuk semua ukuran layar — dipakai CSS mobile
-  const h = window.innerHeight;
-  document.documentElement.style.setProperty('--modal-h', h + 'px');
+  document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
 }
-// Set on load + orientation + resize
 updateModalHeight();
 window.addEventListener('resize', updateModalHeight, { passive: true });
-window.addEventListener('orientationchange', () => {
-  // Delay sedikit agar browser selesai resize dulu
-  setTimeout(updateModalHeight, 100);
+window.addEventListener('orientationchange', function() {
+  setTimeout(updateModalHeight, 150);
 }, { passive: true });
-// Visual viewport untuk browser dengan dynamic toolbar (Chrome Android)
 if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', updateModalHeight, { passive: true });
 }
 
-// Ensure body scroll is restored on page load in case previous session left it locked
-if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
-
-// ── BACK BUTTON HANDLER ──
-// Saat user tekan tombol back (HP/browser), jika modal terbuka → tutup modal.
-// Jika modal sudah tutup → biarkan browser navigasi normal (keluar halaman / back biasa).
-window.addEventListener('popstate', function(e) {
-  if (modalIsOpen) {
-    // Tutup modal tanpa history.back() lagi (sudah di-pop)
-    document.getElementById('modalOverlay').classList.remove('active');
-    // Restore body scroll position
-    const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
-    document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, scrollY);
-    modalIsOpen = false;
-  }
+// ── ESC tutup modal (desktop) ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') _doCloseModal();
 });
-
-// ── ESC tutup modal ──
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 
 
 // ─── TESTIMONIALS — SMOOTH AUTO-SLIDE, NO CLIP FIX ───
