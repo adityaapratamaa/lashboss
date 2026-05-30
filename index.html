@@ -1106,12 +1106,15 @@
     position: fixed; inset: 0;
     background: rgba(217,26,107,0.45);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 2000;
     display: flex; align-items: center; justify-content: center;
     padding: 1.5rem;
     opacity: 0; visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
     overflow: hidden;
+    /* prevent body scroll leak */
+    touch-action: none;
   }
   .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -1121,11 +1124,14 @@
     max-width: 860px; width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
     transform: scale(0.88) translateY(24px);
     transition: transform 0.4s var(--ease);
     display: flex;
     flex-direction: column;
+    /* isolate stacking context */
+    isolation: isolate;
   }
   .modal-overlay.active .modal { transform: scale(1) translateY(0); }
 
@@ -1186,7 +1192,10 @@
     min-height: 200px;
     object-fit: contain;
     display: block;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.18s ease;
+    /* GPU-accelerated smooth render */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .modal-main-img.switching { opacity: 0; }
 
@@ -2128,64 +2137,86 @@
 
     /* MODAL — fullscreen bottom sheet di tablet & HP */
     .modal-drag-handle { display: block; }
-    /* BUGFIX: set align-items flex-end langsung, bukan lewat override
-       supaya tidak ada transisi layout saat modal muncul */
+
     .modal-overlay {
       align-items: flex-end;
       padding: 0;
+      /* CRITICAL: allow modal inner scroll, block page scroll */
+      touch-action: none;
+      overscroll-behavior: contain;
     }
     .modal {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
       max-width: 100%;
       width: 100%;
+      /* Exact pixel height via JS — no svh/dvh quirks */
+      height: var(--modal-h, 100vh);
+      max-height: var(--modal-h, 100vh);
       border-radius: 20px 20px 0 0;
-      height: var(--modal-h, 100svh);
-      max-height: var(--modal-h, 100svh);
       transform: translateY(100%);
-      transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+      /* Buttery smooth slide-up */
+      transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1);
       will-change: transform;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      /* Contain scroll inside modal only */
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .modal-overlay.active .modal {
       transform: translateY(0);
     }
+    /* Single scroll container — the grid scrolls, not the modal itself */
     .modal-grid {
       grid-template-columns: 1fr;
       align-items: start;
       min-height: unset;
       flex: 1;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: scroll;
+      overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
     .modal-close {
-      position: absolute; top: 0.75rem; right: 0.75rem;
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
       float: none; margin: 0;
+      z-index: 100;
     }
     .modal-gallery {
       border-radius: 20px 20px 0 0;
       min-height: unset;
       height: auto;
-      padding: 1.25rem 1rem 0.75rem;
+      padding: 2.5rem 1rem 0.75rem;
       width: 100%;
       box-sizing: border-box;
+      flex-shrink: 0;
     }
-    .modal-main-img { max-height: 260px; min-height: unset; }
+    .modal-main-img-wrap {
+      min-height: unset;
+    }
+    .modal-main-img { max-height: 52vw; min-height: unset; width: 100%; }
     .modal-gallery-arrow { opacity: 1; }
     .modal-info {
-      padding: 1.2rem 1.2rem 2rem;
+      padding: 1rem 1.2rem 2.5rem;
       overflow-x: hidden;
       width: 100%;
       box-sizing: border-box;
       word-break: break-word;
       overflow-wrap: break-word;
+      flex-shrink: 0;
     }
     .modal-name, .modal-desc, .modal-benefit, .modal-cat, .modal-price {
       overflow-wrap: break-word;
       word-break: break-word;
       max-width: 100%;
     }
+    /* Thumbnails scrollable naturally */
+    .modal-thumbs { max-width: 100%; }
 
     /* QUIZ */
     .quiz-result-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 1.5rem; }
@@ -2366,22 +2397,24 @@
     .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; font-size: 0.65rem; }
 
     /* MODAL di HP kecil */
-    .modal-info { padding: 1.2rem 1.2rem 2.5rem; }
-    .modal-name { font-size: 1.3rem; }
-    .modal-price { font-size: 1.3rem; }
-    .modal-desc { font-size: 0.75rem; }
-    .modal-benefit { font-size: 0.7rem; }
-    /* Tombol beli lebih besar agar mudah diklik */
+    .modal-info { padding: 1rem 1rem 3rem; }
+    .modal-name { font-size: 1.25rem; }
+    .modal-price { font-size: 1.25rem; }
+    .modal-desc { font-size: 0.76rem; }
+    .modal-benefit { font-size: 0.72rem; }
+    /* Tombol beli penuh lebar, mudah diklik */
     .modal-shopee-btn {
       padding: 1rem;
-      font-size: 0.85rem;
-      border-radius: 12px;
-      min-height: 52px;
+      font-size: 0.88rem;
+      border-radius: 14px;
+      min-height: 54px;
+      width: 100%;
     }
     /* Gallery di HP kecil */
-    .modal-main-img { max-height: 220px; min-height: unset; }  /* <-- EDIT: tinggi foto HP kecil */
-    .modal-thumb { flex: 0 0 44px; height: 44px; }
-    .modal-gallery-arrow { width: 26px; height: 26px; font-size: 0.7rem; }
+    .modal-main-img { max-height: 48vw; min-height: unset; }
+    .modal-thumb { flex: 0 0 42px; height: 42px; }
+    .modal-gallery-arrow { width: 28px; height: 28px; font-size: 0.75rem; opacity: 1; }
+    .modal-close { top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; }
   }
 
   /* ══════════════════════════════════════════
@@ -3846,9 +3879,21 @@ function openModal(id) {
     document.documentElement.style.setProperty('--modal-h', h + 'px');
   }
   // Reset scroll ke atas SEBELUM modal visible
+  const modalGrid = modalEl.querySelector('.modal-grid');
+  if (modalGrid) modalGrid.scrollTop = 0;
   modalEl.scrollTop = 0;
-  document.getElementById('modalOverlay').classList.add('active');
+
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.add('active');
+
+  // LOCK BODY SCROLL — simpan scrollY lalu fix body di posisi itu
+  const scrollY = window.scrollY;
   document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + scrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.dataset.scrollY = scrollY;
+
   modalIsOpen = true;
 
   // ── HISTORY API: push state agar tombol BACK HP menutup modal ──
@@ -3861,7 +3906,15 @@ function openModal(id) {
 function closeModalBtn() {
   if (!modalIsOpen) return;
   document.getElementById('modalOverlay').classList.remove('active');
+
+  // RESTORE BODY SCROLL — kembalikan ke posisi scroll semula
+  const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
   document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollY);
+
   modalIsOpen = false;
 
   // Jika URL masih punya hash modal, kembali ke state sebelumnya
@@ -3881,13 +3934,21 @@ function closeModal(e) {
 
 // ── Update --modal-h on resize/orientation change ──
 function updateModalHeight() {
-  if (window.innerWidth <= 968) {
-    document.documentElement.style.setProperty('--modal-h', window.innerHeight + 'px');
-  }
+  // Selalu set untuk semua ukuran layar — dipakai CSS mobile
+  const h = window.innerHeight;
+  document.documentElement.style.setProperty('--modal-h', h + 'px');
 }
-// Set immediately on load
+// Set on load + orientation + resize
 updateModalHeight();
-window.addEventListener('resize', updateModalHeight);
+window.addEventListener('resize', updateModalHeight, { passive: true });
+window.addEventListener('orientationchange', () => {
+  // Delay sedikit agar browser selesai resize dulu
+  setTimeout(updateModalHeight, 100);
+}, { passive: true });
+// Visual viewport untuk browser dengan dynamic toolbar (Chrome Android)
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', updateModalHeight, { passive: true });
+}
 
 // Ensure body scroll is restored on page load in case previous session left it locked
 if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
@@ -3899,7 +3960,13 @@ window.addEventListener('popstate', function(e) {
   if (modalIsOpen) {
     // Tutup modal tanpa history.back() lagi (sudah di-pop)
     document.getElementById('modalOverlay').classList.remove('active');
+    // Restore body scroll position
+    const scrollY = parseInt(document.body.dataset.scrollY || '0', 10);
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
     modalIsOpen = false;
   }
 });
