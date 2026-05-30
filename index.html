@@ -1110,9 +1110,8 @@
     display: flex; align-items: center; justify-content: center;
     padding: 1.5rem;
     opacity: 0; visibility: hidden;
-    /* BUGFIX: jangan pakai transition:all — ikut-mentransisikan align-items
-       yang tidak bisa di-animate, menyebabkan modal drift/gap saat dibuka */
     transition: opacity 0.4s ease, visibility 0.4s ease;
+    overflow: hidden;
   }
   .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -1227,8 +1226,10 @@
     display: flex;
     gap: 0.5rem;
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
     padding-bottom: 2px;
+    max-width: 100%;
   }
   .modal-thumbs::-webkit-scrollbar { display: none; }
   .modal-thumb {
@@ -2135,28 +2136,28 @@
     }
     .modal {
       max-width: 100%;
+      width: 100%;
       border-radius: 20px 20px 0 0;
-      /* Height diset via JS pakai window.innerHeight agar akurat di semua browser mobile
-         CSS fallback jaga-jaga kalau JS belum jalan */
       height: var(--modal-h, 100svh);
       max-height: var(--modal-h, 100svh);
-      /* Override desktop scale transform — pakai slide-up dari bawah layar */
       transform: translateY(100%);
       transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
       will-change: transform;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
     .modal-overlay.active .modal {
       transform: translateY(0);
     }
-    /* 1 kolom: gallery atas, info bawah */
     .modal-grid {
       grid-template-columns: 1fr;
       align-items: start;
       min-height: unset;
       flex: 1;
+      overflow-x: hidden;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .modal-close {
       position: absolute; top: 0.75rem; right: 0.75rem;
@@ -2167,10 +2168,24 @@
       min-height: unset;
       height: auto;
       padding: 1.25rem 1rem 0.75rem;
+      width: 100%;
+      box-sizing: border-box;
     }
-    .modal-main-img { max-height: 260px; min-height: unset; }  /* <-- EDIT: tinggi foto utama di tablet */
-    .modal-gallery-arrow { opacity: 1; }    /* panah selalu tampil di mobile */
-    .modal-info { padding: 1.2rem 1.2rem 2rem; overflow-y: unset; }
+    .modal-main-img { max-height: 260px; min-height: unset; }
+    .modal-gallery-arrow { opacity: 1; }
+    .modal-info {
+      padding: 1.2rem 1.2rem 2rem;
+      overflow-x: hidden;
+      width: 100%;
+      box-sizing: border-box;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    .modal-name, .modal-desc, .modal-benefit, .modal-cat, .modal-price {
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+    }
 
     /* QUIZ */
     .quiz-result-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 1.5rem; }
@@ -3465,7 +3480,7 @@ const products=[
     shortDesc:'Serum gel khusus pengguna eyelash extension. Anti-rontok & memperkuat bulu mata.',
     fullDesc:'LashBoss Gel-Based Serum didesain spesifik untuk pengguna eyelash extension. Formula gel-nya membantu mengurangi kerusakan akibat pemasangan extension, mendorong pertumbuhan bulu mata baru, memperkuat akar, dan membuat extension tahan lebih lama.',
     benefits:['Khusus pengguna eyelash extension','Mengurangi kerusakan akibat extension','Extension tahan lebih lama','Anti rontok & kebotakan bulu mata','Peptides untuk regenerasi folikel','Aman untuk mata sensitif'],
-    shopeeUrl:'https://shopee.co.id/LashBoss-Serum-Bulu-Mata-Dan-Alis-for-Eyelash-Extension-(Gel-Based)-Lash-and-Brow-Serum-Anti-Rontok-dan-Botak-untuk-Eyelash-Extension-yang-Membantu-Perawatan-Eyelash-tanpa-Maskara-Bulu-Mata-Lentik-Bulu-Mata-Natural-Serum-Bulumata-i.17525438.19577664595?extraParams=%7B%22display_model_id%22%3A221395030284%2C%22model_selection_logic%22%3A3%7D'
+    shopeeUrl:'https://shopee.co.id/LashBoss-Serum-Bulu-Mata-Dan-Alis-for-Sensitive-Eyes-(Gel-Based)-Lash-And-Brow-Serum-untuk-Mata-Sensitif-yang-Membantu-Perawatan-Eyelash-tanpa-Maskara-i.17525438.22136522302?extraParams=%7B%22display_model_id%22%3A214154011910%2C%22model_selection_logic%22%3A3%7D&sp_atk=c15b4a1e-a7e7-433f-bc90-d766f5fed51b&xptdk=c15b4a1e-a7e7-433f-bc90-d766f5fed51b'
   },
   {
     id:3, name:'Sensitive Eyes Serum', fullName:'LashBoss Serum Sensitive Eyes',
@@ -3617,11 +3632,25 @@ function renderCarousel(){
     </div>
   `).join('');
 
-  // Buat dots berdasarkan jumlah produk
-  const totalDots = filteredProducts.length;
+  // Buat dots berdasarkan jumlah HALAMAN (bukan jumlah produk)
+  const _dotsContainer = document.getElementById('productsTrackContainer');
   const dotsWrap = document.getElementById('carouselDots');
-  dotsWrap.innerHTML = Array.from({length: totalDots}, (_,i) =>
-    `<div class="carousel-dot${i===0?' active':''}" onclick="carouselScrollToCard(${i})"></div>`
+  const _nav = document.querySelector('.carousel-nav');
+
+  function _getPerPage() {
+    const _card = _dotsContainer && _dotsContainer.querySelector('.product-card');
+    if (!_card || !_dotsContainer) return 1;
+    return Math.max(1, Math.round(_dotsContainer.clientWidth / (_card.offsetWidth + 16)));
+  }
+
+  const _perPage = _getPerPage();
+  const _totalPages = Math.ceil(filteredProducts.length / _perPage);
+
+  // Sembunyikan nav jika semua produk sudah muat dalam satu layar (tidak perlu scroll)
+  if (_nav) _nav.style.display = _totalPages <= 1 ? 'none' : 'flex';
+
+  dotsWrap.innerHTML = Array.from({length: _totalPages}, (_,i) =>
+    `<div class="carousel-dot${i===0?' active':''}" onclick="carouselScrollToPage(${i})"></div>`
   ).join('');
 
   // Update dots saat scroll
@@ -3651,17 +3680,28 @@ function carouselNext(){
   if (!container) return;
   container.scrollBy({ left: getCardScrollWidth(), behavior: 'smooth' });
 }
-function goToPage(n){ carouselScrollToCard(n); }
+function carouselScrollToPage(pageIdx){
+  const container = document.getElementById('productsTrackContainer');
+  if (!container) return;
+  const card = container.querySelector('.product-card');
+  if (!card) return;
+  const cardW = card.offsetWidth + 16;
+  const perPage = Math.max(1, Math.round(container.clientWidth / cardW));
+  container.scrollTo({ left: pageIdx * perPage * cardW, behavior: 'smooth' });
+}
+function goToPage(n){ carouselScrollToPage(n); }
 
-// Dots sync saat scroll — registered ONCE, not inside renderCarousel
+// Dots sync saat scroll — by PAGE, not by card
 (function(){
   const container = document.getElementById('productsTrackContainer');
   if (!container) return;
   container.addEventListener('scroll', () => {
-    const scrollW = getCardScrollWidth();
-    if (scrollW < 1) return;
-    const idx = Math.round(container.scrollLeft / scrollW);
-    document.querySelectorAll('.carousel-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+    const card = container.querySelector('.product-card');
+    if (!card) return;
+    const cardW = card.offsetWidth + 16;
+    const perPage = Math.max(1, Math.round(container.clientWidth / cardW));
+    const pageIdx = Math.round(container.scrollLeft / (perPage * cardW));
+    document.querySelectorAll('.carousel-dot').forEach((d,i) => d.classList.toggle('active', i===pageIdx));
   }, { passive: true });
 })();
 
