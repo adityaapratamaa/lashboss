@@ -3950,15 +3950,29 @@ function openModal(id) {
 
   document.getElementById('modalOverlay').classList.add('active');
   modalIsOpen = true;
-  // TIDAK pakai history.pushState / hash — menghindari scroll-to-anchor saat back
+
+  // HISTORY API: push state TANPA hash agar tombol back Android menutup modal
+  // Pakai '?' query string bukan '#hash' — tidak ada scroll-to-anchor
+  history.pushState({ modal: true, productId: id }, '');
 }
 
+// ── Tombol Back Android → tutup modal, jangan keluar website ──
+window.addEventListener('popstate', function(e) {
+  if (modalIsOpen) {
+    _doCloseModal(true); // dipanggil dari back button, jangan history.back() lagi
+  }
+});
+
 // ── Helper: tutup modal & restore scroll ──
-function _doCloseModal() {
+// calledByPopstate: true jika dipanggil dari popstate (back button)
+//   → jangan panggil history.back() lagi (sudah di-pop otomatis)
+// calledByPopstate: false/undefined → dipanggil dari tombol X / klik overlay
+//   → panggil history.back() untuk membersihkan state yang di-push
+function _doCloseModal(calledByPopstate) {
   if (!modalIsOpen) return;
   document.getElementById('modalOverlay').classList.remove('active');
 
-  // Restore body scroll ke posisi semula — presisi
+  // Restore body scroll ke posisi semula
   const savedTop = document.body.style.top; // "-NNNpx"
   const scrollY = savedTop ? Math.abs(parseInt(savedTop, 10)) : 0;
   document.body.style.overflow = '';
@@ -3966,16 +3980,20 @@ function _doCloseModal() {
   document.body.style.top = '';
   document.body.style.left = '';
   document.body.style.right = '';
-  // requestAnimationFrame memastikan layout selesai sebelum scroll
   requestAnimationFrame(() => {
     window.scrollTo({ top: scrollY, behavior: 'instant' });
   });
 
   modalIsOpen = false;
+
+  // Hanya hapus state dari history jika BUKAN dipanggil dari popstate
+  if (!calledByPopstate && history.state && history.state.modal) {
+    history.back();
+  }
 }
 
 // ── closeModalBtn: tombol X ──
-function closeModalBtn() { _doCloseModal(); }
+function closeModalBtn() { _doCloseModal(false); }
 
 // ── closeModal: klik overlay (backdrop) ──
 function closeModal(e) {
