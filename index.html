@@ -1915,7 +1915,6 @@
     /* TEXT BELOW — compact, centered */
     .hero-text {
       order: 2;
-      flex: 1;
       flex: 0 0 auto;
       max-width: 100%;
       padding: 1.6rem 6% 2rem;
@@ -1986,6 +1985,12 @@
       border-radius: 20px 20px 0 0;
       max-height: 100svh;
       height: 100svh;
+      /* Override desktop scale animation — pakai slide from bottom */
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    .modal-overlay.active .modal {
+      transform: translateY(0);
     }
     /* 1 kolom: gallery atas, info bawah */
     .modal-grid {
@@ -3135,33 +3140,11 @@ document.getElementById('mobileClose').addEventListener('click',()=>document.get
 function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');}
 
 // ─── HERO SLIDER (VISUAL ONLY) ───
-const heroBgs = [
-  'radial-gradient(ellipse 90% 80% at 60% 40%, #ffb8d5 0%, #f472a8 35%, #e8579a 65%, #c93c7a 100%)',
-  'radial-gradient(ellipse 90% 80% at 60% 40%, #ffb8d5 0%, #f472a8 35%, #e8579a 65%, #c93c7a 100%)',
-  'radial-gradient(ellipse 90% 80% at 60% 40%, #ffb8d5 0%, #f472a8 35%, #e8579a 65%, #c93c7a 100%)'
-];
+// ─── HERO SLIDER (VISUAL ONLY) ───
+// Dead code removed: goToSlide() / heroProducts queried '.hero-product' which
+// does not exist in HTML — hero uses .hero-slide managed by the IIFE at page bottom.
+// Interval timer was firing every 7s for nothing, wasting resources.
 
-let heroBgIdx=0;
-let heroTimer;
-const heroBgEl = document.getElementById('heroBg');
-const heroProducts = document.querySelectorAll('.hero-product');
-const heroDotEls = document.querySelectorAll('.hero-dot');
-
-function goToSlide(n){
-  if(heroProducts[heroBgIdx]) heroProducts[heroBgIdx].classList.remove('active');
-  if(heroDotEls[heroBgIdx]) heroDotEls[heroBgIdx].classList.remove('active');
-  heroBgIdx=n;
-  if(heroProducts[heroBgIdx]) heroProducts[heroBgIdx].classList.add('active');
-  if(heroDotEls[heroBgIdx]) heroDotEls[heroBgIdx].classList.add('active');
-  if(heroBgEl) heroBgEl.style.background = heroBgs[heroBgIdx];
-  resetHeroTimer();
-}
-
-function resetHeroTimer(){
-  clearInterval(heroTimer);
-  heroTimer=setInterval(()=>goToSlide((heroBgIdx+1)%Math.max(heroProducts.length,1)), 7000);
-}
-resetHeroTimer();
 
 // ─── SCROLL REVEAL ───
 const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
@@ -3228,6 +3211,12 @@ const resultsObserver=new IntersectionObserver((entries)=>{
   });
 },{threshold:0.3});
 document.querySelectorAll('.result-num,.result-bar-fill').forEach(el=>resultsObserver.observe(el));
+// Ensure --target CSS var is set from data-target on bar fills (fallback if not in HTML)
+document.querySelectorAll('.result-bar-fill').forEach(el=>{
+  if(!el.style.getPropertyValue('--target') && el.dataset.target){
+    el.style.setProperty('--target', el.dataset.target + '%');
+  }
+});
 
 // ─── PRODUCTS DATA ───
 // ═══════════════════════════════════════════════════════════════════════
@@ -3247,21 +3236,21 @@ document.querySelectorAll('.result-num,.result-bar-fill').forEach(el=>resultsObs
 // ═══════════════════════════════════════════════════════════════════════
 const products=[
   {
-    id:1, name:'itCurl Eyelash Curler', fullName:'LashBoss itCurl Eyelash Curler',
-    cat:'tools', catLabel:'Beauty Tools',
-    img:'./images/penjepitbulumata.jpeg',
+    id:1, name:'Rapunzel Serum', fullName:'LashBoss Rapunzel Serum',
+    cat:'serum', catLabel:'Serum Oil-Based',
+    img:'./images/rapunzelserum.jpeg',
     // ▼ TAMBAH/KURANGI FOTO DI SINI ▼
     images:[
-      './images/penjepitbulumata.jpeg',
-      './images/products/itcurl-detail1.jpg',
-      './images/products/itcurl-detail2.jpg',
+      './images/rapunzelserum.jpeg',
+      './images/products/rapunzel-detail1.jpg',
+      './images/products/rapunzel-detail2.jpg',
     ],
-    emoji:'💄', badge:'Best Seller', badgeClass:'dark',
-    price:'Rp 79.000', priceOrig:'Rp 110.000', rating:'4.8 (890 ulasan)',
-    shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',
-    fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',
-    benefits:['Desain C-Curl untuk mata Asia','Bebas sudut tumpul yang menyakitkan','Silicone pad premium food-grade','Pegangan ergonomis anti-slip','Bisa digunakan ratusan kali','Tersedia pouch cantik'],
-    shopeeUrl:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'
+    emoji:'✨', badge:'Best Seller', badgeClass:'',
+    price:'Rp 109.000', priceOrig:'Rp 145.000', rating:'4.9 (4.2k ulasan)',
+    shortDesc:'Formula Oil-Concentrated eksklusif. 5× lebih tebal & panjang dalam 2 minggu.',
+    fullDesc:'LashBoss Rapunzel Serum adalah formula oil-concentrated terbaik kami. Satu tetes kecil mengandung 100% bahan aktif — vitamin, fatty acid, dan peptide — tanpa pengencer air. Hasil nyata dalam 2 minggu atau uang kembali.',
+    benefits:['5× lebih tebal & panjang dalam 2 minggu','Formula oil-concentrated 100% aktif','Encapsulated Biotin 7× lebih efektif','1 botol cukup untuk 110 pemakaian','BPOM & Halal MUI Certified','Garansi uang kembali'],
+    shopeeUrl:'https://shopee.co.id/lashboss.id'
   },
   {
     id:2, name:'Gel-Based Serum', fullName:'LashBoss Gel-Based Serum',
@@ -3298,13 +3287,13 @@ const products=[
   {
     id:4, name:'itCurl Eyelash Curler', fullName:'LashBoss itCurl Eyelash Curler',
     cat:'tools', catLabel:'Beauty Tools',
-    img:'./images/products/itcurl-curler.jpg',
+    img:'./images/penjepitbulumata.jpeg',
     images:[
-      './images/products/itcurl-curler.jpg',
+      './images/penjepitbulumata.jpeg',
       './images/products/itcurl-detail1.jpg',
       './images/products/itcurl-detail2.jpg',
     ],
-    emoji:'💄', badge:'New Arrival', badgeClass:'dark',
+    emoji:'💄', badge:'Best Seller', badgeClass:'dark',
     price:'Rp 79.000', priceOrig:'Rp 110.000', rating:'4.8 (890 ulasan)',
     shortDesc:'Penjepit bulu mata presisi tinggi. Desain ergonomis C-Curl untuk mata Asia.',
     fullDesc:'LashBoss itCurl Eyelash Curler hadir dengan desain C-Curl yang bebas tumpul, dirancang khusus untuk bentuk mata Asia. Pegangan ergonomis yang nyaman di tangan dan bahan premium food-grade silicone untuk hasil lentik sempurna.',
@@ -3452,8 +3441,8 @@ function carouselNext(){
 }
 function goToPage(n){ carouselScrollToCard(n); }
 
-// Dots sync saat scroll
-function updateDotFromScroll(){
+// Dots sync saat scroll — registered ONCE, not inside renderCarousel
+(function(){
   const container = document.getElementById('productsTrackContainer');
   if (!container) return;
   container.addEventListener('scroll', () => {
@@ -3462,9 +3451,17 @@ function updateDotFromScroll(){
     const idx = Math.round(container.scrollLeft / scrollW);
     document.querySelectorAll('.carousel-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
   }, { passive: true });
+})();
+
+function updateDotFromScroll(){
+  // No-op: listener now registered once above. Kept to avoid call errors from renderCarousel.
 }
 
-window.addEventListener('resize', renderCarousel);
+let _renderCarouselTimer;
+window.addEventListener('resize', ()=>{
+  clearTimeout(_renderCarouselTimer);
+  _renderCarouselTimer = setTimeout(renderCarousel, 150);
+});
 renderCarousel();
 
 
@@ -3614,8 +3611,15 @@ function closeModalBtn() {
 
 // ── closeModal: klik overlay ──
 function closeModal(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+  // On mobile the modal fills the screen, so e.target is almost always the modal itself.
+  // Only close if user actually clicked the backdrop (outside the modal box).
+  const modal = document.getElementById('modal');
+  const overlay = document.getElementById('modalOverlay');
+  if (e.target === overlay && !modal.contains(e.target)) closeModalBtn();
 }
+
+// Ensure body scroll is restored on page load in case previous session left it locked
+if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
 
 // ── BACK BUTTON HANDLER ──
 // Saat user tekan tombol back (HP/browser), jika modal terbuka → tutup modal.
@@ -3650,7 +3654,7 @@ const TESTI_GAP=20;
 const TESTI_MS=4800;
 let testiCurrentIdx=0;
 let testiAutoInterval=null;
-let touchStartX=0;
+let testiTouchStartX=0;
 
 function getTestiPerPage(){
   if(window.innerWidth>=968) return 3;
@@ -3726,10 +3730,24 @@ function testiAdvance(){
   // After transition, if past end of middle set — silently jump back to middle
   const track=document.getElementById('testiTrack');
   if(!track) return;
-  const total=testimonials.length*3;
   setTimeout(()=>{
     if(testiCurrentIdx>=testimonials.length*2){
       testiCurrentIdx=testimonials.length+(testiCurrentIdx-testimonials.length*2);
+      applyTestiOffset(false);
+    }
+  },720);
+  startTestiProgress();
+}
+
+function testiReverse(){
+  const perPage=getTestiPerPage();
+  testiCurrentIdx-=perPage;
+  applyTestiOffset(true);
+  const track=document.getElementById('testiTrack');
+  if(!track) return;
+  setTimeout(()=>{
+    if(testiCurrentIdx<testimonials.length){
+      testiCurrentIdx=testimonials.length*2-(testimonials.length-testiCurrentIdx);
       applyTestiOffset(false);
     }
   },720);
@@ -3757,12 +3775,15 @@ function resetTestiAuto(){
 const testiWrap=document.getElementById('testiCarouselWrap');
 if(testiWrap){
   testiWrap.addEventListener('touchstart',e=>{
-    touchStartX=e.touches[0].clientX;
+    testiTouchStartX=e.touches[0].clientX;
     clearInterval(testiAutoInterval);
   },{passive:true});
   testiWrap.addEventListener('touchend',e=>{
-    const diff=touchStartX-e.changedTouches[0].clientX;
-    if(Math.abs(diff)>44) testiAdvance();
+    const diff=testiTouchStartX-e.changedTouches[0].clientX;
+    if(Math.abs(diff)>44){
+      if(diff > 0) testiAdvance();
+      else testiReverse();
+    }
     resetTestiAuto();
   });
   testiWrap.addEventListener('mouseenter',()=>clearInterval(testiAutoInterval));
