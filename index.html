@@ -68,7 +68,7 @@
   }
 
   .loader-logo img{
-  height:250px;
+  height:210px;
   width:auto;
   max-width:80vw;
   display:block;
@@ -1046,6 +1046,22 @@
     pointer-events: none;
   }
 
+  /* Label "Testimoni Real" di pojok bawah video */
+  .why-video-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,77,148,0.85);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 99px;
+  }
   .why-video-badge::before {
     content: '';
     width: 6px; height: 6px;
@@ -3308,15 +3324,15 @@
   <div class="why-grid">
 
     <!-- ═══ KIRI: Teks + Feature List + Stats ═══ -->
-    <div class="why-content reveal-left">
-      <div class="section-label">Kenapa LashBoss?</div>
-      <h2 class="section-title">Formula <em>Premium</em><br>Bulu Mata Impianmu</h2>
-      <p class="section-desc">LashBoss hadir dengan teknologi terdepan &amp; bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
+    <div class="why-content">
+      <div class="section-label reveal">Kenapa LashBoss?</div>
+      <h2 class="section-title reveal" style="transition-delay:0.05s">Formula <em>Premium</em><br>Bulu Mata Impianmu</h2>
+      <p class="section-desc reveal" style="transition-delay:0.1s">LashBoss hadir dengan teknologi terdepan &amp; bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
 
       <!-- Feature list — vertical (sesuai mockup) -->
       <div class="why-features">
 
-        <div class="feature-row reveal">
+        <div class="feature-row reveal" style="transition-delay:0.15s">
           <div class="feature-icon-wrap">
             <!-- GANTI: icons/biotin-icon.png (22x22px) -->
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
@@ -3327,7 +3343,7 @@
           </div>
         </div>
 
-        <div class="feature-row reveal" style="transition-delay:0.08s">
+        <div class="feature-row reveal" style="transition-delay:0.25s">
           <div class="feature-icon-wrap">
             <!-- GANTI: icons/natural-icon.png (22x22px) -->
             <svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 7 3 2 3c0 5 4 9 10 9zM12 12c0-5 5-9 10-9 0 5-4 9-10 9z"/></svg>
@@ -3338,7 +3354,7 @@
           </div>
         </div>
 
-        <div class="feature-row reveal" style="transition-delay:0.16s">
+        <div class="feature-row reveal" style="transition-delay:0.35s">
           <div class="feature-icon-wrap">
             <!-- GANTI: icons/peptide-icon.png (22x22px) -->
             <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
@@ -3349,7 +3365,7 @@
           </div>
         </div>
 
-        <div class="feature-row reveal" style="transition-delay:0.24s">
+        <div class="feature-row reveal" style="transition-delay:0.45s">
           <div class="feature-icon-wrap">
             <!-- GANTI: icons/eye-icon.png (22x22px) -->
             <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -3363,7 +3379,7 @@
       </div><!-- /why-features -->
 
       <!-- Stats strip — 4 angka sesuai mockup -->
-      <div class="why-stats reveal" style="transition-delay:0.3s">
+      <div class="why-stats reveal" style="transition-delay:0.55s">
         <div class="why-stat">
           <div class="why-stat-num">95<span class="stat-unit">%</span></div>
           <div class="why-stat-label">Pengguna lihat<br>hasil dalam 14 hari</div>
@@ -3412,6 +3428,11 @@
           <source src="./videos/testimoni.mp4" type="video/mp4">
           Browser kamu tidak mendukung video HTML5.
         </video>
+
+        <!-- Overlay gradient bawah untuk branding -->
+        <div class="why-video-overlay">
+          <div class="why-video-badge">Testimoni Real</div>
+        </div>
 
         <!-- Play hint icon — hilang otomatis saat video playing -->
         <div class="why-video-play-hint" id="whyPlayHint">
@@ -4099,7 +4120,7 @@ function closeMobileMenu(){document.getElementById('mobileMenu').classList.remov
 
 
 // ─── SCROLL REVEAL ───
-const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.why-stats');
 const observer=new IntersectionObserver((entries)=>{
   entries.forEach((e,i)=>{
     if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*60);
