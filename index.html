@@ -53,9 +53,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    opacity: 1;
+    transition: opacity 1.1s cubic-bezier(0.76, 0, 0.24, 1), visibility 1.1s cubic-bezier(0.76, 0, 0.24, 1);
   }
   #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  /* Inner content wrapper fades & lifts slightly before overlay */
+  .loader-content {
+    display: flex; flex-direction: column; align-items: center;
+    transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  #loader.hidden .loader-content { opacity: 0; transform: translateY(-16px); }
 
   .loader-logo {
     font-family: 'Barlow Condensed', sans-serif;
@@ -94,9 +102,19 @@
     background: white;
     width: 0%;
     border-radius: 99px;
-    animation: loadBar 2.2s var(--ease) forwards;
+    transition: width 0.06s linear;
   }
   @keyframes loadBar { 0%{width:0} 100%{width:100%} }
+
+  /* Percentage counter */
+  .loader-percent {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.65);
+    margin-top: 0.8rem;
+  }
 
   .loader-petals { position:absolute;inset:0;pointer-events:none;overflow:hidden; }
   .petal {
@@ -3277,11 +3295,14 @@
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-petals" id="loaderPetals"></div>
-  <div class="loader-logo">
-  <img src="./images/logo.png" alt="LashBoss">
-</div>
-  <div class="loader-tagline">No.1 Serum Bulu Mata & Alis Indonesia</div>
-  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-content">
+    <div class="loader-logo">
+      <img src="./images/logo.png" alt="LashBoss">
+    </div>
+    <div class="loader-tagline">No.1 Serum Bulu Mata &amp; Alis Indonesia</div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+    <div class="loader-percent" id="loaderPercent">0%</div>
+  </div>
 </div>
 
 <!-- MOBILE MENU -->
@@ -4373,9 +4394,43 @@ for(let i=0;i<14;i++){
   p.style.cssText=`left:${Math.random()*100}%;width:${6+Math.random()*6}px;height:${10+Math.random()*8}px;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*2}s;background:${Math.random()>0.5?'#E8739A':'#F4A7C0'};transform:rotate(${Math.random()*360}deg);`;
   loaderPetals.appendChild(p);
 }
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('loader').classList.add('hidden'),2400);
-});
+
+// Smooth percent counter — animates 0→100 over ~2.4s then fades out
+(function(){
+  const bar     = document.getElementById('loaderBar');
+  const pct     = document.getElementById('loaderPercent');
+  const loader  = document.getElementById('loader');
+  const TOTAL   = 2400; // total duration ms
+  let start     = null;
+  let pageLoaded = false;
+
+  // Ease-out-expo for satisfying deceleration near 100%
+  function easeOutExpo(t){ return t===1 ? 1 : 1 - Math.pow(2, -10*t); }
+
+  function tick(ts){
+    if(!start) start = ts;
+    const elapsed = ts - start;
+    const raw = Math.min(elapsed / TOTAL, 1);
+    const val = easeOutExpo(raw);
+    const display = Math.round(val * 100);
+
+    if(bar) bar.style.width = display + '%';
+    if(pct) pct.textContent = display + '%';
+
+    if(raw < 1){
+      requestAnimationFrame(tick);
+    } else {
+      // Counter hit 100 — wait a beat then fade out smoothly
+      setTimeout(()=> loader.classList.add('hidden'), 220);
+    }
+  }
+
+  // Start counter immediately; if page loads early, it still runs to 100
+  requestAnimationFrame(tick);
+
+  // If page takes longer than TOTAL, hold at 99 until load then finish
+  window.addEventListener('load', ()=>{ pageLoaded = true; });
+})();
 
 // ─── MOBILE MENU ───
 document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('mobileMenu').classList.add('open'));
