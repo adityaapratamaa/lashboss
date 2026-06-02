@@ -842,8 +842,20 @@
     margin-top: 2rem;
     border: 1px solid rgba(232,115,154,0.15);
     border-radius: var(--radius);
-    overflow: hidden;
+    overflow: clip; /* clip box tanpa mempengaruhi stacking context / scroll */
+    overflow-clip-margin: 0px;
     background: var(--white);
+  }
+
+  /* Override reveal translateY untuk feature-row — pakai translateX agar
+     tidak terpotong overflow:clip vertikal dari .why-features container */
+  .feature-row.reveal {
+    transform: translateX(-18px);
+    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+  }
+  .feature-row.reveal.visible {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .feature-row {
@@ -900,6 +912,15 @@
     border-radius: var(--radius);
     overflow: hidden;
     background: var(--white);
+  }
+  /* why-stats pakai fade + scale kecil, bukan translateY (tidak ada clip issue) */
+  .why-stats.reveal {
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .why-stats.reveal.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
   .why-stat {
     padding: 1rem 0.75rem;
@@ -4119,14 +4140,35 @@ function closeMobileMenu(){document.getElementById('mobileMenu').classList.remov
 // Interval timer was firing every 7s for nothing, wasting resources.
 
 
-// ─── SCROLL REVEAL ───
-const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.why-stats');
-const observer=new IntersectionObserver((entries)=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*60);
+// ─── SCROLL REVEAL (robust stagger) ───
+(function(){
+  const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+
+  // Parse transition-delay dari inline style (mis. "0.25s" → 250ms)
+  function getInlineDelay(el) {
+    const s = el.style.transitionDelay || '';
+    if (!s) return 0;
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : (s.includes('ms') ? n : n * 1000);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const delay = getInlineDelay(el);
+      setTimeout(() => {
+        el.classList.add('visible');
+      }, delay);
+      io.unobserve(el); // trigger sekali saja, tidak ulang
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
   });
-},{threshold:0.08,rootMargin:'0px 0px -20px 0px'});
-revealEls.forEach(el=>observer.observe(el));
+
+  revealEls.forEach(el => io.observe(el));
+})();
 
 // ─── WHY VIDEO PLAYER ───
 // Autoplay muted otomatis saat halaman load & saat masuk viewport.
