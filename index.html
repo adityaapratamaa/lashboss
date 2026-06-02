@@ -820,25 +820,176 @@
   }
 
   /* ─── WHY LASHBOSS ─── */
-  #why { background: linear-gradient(160deg, #fff5fa 0%, #ffe8f4 100%); }
-  .why-grid { display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center; }
-  .why-features { display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem; }
+  #why {
+    background: linear-gradient(160deg, #fff5fa 0%, #ffe8f4 100%);
+  }
 
-  .feature-card {
-    background:var(--white);border-radius:var(--radius);padding:1.5rem;
-    border:1px solid rgba(232,115,154,0.1);
-    transition:all 0.4s var(--ease);position:relative;overflow:hidden;
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4.5rem;
+    align-items: center;
   }
-  .feature-card::before {
-    content:'';position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg,var(--pink),var(--pink-light));
-    transform:scaleX(0);transform-origin:left;transition:transform 0.4s;
+
+  /* ── Left col: text + features ── */
+  .why-content { display: flex; flex-direction: column; }
+
+  /* Feature list — vertical, icon left + text right (matches mockup) */
+  .why-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 2rem;
+    border: 1px solid rgba(232,115,154,0.15);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--white);
   }
-  .feature-card:hover { transform:translateY(-5px);box-shadow:0 20px 50px rgba(232,115,154,0.2);border-color:var(--pink-light); }
-  .feature-card:hover::before { transform:scaleX(1); }
-  .feature-icon { font-size:1.8rem;margin-bottom:0.8rem; }
-  .feature-title { font-size:0.85rem;font-weight:700;margin-bottom:0.4rem;color:var(--dark); }
-  .feature-desc { font-size:0.73rem;color:var(--text-light);line-height:1.65; }
+
+  .feature-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid rgba(232,115,154,0.1);
+    transition: background 0.25s;
+  }
+  .feature-row:last-child { border-bottom: none; }
+  .feature-row:hover { background: #fff7fb; }
+
+  .feature-icon-wrap {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--pink-pale);
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,77,148,0.12);
+  }
+  .feature-icon-wrap img {
+    width: 22px; height: 22px;
+    object-fit: contain;
+    display: block;
+  }
+  .feature-icon-wrap svg {
+    width: 20px; height: 20px;
+    stroke: var(--pink);
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .feature-text { flex: 1; min-width: 0; }
+  .feature-title {
+    font-size: 0.88rem; font-weight: 700;
+    color: var(--dark); margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+  .feature-desc {
+    font-size: 0.76rem; color: var(--pink);
+    line-height: 1.5; font-weight: 500;
+  }
+
+  /* ── Stats strip ── */
+  .why-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 1.5rem;
+    border: 1px solid rgba(232,115,154,0.15);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--white);
+  }
+  .why-stat {
+    padding: 1rem 0.75rem;
+    text-align: center;
+    border-right: 1px solid rgba(232,115,154,0.1);
+  }
+  .why-stat:last-child { border-right: none; }
+  .why-stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem; font-weight: 900; font-style: italic;
+    color: var(--dark); line-height: 1; margin-bottom: 0.3rem;
+    display: flex; align-items: baseline; justify-content: center; gap: 1px;
+  }
+  .why-stat-num .stat-unit {
+    font-size: 1rem; font-weight: 700; font-style: normal;
+    color: var(--pink);
+  }
+  .why-stat-label {
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #9B5070;
+    font-weight: 500; line-height: 1.3;
+  }
+
+  /* ── Right col: video ── */
+  .why-visual { position: relative; }
+
+  /* ─── WHY VIDEO WRAPPER ─── */
+  .why-video-wrap {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.18),
+      0 0 0 1px rgba(255,77,148,0.18);
+    background: var(--dark);
+    max-height: 660px;
+  }
+
+  .why-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 24px;
+  }
+
+  .why-video-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.2rem 1.4rem;
+    background: linear-gradient(to top, rgba(61,26,46,0.75) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .why-video-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,77,148,0.85);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 99px;
+  }
+  .why-video-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: white; border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  .why-video-play-hint {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none; opacity: 0; transition: opacity 0.3s;
+  }
+  .why-video-wrap:not(.playing) .why-video-play-hint { opacity: 1; }
+  .play-circle {
+    width: 64px; height: 64px;
+    background: rgba(255,77,148,0.85);
+    backdrop-filter: blur(8px); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(255,77,148,0.4);
+  }
+  .play-circle svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
 
   .why-visual { position:relative; }
 
@@ -2480,8 +2631,8 @@
     /* WHY */
     .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .why-visual { order: -1; }
-    .why-img-slider { max-width: 360px; margin: 0 auto; aspect-ratio: 4/3; }
-    .why-features { grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .why-video-wrap { max-height: 420px; }
+    .why-stats { grid-template-columns: repeat(4, 1fr); }
 
     /* PROCESS — responsive handled inside #process block above */
 
@@ -2683,8 +2834,19 @@
     .proof-card-label { font-size: 0.6rem; letter-spacing: 0.1em; }
 
     /* WHY */
-    .why-features { grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.6rem; }
-    .feature-card { padding: 1.2rem; }
+    .why-features { margin-top: 1.4rem; }
+    .feature-row { padding: 1rem 1.1rem; gap: 0.85rem; }
+    .feature-icon-wrap { width: 36px; height: 36px; border-radius: 10px; }
+    .feature-icon-wrap svg { width: 17px; height: 17px; }
+    .feature-title { font-size: 0.82rem; }
+    .feature-desc { font-size: 0.72rem; }
+    .why-stats { grid-template-columns: repeat(2, 1fr); }
+    .why-stat { padding: 0.85rem 0.6rem; border-right: 1px solid rgba(232,115,154,0.1); border-bottom: 1px solid rgba(232,115,154,0.1); }
+    .why-stat:nth-child(2) { border-right: none; }
+    .why-stat:nth-child(3) { border-bottom: none; }
+    .why-stat:nth-child(4) { border-right: none; border-bottom: none; }
+    .why-stat-num { font-size: 1.35rem; }
+    .why-stat-label { font-size: 0.56rem; }
 
     /* ═══════════════════════════════════════════════════════
        📱 UKURAN VIDEO — MOBILE
@@ -3160,38 +3322,85 @@
 <!-- WHY LASHBOSS -->
 <section id="why">
   <div class="why-grid">
-    <div class="reveal-left">
+
+    <!-- ═══ KIRI: Teks + Feature List + Stats ═══ -->
+    <div class="why-content reveal-left">
       <div class="section-label">Kenapa LashBoss?</div>
       <h2 class="section-title">Formula <em>Premium</em><br>Bulu Mata Impianmu</h2>
       <p class="section-desc">LashBoss hadir dengan teknologi terdepan &amp; bahan-bahan aktif berkualitas tinggi untuk memberikan hasil nyata yang bisa kamu rasakan dalam 2 minggu pertama.</p>
+
+      <!-- Feature list — vertical (sesuai mockup) -->
       <div class="why-features">
-        <div class="feature-card reveal">
-          <!-- GANTI: icon botol serum di images/icons/serum-icon.png (48x48px) -->
-          <img src="./images/rapunzelserum.jpeg" alt="Rapunzel Serum" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
-          <div class="feature-title">Oil-Concentrated Serum</div>
-          <div class="feature-desc">100% ingredients aktif, vitamin &amp; fatty acid tanpa pengencer air.</div>
+
+        <div class="feature-row reveal">
+          <div class="feature-icon-wrap">
+            <!-- GANTI: icons/biotin-icon.png (22x22px) -->
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">Encapsulated Biotin</div>
+            <div class="feature-desc">7x lebih efektif diserap langsung ke akar bulu mata.</div>
+          </div>
         </div>
-        <div class="feature-card reveal" style="transition-delay:0.1s">
-          <!-- GANTI: icon laboratorium/science di images/icons/biotin-icon.png (48x48px) -->
-          <img src="./images/icons/biotin-icon.png" alt="Biotin" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
-          <div class="feature-title">Encapsulated Biotin</div>
-          <div class="feature-desc">7× lebih efektif — diserap langsung ke akar bulu mata.</div>
+
+        <div class="feature-row reveal" style="transition-delay:0.08s">
+          <div class="feature-icon-wrap">
+            <!-- GANTI: icons/natural-icon.png (22x22px) -->
+            <svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 7 7 3 2 3c0 5 4 9 10 9zM12 12c0-5 5-9 10-9 0 5-4 9-10 9z"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">Natural Oils Blend</div>
+            <div class="feature-desc">Sunflower, Almond &amp; Camellia Seed Oil untuk kelembapan maksimal.</div>
+          </div>
         </div>
-        <div class="feature-card reveal" style="transition-delay:0.2s">
-          <!-- GANTI: icon bunga/daun alami di images/icons/natural-icon.png (48x48px) -->
-          <img src="./images/icons/natural-icon.png" alt="Natural Oils" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
-          <div class="feature-title">Natural Oils Blend</div>
-          <div class="feature-desc">Sunflower, Almond &amp; Camellia Seed Oil untuk kelembapan maksimal.</div>
+
+        <div class="feature-row reveal" style="transition-delay:0.16s">
+          <div class="feature-icon-wrap">
+            <!-- GANTI: icons/peptide-icon.png (22x22px) -->
+            <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">Growth Peptide</div>
+            <div class="feature-desc">Membantu merangsang pertumbuhan bulu mata secara alami.</div>
+          </div>
         </div>
-        <div class="feature-card reveal" style="transition-delay:0.3s">
-          <!-- GANTI: icon mata di images/icons/eye-icon.png (48x48px) -->
-          <img src="./images/icons/eye-icon.png" alt="Sensitive Eyes" class="feature-icon" width="40" height="40" style="object-fit:contain;margin-bottom:0.8rem;">
-          <div class="feature-title">Safe for Sensitive Eyes</div>
-          <div class="feature-desc">Aman untuk mata sensitif &amp; pengguna eyelash extension.</div>
+
+        <div class="feature-row reveal" style="transition-delay:0.24s">
+          <div class="feature-icon-wrap">
+            <!-- GANTI: icons/eye-icon.png (22x22px) -->
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="feature-text">
+            <div class="feature-title">Safe for Sensitive Eyes</div>
+            <div class="feature-desc">Aman untuk mata sensitif &amp; pengguna eyelash extension.</div>
+          </div>
+        </div>
+
+      </div><!-- /why-features -->
+
+      <!-- Stats strip — 4 angka sesuai mockup -->
+      <div class="why-stats reveal" style="transition-delay:0.3s">
+        <div class="why-stat">
+          <div class="why-stat-num">95<span class="stat-unit">%</span></div>
+          <div class="why-stat-label">Pengguna lihat<br>hasil dalam 14 hari</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-num">4.9<span class="stat-unit">/5</span></div>
+          <div class="why-stat-label">Rating dari lebih<br>dari 2.000+ review</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-num">10<span class="stat-unit">rb+</span></div>
+          <div class="why-stat-label">Botol terjual dan<br>dipercaya pelanggan</div>
+        </div>
+        <div class="why-stat">
+          <div class="why-stat-num">100<span class="stat-unit">%</span></div>
+          <div class="why-stat-label">Oil Concentrated<br>Formula</div>
         </div>
       </div>
-    </div>
 
+    </div><!-- /why-content -->
+
+    <!-- ═══ KANAN: Video testimoni ═══ -->
     <div class="why-visual reveal-right">
 
       <!-- ════════════════════════════════════════════════════
@@ -3200,9 +3409,9 @@
            2. Ganti nilai src di tag <source> di bawah ini
               Contoh: src="./videos/testimoni-baru.mp4"
            3. Pastikan format file adalah .mp4 (H.264)
-           4. Resolusi ideal: 1080x1920 (vertikal/portrait)
+           4. Resolusi ideal: 1080×1920 (vertikal/portrait)
            Catatan: poster= adalah gambar thumbnail saat video belum diplay
-           Ganti juga poster: poster="./images/why/video-thumbnail.jpg"
+           Ganti juga: poster="./images/why/video-thumbnail.jpg"
       ════════════════════════════════════════════════════ -->
       <div class="why-video-wrap" id="whyVideoWrap">
 
@@ -3220,6 +3429,11 @@
           Browser kamu tidak mendukung video HTML5.
         </video>
 
+        <!-- Overlay gradient bawah untuk branding -->
+        <div class="why-video-overlay">
+          <div class="why-video-badge">Testimoni Real</div>
+        </div>
+
         <!-- Play hint icon — hilang otomatis saat video playing -->
         <div class="why-video-play-hint" id="whyPlayHint">
           <div class="play-circle">
@@ -3229,12 +3443,11 @@
           </div>
         </div>
 
+      </div><!-- /why-video-wrap -->
 
+    </div><!-- /why-visual -->
 
-      </div>
-
-    </div>
-  </div>
+  </div><!-- /why-grid -->
 </section>
 
 <!-- CATALOG -->
