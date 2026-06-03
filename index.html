@@ -2131,20 +2131,26 @@
     to   { opacity: 0; transform: translateX(-40px) scale(0.96); }
   }
 
-  /* Question pill — text only */
+  /* Question pill — text only, compact */
   .quiz-question-wrap {
     background: rgba(255,255,255,0.82);
     border: 1.5px solid rgba(255,255,255,0.98);
     border-radius: 99px;
-    padding: 0.75rem 1.6rem;
-    width: 100%; margin: 0 auto 1.6rem;
+    padding: 0.65rem 1.8rem;
+    width: fit-content; max-width: 100%;
+    margin: 0 auto 1.4rem;
     box-shadow: 0 2px 16px rgba(232,115,154,0.13);
     box-sizing: border-box;
     text-align: center;
   }
   .quiz-question {
-    font-size: 0.95rem; font-weight: 700;
+    font-size: 0.88rem; font-weight: 700;
     color: var(--pink-deep); margin: 0; line-height: 1.35;
+    white-space: nowrap;
+  }
+  @media(max-width:640px) {
+    .quiz-question { white-space: normal; }
+    .quiz-question-wrap { width: 100%; }
   }
 
   /* Options — full-width stack */
@@ -2271,51 +2277,69 @@
   }
   .quiz-close-btn:hover { background: var(--pink); color: white; border-color: var(--pink); }
 
-  /* Kiri — foto produk */
+  /* Kiri — foto produk (catalog style, no arch) */
   .quiz-res-img-side {
     background: linear-gradient(160deg, #fce8f3 0%, #fcc8de 60%, #f9b2d0 100%);
     display: flex; flex-direction: column;
     align-items: center; justify-content: flex-end;
-    padding: 2rem 2rem 1.5rem; position: relative;
+    padding: 0 0 1.2rem; position: relative;
     min-height: 480px; overflow: hidden;
   }
-  /* arch shape behind product image */
-  .quiz-res-img-side::before {
-    content: '';
+  .quiz-res-img-side::before { display: none; }
+
+  /* 
+   * UKURAN GAMBAR PRODUK:
+   * Gambar mengisi penuh area kiri card secara catalog-style.
+   * Ganti src dengan foto produk resolusi tinggi (min 600x700px).
+   * Rasio ideal: portrait 3:4 atau 2:3 agar mengisi kotak dengan baik.
+   * Contoh ukuran ideal: 480x560px atau 600x700px.
+   */
+  .quiz-res-img-side img {
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    object-fit: cover;       /* Mengisi penuh kotak, tidak ada sisa kosong */
+    object-position: center top; /* Fokus ke bagian atas/tengah produk */
+    display: block;
     position: absolute;
-    bottom: 60px; left: 50%;
-    transform: translateX(-50%);
-    width: 260px; height: 260px;
-    background: rgba(255,255,255,0.35);
-    border-radius: 50% 50% 0 0;
+    inset: 0;
     z-index: 0;
   }
-  .quiz-res-img-side img {
-    width: auto; max-width: 200px;
-    height: 300px; object-fit: contain;
-    display: block; position: relative; z-index: 1;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 20px 40px rgba(200,60,120,0.25));
+
+  /* Overlay gradient bawah agar tag strip terbaca */
+  .quiz-res-img-side::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(252,200,222,0.85) 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
   }
+
+  /* Tags tetap di atas overlay */
+  .quiz-res-tags { position: relative; z-index: 2; }
+
+  /* Best Seller badge — lebih kecil */
   .quiz-res-bestseller {
-    position: absolute; top: 1.4rem; left: 1.4rem;
+    position: absolute; top: 1rem; left: 1rem;
     background: white; border-radius: 50%;
-    width: 80px; height: 80px;
+    width: 60px; height: 60px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    box-shadow: 0 6px 20px rgba(232,115,154,0.25);
-    z-index: 2;
+    box-shadow: 0 4px 16px rgba(232,115,154,0.25);
+    z-index: 3;
   }
   .quiz-res-bestseller .bs-brand {
-    font-size: 0.44rem; font-weight: 700; color: var(--pink);
+    font-size: 0.38rem; font-weight: 700; color: var(--pink);
     letter-spacing: 0.08em; text-transform: uppercase;
   }
   .quiz-res-bestseller .bs-text {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem; font-weight: 900; color: var(--dark);
+    font-size: 0.62rem; font-weight: 900; color: var(--dark);
     text-transform: uppercase; line-height: 1.1; text-align: center;
   }
-  .quiz-res-bestseller .bs-stars { font-size: 0.48rem; color: #F5A623; margin-top: 2px; }
+  .quiz-res-bestseller .bs-stars { font-size: 0.4rem; color: #F5A623; margin-top: 1px; }
 
   /* Strip bawah kiri */
   .quiz-res-tags {
@@ -3151,13 +3175,12 @@
       overflow: hidden;
     }
     .quiz-res-img-side {
-      min-height: 260px !important;
-      padding: 1.8rem 1.2rem 1.4rem !important;
+      min-height: 280px !important;
+      padding: 0 0 1.2rem !important;
       border-radius: 0 !important;
     }
     .quiz-res-img-side img {
-      max-width: 160px !important;
-      height: 200px !important;
+      min-height: 280px !important;
     }
     .quiz-res-info-side {
       padding: 1.6rem 1.4rem 1.4rem !important;
