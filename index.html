@@ -2841,43 +2841,6 @@
   }
 
 
-  /* ─── BEFORE/AFTER TOGGLE (new premium) ─── */
-  #beforeafter { background: linear-gradient(135deg, #fff0f7 0%, #ffe0f0 100%); color: #3D1A2E; overflow: hidden; position: relative; }
-  #beforeafter::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255,77,148,0.08), transparent);
-  }
-  #beforeafter .section-title { color: #3D1A2E; }
-  .ba-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
-    margin-top: 3rem;
-    position: relative; z-index: 1;
-  }
-  .ba-card {
-    background: rgba(255,255,255,0.85);
-    border: 1px solid rgba(255,77,148,0.2);
-    border-radius: 20px; overflow: hidden;
-    transition: all 0.4s;
-  }
-  .ba-card:hover { border-color: var(--pink); box-shadow: 0 16px 40px rgba(255,77,148,0.2); transform: translateY(-4px); }
-  .ba-img-wrap {
-    aspect-ratio: 3/2;
-    background: linear-gradient(135deg, #FFD6EB, #FFA8D0);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    font-size: 3.5rem;
-  }
-  .ba-weeks {
-    position: absolute; top: 0.7rem; right: 0.7rem;
-    background: var(--pink);
-    color: white; font-size: 0.6rem; font-weight: 700;
-    padding: 0.2rem 0.6rem; border-radius: 99px;
-    letter-spacing: 0.1em;
-  }
-  .ba-info { padding: 1rem 1.2rem 1.2rem; }
-  .ba-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; font-style: italic; color: #3D1A2E; margin-bottom: 0.25rem; }
-  .ba-detail { font-size: 0.72rem; color: #7A4060; line-height: 1.6; }
-  .ba-result { font-size: 0.75rem; color: var(--pink-light); font-weight: 600; margin-top: 0.4rem; }
 
   /* ─── INGREDIENT HIGHLIGHT — Premium Redesign ─── */
   #ingredients {
@@ -3432,8 +3395,6 @@
     .cta-mini-num { font-size: 1.3rem; }
     .cta-guarantee { flex-wrap: wrap; gap: 0.4rem; font-size: 0.63rem; }
 
-    /* BA / BEFORE-AFTER */
-    .ba-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 
     /* MARKETPLACE */
     .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -3562,8 +3523,6 @@
     .btn-white, .btn-outline-white { padding: 0.85rem 1.5rem; font-size: 0.76rem; max-width: 100%; }
     .cta-desc { font-size: 0.85rem; }
 
-    /* BEFORE/AFTER */
-    .ba-img-wrap { aspect-ratio: 2/1; font-size: 2.5rem; }
 
     /* MARKETPLACE */
     .marketplace-card { padding: 1.2rem 0.8rem; }
@@ -3753,6 +3712,525 @@
   ::-webkit-scrollbar { width:4px; }
   ::-webkit-scrollbar-track { background:var(--cream); }
   ::-webkit-scrollbar-thumb { background:var(--pink-light);border-radius:2px; }
+
+  /* ─── TRANSFORMASI NYATA (Slider) ─── */
+/* =====================================================
+   VARIABEL ROOT — sesuaikan dengan yang sudah ada
+   ===================================================== */
+:root {
+  --pink:       #FF4D94;
+  --pink-light: #FF85C0;
+  --pink-pale:  #FFF0F7;
+  --pink-deep:  #D91A6B;
+  --dark:       #3D1A2E;
+  --cream:      #FFF5FA;
+  --gold:       #C9A96E;
+  --text-light: #7A4060;
+  --radius:     16px;
+  --ease:       cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* preview only — remove when integrating */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #f9f0f5;
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* =====================================================
+   SECTION WRAPPER
+   ===================================================== */
+#transformasi {
+  background: linear-gradient(160deg, #fff5fa 0%, #ffe8f3 50%, #fff0f7 100%);
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 7vw, 6rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial glow bg */
+#transformasi::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 40% at 15% 10%, rgba(255,133,190,0.12), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 85% 90%, rgba(255,77,148,0.09), transparent 70%);
+  pointer-events: none;
+}
+
+/* Decorative sparkles */
+#transformasi::after {
+  content: '✦';
+  position: absolute;
+  top: 3.5rem;
+  left: clamp(1rem, 4vw, 5rem);
+  font-size: 1.1rem;
+  color: rgba(255,77,148,0.18);
+  pointer-events: none;
+}
+
+.tr-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 3.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── HEADER ─── */
+.tr-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.tr-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--pink-deep);
+  margin-bottom: 1rem;
+}
+.tr-label::before,
+.tr-label::after {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: var(--pink);
+  border-radius: 99px;
+}
+
+.tr-spark {
+  color: var(--pink);
+  font-size: 0.8rem;
+}
+
+.tr-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.9rem;
+}
+.tr-title .accent { color: var(--pink); }
+
+.tr-subtitle {
+  font-size: clamp(0.88rem, 1.8vw, 1rem);
+  color: var(--text-light);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ─── SLIDER MAIN WRAPPER ─── */
+.tr-slider-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: center;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,133,190,0.25);
+  border-radius: 28px;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3.5vw, 3rem);
+  box-shadow:
+    0 2px 8px rgba(255,77,148,0.06),
+    0 20px 60px rgba(255,77,148,0.1);
+  overflow: hidden;
+}
+
+/* Soft inner gradient top-right */
+.tr-slider-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle at top right, rgba(255,133,190,0.09), transparent 70%);
+  pointer-events: none;
+  border-radius: 28px;
+}
+
+/* ─── LEFT: PHOTO PANEL ─── */
+.tr-photo-panel {
+  position: relative;
+  /* aspect ratio maintained by inner */
+}
+
+.tr-img-track {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  /*
+   * ============================================================
+   * UKURAN GAMBAR SLIDE TRANSFORMASI NYATA
+   *
+   *   Rasio aspek ideal  : 4:3  (landscape, e.g. 800 x 600 px)
+   *                        atau 3:4 (portrait, e.g. 600 x 800 px)
+   *   Ukuran file maks   : 200 KB per gambar (WebP rekomendasi)
+   *   Objek tampil       : object-fit: cover — gambar di-crop tengah
+   *
+   *   Contoh path file:
+   *     images/transformasi/slide-1.webp  (800 x 600 px)
+   *     images/transformasi/slide-2.webp  (800 x 600 px)
+   *     ... dst hingga slide-7.webp
+   *
+   *   Jika menggunakan foto portrait (closeup bulu mata):
+   *     ukuran ideal: 600 x 700 px, rasio 6:7
+   * ============================================================
+   */
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, #FFD6EB 0%, #FFA8D0 100%);
+}
+
+/* All slides stacked absolutely */
+.tr-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.04) translateX(20px);
+  transition:
+    opacity 0.65s var(--ease),
+    transform 0.65s var(--ease);
+  will-change: opacity, transform;
+}
+
+.tr-slide.active {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  position: relative; /* first active takes up space */
+  z-index: 2;
+}
+
+.tr-slide.exit {
+  opacity: 0;
+  transform: scale(0.97) translateX(-20px);
+  position: absolute;
+  z-index: 1;
+}
+
+.tr-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  /* Placeholder gradient bg shown until real image loads */
+  background: linear-gradient(135deg, #FFD6EB 0%, #FFA8D0 100%);
+}
+
+/* Placeholder when no real image — remove when using real photos */
+.tr-slide-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #ffe4f1 0%, #ffc4e0 100%);
+  border-radius: 20px;
+  color: var(--pink);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 1rem;
+}
+.tr-slide-placeholder svg {
+  width: 48px; height: 48px;
+  stroke: var(--pink-light);
+  opacity: 0.6;
+}
+
+/* Progress bar at bottom of photo */
+.tr-progress-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.25);
+  z-index: 5;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+.tr-progress-fill {
+  height: 100%;
+  background: white;
+  width: 0%;
+  border-radius: 99px;
+  transition: width linear;
+}
+
+/* ─── PREV / NEXT ARROWS ─── */
+.tr-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: 1.5px solid rgba(255,133,190,0.35);
+  color: var(--pink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.22s var(--ease);
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(255,77,148,0.15);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  line-height: 1;
+}
+.tr-arrow:hover {
+  background: var(--pink);
+  color: white;
+  border-color: var(--pink);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 22px rgba(255,77,148,0.35);
+}
+.tr-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+.tr-arrow.prev { left: -22px; }
+.tr-arrow.next { right: -22px; }
+
+/* ─── RIGHT: CONTENT PANEL ─── */
+.tr-content-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding-left: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.tr-week-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,77,148,0.1);
+  border: 1.5px solid rgba(255,77,148,0.25);
+  color: var(--pink-deep);
+  padding: 0.3rem 0.85rem;
+  border-radius: 99px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  width: fit-content;
+  transition: all 0.4s var(--ease);
+}
+
+.tr-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-left: 1.4rem;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.tr-quote::before {
+  content: '"';
+  position: absolute;
+  left: 0; top: -0.15rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: var(--pink);
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.tr-body {
+  font-size: clamp(0.82rem, 1.4vw, 0.9rem);
+  color: var(--text-light);
+  line-height: 1.75;
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.tr-body .hl { color: var(--pink); font-weight: 600; }
+
+/* Stars */
+.tr-stars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.tr-star {
+  font-size: 1.15rem;
+  color: #F5A623;
+  filter: drop-shadow(0 1px 3px rgba(245,166,35,0.35));
+  animation: starPop 0.4s var(--ease) backwards;
+}
+@keyframes starPop {
+  from { transform: scale(0.4); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.tr-stars .tr-star:nth-child(1) { animation-delay: 0.05s; }
+.tr-stars .tr-star:nth-child(2) { animation-delay: 0.10s; }
+.tr-stars .tr-star:nth-child(3) { animation-delay: 0.15s; }
+.tr-stars .tr-star:nth-child(4) { animation-delay: 0.20s; }
+.tr-stars .tr-star:nth-child(5) { animation-delay: 0.25s; }
+
+.tr-user-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+.tr-user-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--dark);
+}
+.tr-user-loc {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+.tr-user-loc svg { width: 13px; height: 13px; stroke: var(--pink-light); }
+
+.tr-verified {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: #2E9E5B;
+  font-weight: 600;
+}
+.tr-verified svg { width: 14px; height: 14px; stroke: #2E9E5B; }
+
+/* ─── DOTS ─── */
+.tr-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.tr-dot {
+  width: 8px; height: 8px;
+  border-radius: 99px;
+  background: rgba(255,77,148,0.22);
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s var(--ease);
+  padding: 0;
+}
+.tr-dot.active {
+  width: 28px;
+  background: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255,77,148,0.2);
+}
+.tr-dot:hover:not(.active) {
+  background: rgba(255,77,148,0.5);
+  transform: scale(1.2);
+}
+
+/* ─── TRUST BAR ─── */
+.tr-trust {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.tr-trust-item {
+  background: rgba(255,255,255,0.8);
+  border: 1.5px solid rgba(255,133,190,0.2);
+  border-radius: 14px;
+  padding: 0.9rem 0.8rem 0.8rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.28s var(--ease);
+}
+.tr-trust-item:hover {
+  border-color: var(--pink-light);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255,77,148,0.12);
+}
+.tr-trust-icon {
+  width: 36px; height: 36px;
+  background: rgba(255,77,148,0.08);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.tr-trust-icon svg { width: 18px; height: 18px; stroke: var(--pink); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tr-trust-name {
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.3;
+}
+.tr-trust-desc {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE — MOBILE
+   ───────────────────────────────────────── */
+@media (max-width: 900px) {
+  .tr-slider-wrap {
+    grid-template-columns: 1fr;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-radius: 22px;
+    gap: 1.5rem;
+  }
+
+  .tr-arrow.prev { left: -16px; }
+  .tr-arrow.next { right: -16px; }
+}
+
+@media (max-width: 640px) {
+  #transformasi {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .tr-img-track {
+    aspect-ratio: 3 / 2;
+    border-radius: 16px;
+  }
+  .tr-slide img { border-radius: 16px; }
+
+  .tr-arrow { width: 38px; height: 38px; font-size: 1rem; }
+  .tr-arrow.prev { left: -14px; }
+  .tr-arrow.next { right: -14px; }
+
+  .tr-content-panel { padding-left: 0; gap: 0.85rem; }
+
+  .tr-quote { font-size: 1.35rem; padding-left: 1.1rem; }
+  .tr-quote::before { font-size: 2.4rem; }
+
+  .tr-trust {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .tr-title { font-size: 2rem; }
+  .tr-arrow { display: none; } /* very small screens: swipe only */
+}
+
 </style>
 </head>
 <body>
@@ -3928,52 +4406,219 @@
 
 
 
-<!-- BEFORE/AFTER RESULTS (new premium section) -->
-<section id="beforeafter">
-  <div style="text-align:center;max-width:560px;margin:0 auto;position:relative;z-index:1" class="reveal">
-    <div class="section-label">Transformasi Nyata</div>
-    <h2 class="section-title">Lihat Sendiri <em>Hasilnya</em></h2>
-    <p class="section-desc" style="margin:0 auto;">Bukan rekayasa — ini hasil asli pengguna LashBoss dari seluruh Indonesia</p>
-  </div>
-  <div class="ba-grid" style="max-width:1100px;margin:3rem auto 0">
-    <div class="ba-card reveal" style="transition-delay:0.1s">
-      <div class="ba-img-wrap">
-        <!-- GANTI: foto before/after pelanggan 1 di images/ba/ba-anita.jpg (rasio 3:2) -->
-        <img src="./images/ba/ba-anita.jpg" alt="Before After - Anita" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <span class="ba-weeks">Minggu ke-2</span>
+<!-- TRANSFORMASI NYATA (Slider Section) -->
+<section id="transformasi">
+  <div class="tr-container">
+
+    <!-- Header -->
+    <div class="tr-header">
+      <div class="tr-label">
+        <span class="tr-spark">✦</span>
+        Transformasi Nyata
+        <span class="tr-spark">✦</span>
       </div>
-      <div class="ba-info">
-        <div class="ba-name">Anita, 24 · Jakarta</div>
-        <div class="ba-detail">Pakai Rapunzel Serum rutin setiap malam sebelum tidur.</div>
-        <div class="ba-result">✓ Bulu mata 2× lebih tebal &amp; panjang dari sebelumnya</div>
-      </div>
+      <h2 class="tr-title">Lihat Sendiri <span class="accent">Hasilnya</span></h2>
+      <p class="tr-subtitle">Bukan rekayasa — ini hasil asli pengguna LashBoss dari seluruh Indonesia</p>
     </div>
-    <div class="ba-card reveal" style="transition-delay:0.2s">
-      <div class="ba-img-wrap">
-        <!-- GANTI: foto before/after pelanggan 2 di images/ba/ba-dewi.jpg (rasio 3:2) -->
-        <img src="./images/ba/ba-dewi.jpg" alt="Before After - Dewi" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <span class="ba-weeks">Minggu ke-3</span>
+
+    <!-- Slider Card -->
+    <div class="tr-slider-wrap" id="trSliderWrap">
+
+      <!-- Arrow Prev -->
+      <button class="tr-arrow prev" id="trPrev" aria-label="Slide sebelumnya">&#8249;</button>
+      <!-- Arrow Next -->
+      <button class="tr-arrow next" id="trNext" aria-label="Slide berikutnya">&#8250;</button>
+
+      <!-- LEFT: Photo Panel -->
+      <div class="tr-photo-panel">
+        <div class="tr-img-track" id="trImgTrack">
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 1 — ganti src dengan path foto nyata
+            Ukuran ideal: 800×600 px (rasio 4:3) atau
+                          600×700 px (rasio portrait closeup)
+            Format: WebP / JPG, maks 200 KB
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide active" data-index="0">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 1<br>(800×600 px)
+            </div>
+            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
+            <!-- <img src="images/transformasi/slide-1.webp" alt="Transformasi Dewi — Minggu ke-3" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 2
+            Ukuran ideal: sama seperti slide 1
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="1">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 2<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-2.webp" alt="Transformasi Siti — Minggu ke-2" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 3
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="2">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 3<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-3.webp" alt="Transformasi Rina — Minggu ke-4" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 4
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="3">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 4<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-4.webp" alt="Transformasi Ayu — Minggu ke-3" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 5
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="4">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 5<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-5.webp" alt="Transformasi Maya — Minggu ke-2" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 6
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="5">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 6<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-6.webp" alt="Transformasi Fitri — Minggu ke-4" loading="lazy"> -->
+          </div>
+
+          <!--
+            ──────────────────────────────────────────────
+            SLIDE 7
+            ──────────────────────────────────────────────
+          -->
+          <div class="tr-slide" data-index="6">
+            <div class="tr-slide-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Foto Transformasi<br>Slide 7<br>(800×600 px)
+            </div>
+            <!-- <img src="images/transformasi/slide-7.webp" alt="Transformasi Nadia — Minggu ke-3" loading="lazy"> -->
+          </div>
+
+          <!-- Progress bar -->
+          <div class="tr-progress-bar">
+            <div class="tr-progress-fill" id="trProgressFill"></div>
+          </div>
+        </div><!-- /.tr-img-track -->
+      </div><!-- /.tr-photo-panel -->
+
+      <!-- RIGHT: Testimonial Content Panel -->
+      <div class="tr-content-panel" id="trContentPanel">
+
+        <!-- Week badge -->
+        <div class="tr-week-badge" id="trWeekBadge">
+          ✦&nbsp; Minggu ke-3
+        </div>
+
+        <!-- Quote -->
+        <p class="tr-quote" id="trQuote">
+          "Bulu mata jadi lebih panjang &amp; lentik!"
+        </p>
+
+        <!-- Body copy -->
+        <p class="tr-body" id="trBody">
+          Awalnya ragu, tapi ternyata LashBoss benar-benar bikin bulu mata tumbuh <span class="hl">lebih panjang dan tebal</span>. Sekarang makin <span class="hl">percaya diri</span> tanpa maskara!
+        </p>
+
+        <!-- Stars -->
+        <div class="tr-stars" id="trStars" aria-label="5 dari 5 bintang">
+          <span class="tr-star">★</span>
+          <span class="tr-star">★</span>
+          <span class="tr-star">★</span>
+          <span class="tr-star">★</span>
+          <span class="tr-star">★</span>
+        </div>
+
+        <!-- User -->
+        <div>
+          <div class="tr-user-row">
+            <span class="tr-user-name" id="trUserName">Dewi, 29</span>
+            <span class="tr-user-loc">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <span id="trUserCity">Surabaya</span>
+            </span>
+          </div>
+          <div class="tr-verified" style="margin-top:0.45rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Pembelian Terverifikasi
+          </div>
+        </div>
+      </div><!-- /.tr-content-panel -->
+
+    </div><!-- /.tr-slider-wrap -->
+
+    <!-- Dots -->
+    <div class="tr-dots" id="trDots" role="tablist" aria-label="Pilih slide"></div>
+
+    <!-- Trust Bar -->
+    <div class="tr-trust">
+      <div class="tr-trust-item">
+        <div class="tr-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="tr-trust-name">Hasil Nyata</div>
+        <div class="tr-trust-desc">Terbukti oleh ribuan pengguna</div>
       </div>
-      <div class="ba-info">
-        <div class="ba-name">Dewi, 29 · Surabaya</div>
-        <div class="ba-detail">Setelah pake extension 2 tahun, coba Gel-Based Serum.</div>
-        <div class="ba-result">✓ Bulu mata asli tumbuh lebih kuat, extension tahan lama</div>
+      <div class="tr-trust-item">
+        <div class="tr-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="tr-trust-name">Aman &amp; BPOM</div>
+        <div class="tr-trust-desc">Formula lembut, aman digunakan</div>
       </div>
-    </div>
-    <div class="ba-card reveal" style="transition-delay:0.3s">
-      <div class="ba-img-wrap">
-        <!-- GANTI: foto before/after pelanggan 3 di images/ba/ba-sari.jpg (rasio 3:2) -->
-        <img src="./images/ba/ba-sari.jpg" alt="Before After - Sari" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <span class="ba-weeks">Minggu ke-4</span>
+      <div class="tr-trust-item">
+        <div class="tr-trust-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+        </div>
+        <div class="tr-trust-name">Tanpa Efek Samping</div>
+        <div class="tr-trust-desc">Nyaman untuk pemakaian harian</div>
       </div>
-      <div class="ba-info">
-        <div class="ba-name">Sari, 31 · Bandung</div>
-        <div class="ba-detail">Mata sensitif, sudah coba berbagai serum tapi selalu iritasi.</div>
-        <div class="ba-result">✓ Pertama kali nemu serum yang cocok — bulu alis ikut lebat!</div>
+      <div class="tr-trust-item">
+        <div class="tr-trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="tr-trust-name">Dipercaya Banyak Orang</div>
+        <div class="tr-trust-desc">Ribuan testimoni positif</div>
       </div>
-    </div>
-  </div>
+    </div><!-- /.tr-trust -->
+
+  </div><!-- /.tr-container -->
 </section>
+
 
 <!-- HASIL NYATA (NEW) -->
 <section id="results">
@@ -6102,6 +6747,246 @@ document.addEventListener('keydown', e => {
     const diff = tx - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) lbNav(diff > 0 ? 1 : -1, null);
   });
+})();
+</script>
+
+
+<!-- JS: Transformasi Nyata Slider -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── DATA SLIDES (edit sesuai konten nyata) ── */
+  const TR_DATA = [
+    {
+      week:    'Minggu ke-3',
+      quote:   '"Bulu mata jadi lebih panjang &amp; lentik!"',
+      body:    'Awalnya ragu, tapi ternyata LashBoss benar-benar bikin bulu mata tumbuh <span class="hl">lebih panjang dan tebal</span>. Sekarang makin <span class="hl">percaya diri</span> tanpa maskara!',
+      name:    'Dewi, 29',
+      city:    'Surabaya',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-2',
+      quote:   '"Alis saya makin tebal, terima kasih LashBoss!"',
+      body:    'Sudah 2 minggu pakai dan perubahannya <span class="hl">benar-benar terlihat</span>. Bulu alis lebih rapi dan tebal, gak perlu pensil alis lagi setiap hari.',
+      name:    'Siti, 25',
+      city:    'Jakarta',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-4',
+      quote:   '"Hasilnya melebihi ekspektasi saya!"',
+      body:    'Sempat skeptis tapi setelah <span class="hl">4 minggu konsisten</span> hasilnya sungguh nyata. Bulu mata jadi lebih hitam, panjang, dan natural.',
+      name:    'Rina, 32',
+      city:    'Bandung',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-3',
+      quote:   '"Bulu mata tumbuh lebih cepat dari yang saya kira!"',
+      body:    'Pemakaian rutin tiap malam sebelum tidur dan hasilnya <span class="hl">sangat memuaskan</span>. Bulu mata terasa lebih sehat dan tidak mudah rontok.',
+      name:    'Ayu, 27',
+      city:    'Yogyakarta',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-2',
+      quote:   '"Recommend banget buat yang mau bulu mata natural!"',
+      body:    'Formula-nya lembut dan tidak bikin iritasi. Dalam <span class="hl">2 minggu</span> sudah terasa bulu mata lebih lentik dan kuat.',
+      name:    'Maya, 23',
+      city:    'Semarang',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-4',
+      quote:   '"Investasi terbaik untuk perawatan bulu mata!"',
+      body:    'Setelah 4 minggu pakai LashBoss, hasilnya <span class="hl">luar biasa</span>. Bulu mata jadi lebih panjang, tebal, dan hitam alami. Sangat puas!',
+      name:    'Fitri, 30',
+      city:    'Makassar',
+      stars:   5,
+    },
+    {
+      week:    'Minggu ke-3',
+      quote:   '"Sekarang percaya diri tampil tanpa maskara!"',
+      body:    'Tiga minggu pakai dan bulu mata saya <span class="hl">jelas lebih panjang dan melengkung</span>. Teman-teman pada tanya pakai maskara apa, padahal enggak!',
+      name:    'Nadia, 28',
+      city:    'Medan',
+      stars:   5,
+    },
+  ];
+
+  /* ── CONSTANTS ── */
+  const DURATION   = 5000;   // ms between auto-slides
+  const TRANS_MS   = 650;    // match CSS transition duration
+
+  /* ── ELEMENTS ── */
+  const wrap        = document.getElementById('trSliderWrap');
+  const slides      = Array.from(document.querySelectorAll('.tr-slide'));
+  const dotsWrap    = document.getElementById('trDots');
+  const progressFill = document.getElementById('trProgressFill');
+  const btnPrev     = document.getElementById('trPrev');
+  const btnNext     = document.getElementById('trNext');
+  const elWeek      = document.getElementById('trWeekBadge');
+  const elQuote     = document.getElementById('trQuote');
+  const elBody      = document.getElementById('trBody');
+  const elStars     = document.getElementById('trStars');
+  const elName      = document.getElementById('trUserName');
+  const elCity      = document.getElementById('trUserCity');
+
+  if (!slides.length) return; // guard
+
+  let current   = 0;
+  let animating = false;
+  let paused    = false;
+  let timer     = null;
+  let progTimer = null;
+
+  /* ── BUILD DOTS ── */
+  dotsWrap.innerHTML = TR_DATA.map((_, i) =>
+    `<button class="tr-dot${i === 0 ? ' active' : ''}" data-i="${i}" role="tab" aria-label="Slide ${i + 1}" aria-selected="${i === 0}"></button>`
+  ).join('');
+
+  dotsWrap.querySelectorAll('.tr-dot').forEach(d => {
+    d.addEventListener('click', () => {
+      const idx = parseInt(d.dataset.i, 10);
+      if (idx !== current) goTo(idx);
+      resetTimer();
+    });
+  });
+
+  /* ── UPDATE DOTS ── */
+  function updateDots() {
+    dotsWrap.querySelectorAll('.tr-dot').forEach((d, i) => {
+      const active = i === current;
+      d.classList.toggle('active', active);
+      d.setAttribute('aria-selected', String(active));
+    });
+  }
+
+  /* ── UPDATE CONTENT ── */
+  function updateContent(idx) {
+    const d = TR_DATA[idx];
+    if (!d) return;
+
+    /* fade out content slightly, swap, fade back in */
+    const els = [elWeek, elQuote, elBody, elName, elCity, elStars];
+    els.forEach(el => {
+      el.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+      el.style.opacity    = '0';
+      el.style.transform  = 'translateY(8px)';
+    });
+
+    setTimeout(() => {
+      elWeek.innerHTML  = `✦&nbsp; ${d.week}`;
+      elQuote.innerHTML = d.quote;
+      elBody.innerHTML  = d.body;
+      elName.textContent = d.name;
+      elCity.textContent = d.city;
+
+      /* Re-trigger star animation */
+      elStars.innerHTML = Array(d.stars).fill('').map((_, si) =>
+        `<span class="tr-star" style="animation-delay:${(si * 0.05).toFixed(2)}s">★</span>`
+      ).join('');
+
+      els.forEach(el => {
+        el.style.opacity   = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }, 230);
+  }
+
+  /* ── GO TO SLIDE ── */
+  function goTo(next) {
+    if (animating || next === current) return;
+    animating = true;
+
+    const prev = current;
+    current    = next;
+
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('exit');
+    slides[next].classList.add('active');
+
+    updateDots();
+    updateContent(next);
+    startProgress();
+
+    setTimeout(() => {
+      slides[prev].classList.remove('exit');
+      animating = false;
+    }, TRANS_MS + 50);
+  }
+
+  /* ── AUTO ADVANCE ── */
+  function advance() {
+    if (!paused) goTo((current + 1) % slides.length);
+  }
+
+  /* ── TIMER ── */
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(advance, DURATION);
+  }
+
+  /* ── PROGRESS BAR ── */
+  function startProgress() {
+    clearInterval(progTimer);
+    progressFill.style.transition = 'none';
+    progressFill.style.width = '0%';
+    /* force reflow */
+    progressFill.offsetHeight; // eslint-disable-line no-unused-expressions
+    progressFill.style.transition = `width ${DURATION}ms linear`;
+    progressFill.style.width = '100%';
+  }
+
+  /* ── ARROW BUTTONS ── */
+  btnPrev.addEventListener('click', () => {
+    goTo((current - 1 + slides.length) % slides.length);
+    resetTimer();
+  });
+  btnNext.addEventListener('click', () => {
+    goTo((current + 1) % slides.length);
+    resetTimer();
+  });
+
+  /* ── PAUSE ON HOVER (desktop) ── */
+  wrap.addEventListener('mouseenter', () => { paused = true; });
+  wrap.addEventListener('mouseleave', () => { paused = false; });
+
+  /* ── TOUCH SWIPE ── */
+  let touchX = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchX = e.touches[0].clientX;
+  }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 44) {
+      goTo(diff > 0
+        ? (current + 1) % slides.length
+        : (current - 1 + slides.length) % slides.length
+      );
+      resetTimer();
+    }
+  });
+
+  /* ── KEYBOARD ── */
+  document.addEventListener('keydown', e => {
+    const focused = wrap.contains(document.activeElement) || document.activeElement === document.body;
+    if (!focused) return;
+    if (e.key === 'ArrowRight') { goTo((current + 1) % slides.length); resetTimer(); }
+    if (e.key === 'ArrowLeft')  { goTo((current - 1 + slides.length) % slides.length); resetTimer(); }
+  });
+
+  /* ── INIT ── */
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'exit');
+    if (i === 0) s.classList.add('active');
+  });
+  updateContent(0);
+  startProgress();
+  resetTimer();
+
 })();
 </script>
 
