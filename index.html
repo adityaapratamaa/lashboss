@@ -2083,7 +2083,6 @@
     transform: translateY(0) scale(1);
   }
 
-  /* ─── QUIZ (NEW) ─── */
   /* ─── QUIZ REDESIGN ─── */
   #quiz {
     background: linear-gradient(160deg, #fce8f3 0%, #fdd5ea 50%, #fbbfd8 100%);
@@ -2093,11 +2092,10 @@
 
   .quiz-inner {
     position: relative; z-index: 1;
-    max-width: 900px; margin: 0 auto;
+    max-width: 640px; margin: 0 auto;
     text-align: center;
   }
 
-  /* Label pill */
   .quiz-label-pill {
     display: inline-flex; align-items: center; gap: 0.4rem;
     background: rgba(255,255,255,0.75);
@@ -2114,68 +2112,147 @@
   .quiz-title .section-title em { color: var(--pink); font-style: normal; }
   .quiz-title .section-desc { color: #8b4a6a; margin: 0.6rem auto 2rem; }
 
-  /* ── Step (pilihan) ── */
+  /* Step animations */
   .quiz-step { display: none; }
-  .quiz-step.active { display: block; }
+  .quiz-step.active {
+    display: block;
+    animation: quizStepIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes quizStepIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .quiz-step.exit-left {
+    display: block;
+    animation: quizStepOutLeft 0.28s cubic-bezier(0.55, 0, 1, 0.45) both;
+  }
+  @keyframes quizStepOutLeft {
+    from { opacity: 1; transform: translateX(0) scale(1); }
+    to   { opacity: 0; transform: translateX(-40px) scale(0.96); }
+  }
 
   /* Question badge */
   .quiz-question-wrap {
-    display: flex; align-items: center; justify-content: center; gap: 0.7rem;
-    background: rgba(255,255,255,0.8);
-    border: 1.5px solid rgba(255,77,148,0.18);
-    border-radius: 99px; padding: 0.6rem 1.4rem 0.6rem 0.6rem;
-    width: fit-content; margin: 0 auto 1.8rem;
+    display: flex; align-items: center; gap: 0.85rem;
+    background: rgba(255,255,255,0.88);
+    border: 1.5px solid rgba(255,77,148,0.2);
+    border-radius: 20px; padding: 1rem 1.2rem;
+    width: 100%; margin: 0 auto 1.4rem;
+    box-shadow: 0 4px 20px rgba(232,115,154,0.12);
+    box-sizing: border-box;
+    text-align: left;
   }
   .quiz-q-icon {
-    width: 34px; height: 34px; flex-shrink: 0;
+    width: 44px; height: 44px; flex-shrink: 0;
     background: linear-gradient(135deg, #ffb3d4, var(--pink));
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(255,77,148,0.3);
   }
-  .quiz-q-icon svg { width:17px;height:17px;stroke:white;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round; }
+  .quiz-q-icon svg { width:20px;height:20px;stroke:white;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round; }
   .quiz-question {
-    font-size: 0.88rem; font-weight: 700;
-    color: var(--pink-deep); margin: 0; line-height: 1.3;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--pink-deep); margin: 0; line-height: 1.35;
+    flex: 1;
   }
 
-  /* Options grid */
+  /* Options — full-width stack */
   .quiz-options {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
   .quiz-option {
-    background: rgba(255,255,255,0.88);
-    border: 1.5px solid rgba(255,255,255,0.95);
-    border-radius: 18px; padding: 1.2rem 1rem;
+    background: rgba(255,255,255,0.9);
+    border: 1.5px solid rgba(255,255,255,0.98);
+    border-radius: 18px; padding: 1.1rem 1.1rem;
     cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s, background 0.25s;
     text-align: left; display: flex; align-items: center;
-    gap: 0.85rem; font-family: 'Barlow', sans-serif;
-    box-shadow: 0 2px 10px rgba(232,115,154,0.08);
+    gap: 1rem; font-family: 'Barlow', sans-serif;
+    box-shadow: 0 2px 12px rgba(232,115,154,0.1);
+    position: relative; overflow: hidden;
+    width: 100%;
   }
   .quiz-option:hover {
+    border-color: rgba(255,77,148,0.4); background: white;
+    box-shadow: 0 8px 28px rgba(232,115,154,0.22);
+    transform: translateY(-1px);
+  }
+  .quiz-option:active { transform: scale(0.98); }
+  /* Ripple */
+  .quiz-option .ripple {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,77,148,0.18);
+    transform: scale(0);
+    animation: rippleAnim 0.55s linear;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+  .quiz-option.selected {
     border-color: var(--pink); background: white;
-    box-shadow: 0 8px 24px rgba(232,115,154,0.2);
+    box-shadow: 0 8px 28px rgba(232,115,154,0.28);
+    animation: optionPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes optionPop {
+    0%  { transform: scale(1); }
+    45% { transform: scale(1.025); }
+    100%{ transform: scale(1); }
   }
   .qo-icon-wrap {
     width: 46px; height: 46px; flex-shrink: 0;
     background: linear-gradient(135deg, #fce8f3, #fdd0e8);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s, transform 0.25s;
   }
-  .qo-icon-wrap svg { width:21px;height:21px;stroke:var(--pink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round; }
-  .qo-text { font-size: 0.83rem; font-weight: 600; color: var(--dark); line-height: 1.45; flex:1; }
-  .qo-arrow svg { width:15px;height:15px;stroke:rgba(255,77,148,0.5);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
+  .quiz-option:hover .qo-icon-wrap,
+  .quiz-option.selected .qo-icon-wrap {
+    background: linear-gradient(135deg, #ffb3d4, var(--pink));
+    transform: scale(1.08);
+  }
+  .qo-icon-wrap svg {
+    width:21px;height:21px;stroke:var(--pink);fill:none;
+    stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+    transition: stroke 0.25s;
+  }
+  .quiz-option:hover .qo-icon-wrap svg,
+  .quiz-option.selected .qo-icon-wrap svg { stroke: white; }
+  .qo-text { font-size: 0.88rem; font-weight: 600; color: var(--dark); line-height: 1.45; flex:1; }
+  .qo-arrow {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,77,148,0.08);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .quiz-option:hover .qo-arrow,
+  .quiz-option.selected .qo-arrow { background: var(--pink); transform: translateX(2px); }
+  .qo-arrow svg {
+    width:14px;height:14px;stroke:rgba(255,77,148,0.5);fill:none;
+    stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+    transition: stroke 0.25s;
+  }
+  .quiz-option:hover .qo-arrow svg,
+  .quiz-option.selected .qo-arrow svg { stroke: white; }
 
   .quiz-trust-note {
     font-size: 0.76rem; color: #8b4a6a;
-    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.4rem; flex-wrap: wrap; text-align: center;
   }
   .quiz-trust-note b { color: var(--pink-deep); }
 
   /* ── Result Card ── */
   .quiz-result { display: none; }
-  .quiz-result.active { display: block; }
+  .quiz-result.active {
+    display: block;
+    animation: resultSlideUp 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+  @keyframes resultSlideUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
   .quiz-result-card {
     background: white;
@@ -3046,7 +3123,10 @@
       overflow: hidden;
     }
 
-    /* QUIZ RESULT — mobile: single column like reference */
+    /* QUIZ — tablet/mobile */
+    .quiz-options { flex-direction: column; gap: 0.75rem; }
+
+    /* QUIZ RESULT — mobile: single column */
     .quiz-result-card {
       display: flex !important;
       flex-direction: column !important;
@@ -3058,7 +3138,7 @@
       overflow: hidden;
     }
     .quiz-res-img-side {
-      min-height: 280px !important;
+      min-height: 260px !important;
       padding: 1.8rem 1.2rem 1.4rem !important;
       border-radius: 0 !important;
     }
@@ -3072,8 +3152,8 @@
     }
     .quiz-res-label { text-align: center; }
     .quiz-res-name { text-align: center; font-size: 2rem !important; }
-    .quiz-res-desc { text-align: center; font-size: 0.8rem !important; }
-    .quiz-res-benefits { gap: 0.9rem !important; }
+    .quiz-res-desc { text-align: center; font-size: 0.82rem !important; }
+    .quiz-res-benefits { gap: 0.85rem !important; }
     .quiz-res-btns {
       flex-direction: column !important;
       gap: 0.6rem !important;
@@ -3096,7 +3176,6 @@
     }
     .quiz-res-trust-item { font-size: 0.62rem !important; }
     .quiz-close-btn { top: 0.75rem !important; right: 0.75rem !important; }
-    .quiz-result-emoji { font-size: 3.5rem; }
     .quiz-btns { justify-content: center; }
 
     /* CTA */
@@ -4160,28 +4239,28 @@
       </div>
 
       <div class="quiz-options">
-        <button class="quiz-option" onclick="selectQuiz('rapunzel')">
+        <button class="quiz-option" onclick="selectQuiz('rapunzel', this)">
           <div class="qo-icon-wrap">
             <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><path d="M8 12c0-2.2 1.8-4 4-4"/></svg>
           </div>
           <div class="qo-text">Tipis, jarang &amp; ingin lebih lebat dan panjang</div>
           <div class="qo-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </button>
-        <button class="quiz-option" onclick="selectQuiz('gel')">
+        <button class="quiz-option" onclick="selectQuiz('gel', this)">
           <div class="qo-icon-wrap">
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
           </div>
           <div class="qo-text">Sering pakai eyelash extension &amp; ingin bulu mata tetap sehat</div>
           <div class="qo-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </button>
-        <button class="quiz-option" onclick="selectQuiz('sensitive')">
+        <button class="quiz-option" onclick="selectQuiz('sensitive', this)">
           <div class="qo-icon-wrap">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
           <div class="qo-text">Mata mudah iritasi &amp; sensitif terhadap produk biasa</div>
           <div class="qo-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
         </button>
-        <button class="quiz-option" onclick="selectQuiz('itcurl')">
+        <button class="quiz-option" onclick="selectQuiz('itcurl', this)">
           <div class="qo-icon-wrap">
             <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
           </div>
@@ -5429,25 +5508,64 @@ const quizData={
   itcurl:{img:'./images/products/itcurl-curler.jpg',emoji:'💄',label:'Solusi Lentik Sempurna',name:'itCurl Eyelash Curler',desc:'Desain C-Curl khusus mata Asia yang ergonomis. Hasilkan lentikan sempurna tanpa rasa sakit, tahan ratusan kali pemakaian.',url:'https://shopee.co.id/-PRE-ORDER-LashBoss-itCurl-Eyelash-Curler-Penjepit-Bulu-Mata-Alat-Make-Up-Beauty-Tools-Pelentik-Bulu-Mata-i.17525438.29026790476'},
 };
 
-function selectQuiz(type){
-  const d=quizData[type];
-  // GANTI emoji dengan foto produk quiz result
-  const quizImgEl = document.getElementById('quizResImg');
-  if(quizImgEl) quizImgEl.src = d.img; // field img di quizData
-  document.getElementById('quizResLabel').textContent=d.label;
-  document.getElementById('quizResName').textContent=d.name;
-  document.getElementById('quizResDesc').textContent=d.desc;
-  document.getElementById('quizResBtn').href=d.url;
-  document.getElementById('quizStep1').classList.remove('active');
-  const result=document.getElementById('quizResult');
-  result.classList.add('active');
-  result.style.display='block';
+function selectQuiz(type, clickedBtn) {
+  const d = quizData[type];
+
+  // Ripple on clicked button
+  if (clickedBtn) {
+    const btn = clickedBtn;
+    btn.classList.add('selected');
+    const rect = btn.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const size = Math.max(btn.offsetWidth, btn.offsetHeight) * 2;
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${rect.width/2 - size/2}px;top:${rect.height/2 - size/2}px;`;
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  }
+
+  // Short delay for visual feedback, then transition
+  setTimeout(() => {
+    const step1 = document.getElementById('quizStep1');
+    step1.classList.add('exit-left');
+
+    setTimeout(() => {
+      step1.classList.remove('active', 'exit-left');
+
+      const quizImgEl = document.getElementById('quizResImg');
+      if (quizImgEl) quizImgEl.src = d.img;
+      document.getElementById('quizResLabel').textContent = d.label;
+      document.getElementById('quizResName').textContent = d.name;
+      document.getElementById('quizResDesc').textContent = d.desc;
+      document.getElementById('quizResBtn').href = d.url;
+
+      const result = document.getElementById('quizResult');
+      result.style.display = 'block';
+      // Force reflow so animation triggers
+      result.offsetHeight;
+      result.classList.add('active');
+    }, 280);
+  }, 180);
 }
 
-function resetQuiz(){
-  document.getElementById('quizResult').classList.remove('active');
-  document.getElementById('quizResult').style.display='none';
-  document.getElementById('quizStep1').classList.add('active');
+function resetQuiz() {
+  const result = document.getElementById('quizResult');
+  result.style.opacity = '0';
+  result.style.transform = 'translateY(20px) scale(0.97)';
+  result.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+
+  setTimeout(() => {
+    result.classList.remove('active');
+    result.style.display = 'none';
+    result.style.opacity = '';
+    result.style.transform = '';
+    result.style.transition = '';
+
+    const step1 = document.getElementById('quizStep1');
+    // Remove selected state from all options
+    step1.querySelectorAll('.quiz-option.selected').forEach(o => o.classList.remove('selected'));
+    step1.classList.add('active');
+  }, 260);
 }
 
 // ─── FAQ ACCORDION ───
