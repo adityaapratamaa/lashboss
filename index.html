@@ -2187,6 +2187,7 @@
     grid-template-columns: 1fr 1fr;
     min-height: 420px;
     text-align: left;
+    width: 100%;
   }
 
   /* Tombol close */
@@ -3045,8 +3046,56 @@
       overflow: hidden;
     }
 
-    /* QUIZ */
-    .quiz-result-card { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 1.5rem; }
+    /* QUIZ RESULT — mobile: single column like reference */
+    .quiz-result-card {
+      display: flex !important;
+      flex-direction: column !important;
+      grid-template-columns: none !important;
+      text-align: center;
+      gap: 0;
+      padding: 0;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .quiz-res-img-side {
+      min-height: 280px !important;
+      padding: 1.8rem 1.2rem 1.4rem !important;
+      border-radius: 0 !important;
+    }
+    .quiz-res-img-side img {
+      max-width: 160px !important;
+      height: 200px !important;
+    }
+    .quiz-res-info-side {
+      padding: 1.6rem 1.4rem 1.4rem !important;
+      text-align: left;
+    }
+    .quiz-res-label { text-align: center; }
+    .quiz-res-name { text-align: center; font-size: 2rem !important; }
+    .quiz-res-desc { text-align: center; font-size: 0.8rem !important; }
+    .quiz-res-benefits { gap: 0.9rem !important; }
+    .quiz-res-btns {
+      flex-direction: column !important;
+      gap: 0.6rem !important;
+      margin-bottom: 1rem !important;
+    }
+    .quiz-res-buy {
+      width: 100% !important;
+      justify-content: center !important;
+      padding: 1rem 1.8rem !important;
+      font-size: 0.88rem !important;
+    }
+    .quiz-retry {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+    .quiz-res-trust {
+      justify-content: center !important;
+      gap: 0.6rem !important;
+      flex-wrap: wrap !important;
+    }
+    .quiz-res-trust-item { font-size: 0.62rem !important; }
+    .quiz-close-btn { top: 0.75rem !important; right: 0.75rem !important; }
     .quiz-result-emoji { font-size: 3.5rem; }
     .quiz-btns { justify-content: center; }
 
@@ -3180,9 +3229,6 @@
     .qo-emoji { font-size: 1.5rem; }
     .qo-text { font-size: 0.82rem; }
     .quiz-question { font-size: clamp(1.1rem, 4vw, 1.4rem); margin-bottom: 1.5rem; }
-    .quiz-result-card { padding: 1.6rem 1.2rem; }
-    .quiz-result-name { font-size: 1.6rem; }
-    .quiz-result-desc { font-size: 0.78rem; }
 
     /* FAQ */
     .faq-q { font-size: 0.85rem; padding: 1.1rem; }
