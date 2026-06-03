@@ -2032,26 +2032,16 @@
     background: rgba(255,255,255,0.96);
   }
   .cert-img-wrap {
-    width: 130px; height: 130px;
+    width: 160px; height: 160px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 1rem; position: relative;
   }
   .cert-img-wrap img {
-    width: 120px; height: 120px;
+    width: 150px; height: 150px;
     object-fit: contain; display: block;
   }
-  .cert-img-wrap::before {
-    content: '✦';
-    position: absolute; top: 4px; right: 6px;
-    font-size: 0.75rem; color: rgba(255,77,148,0.45);
-    animation: floatSpark 4s ease-in-out infinite;
-  }
-  .cert-img-wrap::after {
-    content: '✦';
-    position: absolute; bottom: 8px; left: 4px;
-    font-size: 0.5rem; color: rgba(255,77,148,0.3);
-    animation: floatSpark 5.5s ease-in-out infinite reverse;
-  }
+  .cert-img-wrap::before,
+  .cert-img-wrap::after { display: none; }
   .cert-check {
     width: 24px; height: 24px;
     background: var(--pink); border-radius: 50%;
@@ -2970,8 +2960,8 @@
     /* CERT — tablet */
     .cert-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .cert-card { padding: 1.6rem 1rem 1.3rem; }
-    .cert-img-wrap { width: 100px; height: 100px; }
-    .cert-img-wrap img { width: 90px; height: 90px; }
+    .cert-img-wrap { width: 130px; height: 130px; }
+    .cert-img-wrap img { width: 120px; height: 120px; }
     .cert-trust-strip { grid-template-columns: repeat(2, 1fr); }
     .cert-trust-item:nth-child(2) { border-right: none; }
     .cert-trust-item:nth-child(3),
@@ -3112,8 +3102,8 @@
     /* CERT — mobile */
     .cert-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
     .cert-card { padding: 1.3rem 0.9rem 1.1rem; border-radius: 16px; }
-    .cert-img-wrap { width: 80px; height: 80px; margin-bottom: 0.7rem; }
-    .cert-img-wrap img { width: 72px; height: 72px; }
+    .cert-img-wrap { width: 110px; height: 110px; margin-bottom: 0.7rem; }
+    .cert-img-wrap img { width: 100px; height: 100px; }
     .cert-check { width: 20px; height: 20px; margin-bottom: 0.5rem; }
     .cert-check svg { width: 11px; height: 11px; }
     .cert-title { font-size: 0.82rem; }
@@ -3895,7 +3885,6 @@
 
 <!-- CERTIFICATIONS -->
 <section id="certifications">
-
 
   <!-- Header -->
   <div class="reveal" style="text-align:center;position:relative;z-index:1">
