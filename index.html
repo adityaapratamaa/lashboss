@@ -2973,19 +2973,18 @@
   .ingredient-card:hover { transform: translateY(-7px) scale(1.015); box-shadow: 0 18px 44px rgba(255,77,148,0.16); border-color: #FF85C0; }
   .ingredient-card:hover::before { opacity: 1; }
 
-  /* Image circle */
+  /* Image area — full width, no circle/shadow, like cert section */
   .ingredient-img-wrap {
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: #FFF0F7;
-    margin: 0 auto 1.1rem;
+    width: 100%;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    margin-bottom: 1.1rem;
+    padding: 0.8rem;
     position: relative;
     z-index: 1;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
   }
   .ingredient-card:hover .ingredient-img-wrap { transform: translateY(-3px); }
 
@@ -2993,26 +2992,27 @@
    * ============================================================
    * UKURAN GAMBAR YANG DIREKOMENDASIKAN UNTUK TIAP KOTAK:
    *
-   *   Ukuran ideal   : 240 × 240 px  (rasio 1:1, persegi)
-   *   Ukuran minimum : 120 × 120 px
+   *   Ukuran ideal   : 400 x 400 px  (rasio 1:1, persegi)
+   *   Ukuran minimum : 200 x 200 px
    *   Format         : PNG transparan (background bening) / WebP
-   *   File size      : maks 80 KB per gambar
-   *   Tampilan       : object-fit: cover → di-crop jadi circle 120×120px
+   *   File size      : maks 100 KB per gambar
+   *   Tampilan       : object-fit: contain — gambar penuh, tidak di-crop
    *
    *   Contoh nama file:
-   *     images/ingredients/biotin.png   (240×240px)
-   *     images/ingredients/peptide.png  (240×240px)
-   *     images/ingredients/oils.png     (240×240px)
-   *     images/ingredients/aloe.png     (240×240px)
+   *     images/ingredients/biotin.png   (400x400px PNG transparan)
+   *     images/ingredients/peptide.png  (400x400px PNG transparan)
+   *     images/ingredients/oils.png     (400x400px PNG transparan)
+   *     images/ingredients/aloe.png     (400x400px PNG transparan)
    * ============================================================
    */
   .ingredient-img-wrap img {
-    width: 110px; height: 110px;
-    object-fit: cover;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
     transition: transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94);
   }
-  .ingredient-card:hover .ingredient-img-wrap img { transform: scale(1.1); }
+  .ingredient-card:hover .ingredient-img-wrap img { transform: scale(1.07); }
 
   /* Text elements */
   .ingredient-name {
@@ -3089,16 +3089,18 @@
   /* Mobile responsive */
   @media (max-width: 968px) {
     .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .ingredient-img-wrap { height: 160px; padding: 0.6rem; }
     .ingr-trust { grid-template-columns: 1fr 1fr; gap: 8px; }
   }
   @media (max-width: 480px) {
     .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .ingredient-card { padding: 1.4rem 0.9rem 1.2rem; }
-    .ingredient-img-wrap { width: 90px; height: 90px; }
-    .ingredient-img-wrap img { width: 82px; height: 82px; }
-    .ingredient-name { font-size: 1.1rem; }
+    .ingredient-card { padding: 1.2rem 0.8rem 1rem; }
+    .ingredient-img-wrap { height: 120px; padding: 0.4rem; }
+    .ingredient-name { font-size: 1rem; }
+    .ingredient-latin { font-size: 0.65rem; }
+    .ingredient-desc { font-size: 0.72rem; min-height: auto; }
     .ingr-trust { grid-template-columns: 1fr 1fr; }
-    .ingr-trust-item { font-size: 0.7rem; padding: 0.55rem 0.6rem; gap: 6px; }
+    .ingr-trust-item { font-size: 0.68rem; padding: 0.5rem 0.5rem; gap: 5px; }
   }
 
   /* ─── WHERE TO BUY (new premium) ─── */
@@ -4780,7 +4782,33 @@
     <!-- CARD 1: BIOTIN -->
     <div class="ingredient-card">
       <div class="ingredient-img-wrap">
-          <img src="./images/biotin.png" alt="Biotin" width="220" height="2200">
+        <!--
+          GANTI dengan gambar asli (PNG transparan, background bening):
+          <img src="./images/ingredients/biotin.png" alt="Biotin" width="200" height="200">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/biotin.png
+          • Ukuran   : 400 x 400 px  (rasio 1:1, persegi)
+          • Minimum  : 200 x 200 px
+          • Format   : PNG transparan / WebP (WAJIB background bening)
+          • Max size : 100 KB
+        -->
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="80" cy="62" r="22" fill="#FF85C0" opacity="0.9"/>
+          <circle cx="80" cy="62" r="13" fill="#FFB8D8" opacity="0.8"/>
+          <circle cx="47" cy="105" r="17" fill="#FF85C0" opacity="0.75"/>
+          <circle cx="113" cy="105" r="17" fill="#FF85C0" opacity="0.75"/>
+          <line x1="80" y1="84" x2="47" y2="105" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <line x1="80" y1="84" x2="113" y2="105" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="52" cy="30" r="12" fill="#FFADD0" opacity="0.85"/>
+          <circle cx="108" cy="30" r="12" fill="#FFADD0" opacity="0.85"/>
+          <line x1="80" y1="40" x2="52" y2="30" stroke="#FF85C0" stroke-width="3" stroke-linecap="round"/>
+          <line x1="80" y1="40" x2="108" y2="30" stroke="#FF85C0" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="30" cy="120" r="8" fill="#FFD0E8" opacity="0.7"/>
+          <circle cx="130" cy="120" r="8" fill="#FFD0E8" opacity="0.7"/>
+          <line x1="47" y1="122" x2="30" y2="120" stroke="#FFADD0" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="113" y1="122" x2="130" y2="120" stroke="#FFADD0" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
       </div>
       <div class="ingredient-name">Biotin</div>
       <div class="ingredient-latin">Encapsulated Biotin</div>
@@ -4792,7 +4820,31 @@
     <!-- CARD 2: PEPTIDE -->
     <div class="ingredient-card">
       <div class="ingredient-img-wrap">
-          <img src="./images/peptide.png" alt="Peptide" width="110" height="110">
+        <!--
+          GANTI dengan gambar asli (PNG transparan, background bening):
+          <img src="./images/ingredients/peptide.png" alt="Peptide" width="200" height="200">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/peptide.png
+          • Ukuran   : 400 x 400 px  (rasio 1:1, persegi)
+          • Minimum  : 200 x 200 px
+          • Format   : PNG transparan / WebP (WAJIB background bening)
+          • Max size : 100 KB
+        -->
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="80" cy="42" r="18" fill="#FF85C0" opacity="0.9"/>
+          <circle cx="42" cy="80" r="18" fill="#FF85C0" opacity="0.85"/>
+          <circle cx="118" cy="80" r="18" fill="#FF85C0" opacity="0.85"/>
+          <circle cx="80" cy="118" r="18" fill="#FF4D94" opacity="0.9"/>
+          <line x1="80" y1="60" x2="42" y2="80" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <line x1="80" y1="60" x2="118" y2="80" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <line x1="42" y1="98" x2="80" y2="118" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <line x1="118" y1="98" x2="80" y2="118" stroke="#FF4D94" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="80" cy="42" r="9" fill="#FFD0E8" opacity="0.7"/>
+          <circle cx="42" cy="80" r="9" fill="#FFD0E8" opacity="0.7"/>
+          <circle cx="118" cy="80" r="9" fill="#FFD0E8" opacity="0.7"/>
+          <circle cx="80" cy="118" r="9" fill="#FFD0E8" opacity="0.6"/>
+        </svg>
       </div>
       <div class="ingredient-name">Peptide</div>
       <div class="ingredient-latin">Acetyl Tetrapeptide-3</div>
@@ -4804,7 +4856,28 @@
     <!-- CARD 3: NATURAL OILS -->
     <div class="ingredient-card">
       <div class="ingredient-img-wrap">
-          <img src="./images/naturaloil.png" alt="Natural Oils" width="110" height="110">
+        <!--
+          GANTI dengan gambar asli (PNG transparan, background bening):
+          <img src="./images/ingredients/oils.png" alt="Natural Oils" width="200" height="200">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/oils.png
+          • Ukuran   : 400 x 400 px  (rasio 1:1, persegi)
+          • Minimum  : 200 x 200 px
+          • Format   : PNG transparan / WebP (WAJIB background bening)
+          • Max size : 100 KB
+        -->
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="80" cy="88" rx="36" ry="40" fill="#EFB730" opacity="0.18"/>
+          <circle cx="62" cy="68" r="26" fill="#F5C842" opacity="0.88"/>
+          <circle cx="100" cy="60" r="20" fill="#EFB730" opacity="0.82"/>
+          <circle cx="80" cy="100" r="22" fill="#F5C842" opacity="0.78"/>
+          <circle cx="62" cy="68" r="14" fill="#FDD96A" opacity="0.65"/>
+          <circle cx="100" cy="60" r="11" fill="#FDD96A" opacity="0.55"/>
+          <circle cx="80" cy="100" r="12" fill="#FDD96A" opacity="0.58"/>
+          <circle cx="62" cy="60" r="6" fill="#FFF0A0" opacity="0.5"/>
+          <circle cx="95" cy="54" r="5" fill="#FFF0A0" opacity="0.45"/>
+        </svg>
       </div>
       <div class="ingredient-name">Natural Oils</div>
       <div class="ingredient-latin">Natural Oils Blend</div>
@@ -4816,8 +4889,25 @@
     <!-- CARD 4: ALOE -->
     <div class="ingredient-card">
       <div class="ingredient-img-wrap">
-          <img src="./images/aloe.png" alt="Aloe Vera" width="110" height="110">
+        <!--
+          GANTI dengan gambar asli (PNG transparan, background bening):
+          <img src="./images/ingredients/aloe.png" alt="Aloe Vera" width="200" height="200">
 
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/aloe.png
+          • Ukuran   : 400 x 400 px  (rasio 1:1, persegi)
+          • Minimum  : 200 x 200 px
+          • Format   : PNG transparan / WebP (WAJIB background bening)
+          • Max size : 100 KB
+        -->
+        <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M80 130 C80 130 38 108 38 72 C38 50 56 40 80 54 C104 40 122 50 122 72 C122 108 80 130 80 130Z" fill="#4CAF82" opacity="0.22"/>
+          <path d="M80 125 C80 125 46 100 50 70 C53 50 64 46 80 60 C96 46 107 50 110 70 C114 100 80 125 80 125Z" fill="#3DBF7A" opacity="0.6"/>
+          <path d="M80 120 C80 120 58 94 62 68 C65 50 74 48 80 62 C86 48 95 50 98 68 C102 94 80 120 80 120Z" fill="#5EE09A" opacity="0.85"/>
+          <path d="M80 115 C80 115 66 92 68 70 C70 56 76 54 80 64 C84 54 90 56 92 70 C94 92 80 115 80 115Z" fill="#7AEAB0" opacity="0.75"/>
+          <ellipse cx="80" cy="66" rx="8" ry="14" fill="#B8F5D4" opacity="0.65"/>
+          <ellipse cx="80" cy="62" rx="4" ry="7" fill="#E0FFF0" opacity="0.5"/>
+        </svg>
       </div>
       <div class="ingredient-name">Aloe</div>
       <div class="ingredient-latin">Aloe Barbadensis</div>
