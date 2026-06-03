@@ -2879,24 +2879,227 @@
   .ba-detail { font-size: 0.72rem; color: #7A4060; line-height: 1.6; }
   .ba-result { font-size: 0.75rem; color: var(--pink-light); font-weight: 600; margin-top: 0.4rem; }
 
-  /* ─── INGREDIENT HIGHLIGHT (new premium) ─── */
-  #ingredients { background: var(--white); }
+  /* ─── INGREDIENT HIGHLIGHT — Premium Redesign ─── */
+  #ingredients {
+    background: #FFF0F7;
+    position: relative;
+    overflow: hidden;
+  }
+  #ingredients::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 10% 20%, rgba(255,133,190,0.12), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 80%, rgba(255,77,148,0.08), transparent 60%);
+    pointer-events: none;
+  }
+  #ingredients .section-header-wrap {
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  #ingredients .section-label {
+    display: inline-block;
+    background: white;
+    border: 1.5px solid #FFB8D8;
+    border-radius: 99px;
+    padding: 4px 18px;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: #D91A6B;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  #ingredients .section-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  #ingredients .ingr-divider {
+    width: 36px; height: 3px;
+    background: var(--pink);
+    border-radius: 99px;
+    margin: 0.9rem auto;
+  }
+  #ingredients .section-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.75;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  #ingredients .section-desc b { color: var(--pink); font-weight: 700; }
+
+  /* Grid */
   .ingredients-grid {
-    display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
-    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
   }
+
+  /* Card */
   .ingredient-card {
-    text-align: center; padding: 1.8rem 1rem;
-    border: 1px solid rgba(232,115,154,0.1);
-    border-radius: var(--radius);
-    transition: all 0.4s;
-    background: var(--cream);
+    background: white;
+    border-radius: 20px;
+    border: 1.5px solid #FFD6EA;
+    padding: 2rem 1.2rem 1.6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition:
+      transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94),
+      box-shadow 0.38s cubic-bezier(0.25,0.46,0.45,0.94),
+      border-color 0.3s ease;
+    will-change: transform;
   }
-  .ingredient-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(232,115,154,0.15); border-color: var(--pink-light); }
-  .ingredient-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
-  .ingredient-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 800; font-style: italic; color: var(--dark); margin-bottom: 0.4rem; }
-  .ingredient-role { font-size: 0.68rem; color: var(--pink); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
-  .ingredient-desc { font-size: 0.7rem; color: var(--text-light); line-height: 1.6; }
+  .ingredient-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: 50%;
+    transform: translateX(-50%);
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(255,133,190,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .ingredient-card:hover { transform: translateY(-7px) scale(1.015); box-shadow: 0 18px 44px rgba(255,77,148,0.16); border-color: #FF85C0; }
+  .ingredient-card:hover::before { opacity: 1; }
+
+  /* Image circle */
+  .ingredient-img-wrap {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: #FFF0F7;
+    margin: 0 auto 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    position: relative;
+    z-index: 1;
+  }
+  .ingredient-card:hover .ingredient-img-wrap { transform: translateY(-3px); }
+
+  /*
+   * ============================================================
+   * UKURAN GAMBAR YANG DIREKOMENDASIKAN UNTUK TIAP KOTAK:
+   *
+   *   Ukuran ideal   : 240 × 240 px  (rasio 1:1, persegi)
+   *   Ukuran minimum : 120 × 120 px
+   *   Format         : PNG transparan (background bening) / WebP
+   *   File size      : maks 80 KB per gambar
+   *   Tampilan       : object-fit: cover → di-crop jadi circle 120×120px
+   *
+   *   Contoh nama file:
+   *     images/ingredients/biotin.png   (240×240px)
+   *     images/ingredients/peptide.png  (240×240px)
+   *     images/ingredients/oils.png     (240×240px)
+   *     images/ingredients/aloe.png     (240×240px)
+   * ============================================================
+   */
+  .ingredient-img-wrap img {
+    width: 110px; height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .ingredient-card:hover .ingredient-img-wrap img { transform: scale(1.1); }
+
+  /* Text elements */
+  .ingredient-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--dark);
+    margin-bottom: 0.18rem;
+    letter-spacing: 0.01em;
+  }
+  .ingredient-latin {
+    font-size: 0.72rem;
+    font-style: italic;
+    color: #9E6080;
+    margin-bottom: 0.75rem;
+  }
+  .ingredient-role {
+    display: inline-block;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pink);
+    border: 1.5px solid #FFB8D8;
+    border-radius: 99px;
+    padding: 3px 13px;
+    margin-bottom: 0.9rem;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .ingredient-card:hover .ingredient-role { background: var(--pink); color: white; }
+
+  .ingredient-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    min-height: 56px;
+  }
+  .ingredient-bar {
+    width: 28px; height: 2.5px;
+    background: #FFB8D8;
+    border-radius: 99px;
+    margin: 1rem auto 0;
+    transition: width 0.3s ease, background 0.3s ease;
+  }
+  .ingredient-card:hover .ingredient-bar { width: 46px; background: var(--pink); }
+
+  /* Trust bar */
+  .ingr-trust {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    max-width: 1100px;
+    margin: 2.5rem auto 0;
+    position: relative;
+    z-index: 1;
+  }
+  .ingr-trust-item {
+    background: white;
+    border: 1.5px solid #FFD6EA;
+    border-radius: 12px;
+    padding: 0.65rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-light);
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .ingr-trust-item:hover { border-color: #FF85C0; transform: translateY(-2px); }
+  .ingr-trust-item svg { flex-shrink: 0; width: 18px; height: 18px; stroke: var(--pink); }
+
+  /* Mobile responsive */
+  @media (max-width: 968px) {
+    .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .ingr-trust { grid-template-columns: 1fr 1fr; gap: 8px; }
+  }
+  @media (max-width: 480px) {
+    .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .ingredient-card { padding: 1.4rem 0.9rem 1.2rem; }
+    .ingredient-img-wrap { width: 90px; height: 90px; }
+    .ingredient-img-wrap img { width: 82px; height: 82px; }
+    .ingredient-name { font-size: 1.1rem; }
+    .ingr-trust { grid-template-columns: 1fr 1fr; }
+    .ingr-trust-item { font-size: 0.7rem; padding: 0.55rem 0.6rem; gap: 6px; }
+  }
 
   /* ─── WHERE TO BUY (new premium) ─── */
   #wheretobuy { background: var(--cream); }
@@ -3226,9 +3429,6 @@
     /* BA / BEFORE-AFTER */
     .ba-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 
-    /* INGREDIENTS */
-    .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-
     /* MARKETPLACE */
     .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
 
@@ -3358,13 +3558,6 @@
 
     /* BEFORE/AFTER */
     .ba-img-wrap { aspect-ratio: 2/1; font-size: 2.5rem; }
-
-    /* INGREDIENTS */
-    .ingredients-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .ingredient-card { padding: 1.3rem 0.8rem; }
-    .ingredient-icon { font-size: 1.8rem; }
-    .ingredient-name { font-size: 0.88rem; }
-    .ingredient-desc { font-size: 0.65rem; }
 
     /* MARKETPLACE */
     .marketplace-card { padding: 1.2rem 0.8rem; }
@@ -4573,43 +4766,167 @@
   </div>
 </section>
 
-<!-- KEY INGREDIENTS (new premium section) -->
+<!-- KEY INGREDIENTS — Premium Redesign -->
 <section id="ingredients">
-  <div style="text-align:center;max-width:560px;margin:0 auto" class="reveal">
+  <div class="section-header-wrap reveal">
     <div class="section-label">Bahan Aktif Premium</div>
     <h2 class="section-title">Diracik dari<br><em>Bahan Terbaik</em></h2>
-    <p class="section-desc" style="margin:0 auto">Setiap tetes LashBoss mengandung bahan aktif pilihan yang bekerja sinergis untuk hasil maksimal</p>
+    <div class="ingr-divider"></div>
+    <p class="section-desc">Setiap tetes LashBoss mengandung bahan aktif pilihan yang bekerja sinergis untuk <b>hasil maksimal</b></p>
   </div>
-  <div class="ingredients-grid reveal" style="max-width:1100px;margin:3rem auto 0">
+
+  <div class="ingredients-grid reveal" style="max-width:1100px;margin:2.8rem auto 0">
+
+    <!-- CARD 1: BIOTIN -->
     <div class="ingredient-card">
-      <!-- GANTI: icon DNA/biotin di images/icons/ingredient-biotin.png (48x48px) -->
-      <img src="./images/icons/ingredient-biotin.png" alt="Biotin" class="ingredient-icon" width="44" height="44" style="object-fit:contain;">
-      <div class="ingredient-name">Encapsulated Biotin</div>
+      <div class="ingredient-img-wrap">
+        <!--
+          GANTI dengan gambar asli:
+          <img src="./images/ingredients/biotin.png" alt="Biotin" width="110" height="110">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/biotin.png
+          • Ukuran   : 240 × 240 px  (rasio 1:1)
+          • Minimum  : 120 × 120 px
+          • Format   : PNG transparan atau WebP
+          • Max size : 80 KB
+        -->
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#FFE0EE" stroke="#FFB8D8" stroke-width="1.5"/>
+          <circle cx="36" cy="28" r="7" fill="#FF85C0" opacity="0.9"/>
+          <circle cx="22" cy="42" r="5.5" fill="#FF85C0" opacity="0.7"/>
+          <circle cx="50" cy="42" r="5.5" fill="#FF85C0" opacity="0.7"/>
+          <line x1="36" y1="35" x2="22" y2="42" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+          <line x1="36" y1="35" x2="50" y2="42" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="29" cy="20" r="4" fill="#FFADD0" opacity="0.8"/>
+          <circle cx="43" cy="20" r="4" fill="#FFADD0" opacity="0.8"/>
+          <line x1="36" y1="21" x2="29" y2="20" stroke="#FF85C0" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="36" y1="21" x2="43" y2="20" stroke="#FF85C0" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ingredient-name">Biotin</div>
+      <div class="ingredient-latin">Encapsulated Biotin</div>
       <div class="ingredient-role">Penguat Akar</div>
-      <div class="ingredient-desc">7× lebih efektif dari biotin biasa — langsung diserap ke folikel untuk memperkuat akar bulu mata.</div>
+      <div class="ingredient-desc">7× lebih aktif dari biotin biasa — langsung diserap ke folikel untuk memperkuat akar bulu mata.</div>
+      <div class="ingredient-bar"></div>
     </div>
+
+    <!-- CARD 2: PEPTIDE -->
     <div class="ingredient-card">
-      <!-- GANTI: icon peptide/science di images/icons/ingredient-peptide.png (48x48px) -->
-      <img src="./images/icons/ingredient-peptide.png" alt="Peptide" class="ingredient-icon" width="44" height="44" style="object-fit:contain;">
-      <div class="ingredient-name">Acetyl Tetrapeptide-3</div>
+      <div class="ingredient-img-wrap">
+        <!--
+          GANTI dengan gambar asli:
+          <img src="./images/ingredients/peptide.png" alt="Peptide" width="110" height="110">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/peptide.png
+          • Ukuran   : 240 × 240 px  (rasio 1:1)
+          • Minimum  : 120 × 120 px
+          • Format   : PNG transparan atau WebP
+          • Max size : 80 KB
+        -->
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#FFE0EE" stroke="#FFB8D8" stroke-width="1.5"/>
+          <circle cx="36" cy="22" r="6" fill="#FF85C0" opacity="0.9"/>
+          <circle cx="24" cy="36" r="6" fill="#FF85C0" opacity="0.8"/>
+          <circle cx="48" cy="36" r="6" fill="#FF85C0" opacity="0.8"/>
+          <circle cx="36" cy="50" r="6" fill="#FF4D94" opacity="0.85"/>
+          <line x1="36" y1="28" x2="24" y2="36" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+          <line x1="36" y1="28" x2="48" y2="36" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+          <line x1="24" y1="42" x2="36" y2="50" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+          <line x1="48" y1="42" x2="36" y2="50" stroke="#FF4D94" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="ingredient-name">Peptide</div>
+      <div class="ingredient-latin">Acetyl Tetrapeptide-3</div>
       <div class="ingredient-role">Stimulasi Pertumbuhan</div>
       <div class="ingredient-desc">Peptide canggih yang merangsang produksi keratin & kolagen untuk pertumbuhan bulu mata optimal.</div>
+      <div class="ingredient-bar"></div>
     </div>
+
+    <!-- CARD 3: NATURAL OILS -->
     <div class="ingredient-card">
-      <!-- GANTI: icon bunga matahari/oils di images/icons/ingredient-oils.png (48x48px) -->
-      <img src="./images/icons/ingredient-oils.png" alt="Natural Oils" class="ingredient-icon" width="44" height="44" style="object-fit:contain;">
-      <div class="ingredient-name">Natural Oils Blend</div>
-      <div class="ingredient-role">Nutrisi & Kelembapan</div>
-      <div class="ingredient-desc">Sunflower, Almond & Camellia Seed Oil memberikan nutrisi esensial ke setiap helai bulu mata.</div>
+      <div class="ingredient-img-wrap">
+        <!--
+          GANTI dengan gambar asli:
+          <img src="./images/ingredients/oils.png" alt="Natural Oils" width="110" height="110">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/oils.png
+          • Ukuran   : 240 × 240 px  (rasio 1:1)
+          • Minimum  : 120 × 120 px
+          • Format   : PNG transparan atau WebP
+          • Max size : 80 KB
+        -->
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#FFF5D0" stroke="#FFE490" stroke-width="1.5"/>
+          <ellipse cx="36" cy="38" rx="14" ry="16" fill="#EFB730" opacity="0.25"/>
+          <circle cx="28" cy="30" r="9" fill="#F5C842" opacity="0.85"/>
+          <circle cx="44" cy="28" r="7" fill="#EFB730" opacity="0.8"/>
+          <circle cx="36" cy="44" r="8" fill="#F5C842" opacity="0.75"/>
+          <circle cx="28" cy="30" r="5" fill="#FDD96A" opacity="0.6"/>
+          <circle cx="44" cy="28" r="4" fill="#FDD96A" opacity="0.5"/>
+          <circle cx="36" cy="44" r="4.5" fill="#FDD96A" opacity="0.55"/>
+        </svg>
+      </div>
+      <div class="ingredient-name">Natural Oils</div>
+      <div class="ingredient-latin">Natural Oils Blend</div>
+      <div class="ingredient-role">Nutrisi &amp; Kelembapan</div>
+      <div class="ingredient-desc">Sunflower, Almond &amp; Camellia Seed Oil memberikan nutrisi esensial ke setiap helai bulu mata.</div>
+      <div class="ingredient-bar"></div>
     </div>
+
+    <!-- CARD 4: ALOE -->
     <div class="ingredient-card">
-      <!-- GANTI: icon daun aloe vera di images/icons/ingredient-aloe.png (48x48px) -->
-      <img src="./images/icons/ingredient-aloe.png" alt="Aloe" class="ingredient-icon" width="44" height="44" style="object-fit:contain;">
-      <div class="ingredient-name">Aloe Barbadensis</div>
-      <div class="ingredient-role">Soothing & Calming</div>
+      <div class="ingredient-img-wrap">
+        <!--
+          GANTI dengan gambar asli:
+          <img src="./images/ingredients/aloe.png" alt="Aloe Vera" width="110" height="110">
+
+          UKURAN GAMBAR IDEAL:
+          • File     : images/ingredients/aloe.png
+          • Ukuran   : 240 × 240 px  (rasio 1:1)
+          • Minimum  : 120 × 120 px
+          • Format   : PNG transparan atau WebP
+          • Max size : 80 KB
+        -->
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="36" cy="36" r="34" fill="#D4F5E2" stroke="#9EE0BC" stroke-width="1.5"/>
+          <path d="M36 52 C36 52 20 44 20 30 C20 22 28 18 36 24 C44 18 52 22 52 30 C52 44 36 52 36 52Z" fill="#4CAF82" opacity="0.3"/>
+          <path d="M36 50 C36 50 24 40 26 28 C27 22 32 20 36 26 C40 20 45 22 46 28 C48 40 36 50 36 50Z" fill="#3DBF7A" opacity="0.7"/>
+          <path d="M36 48 C36 48 28 38 30 28 C31.5 22 35 22 36 28 C37 22 40.5 22 42 28 C44 38 36 48 36 48Z" fill="#5EE09A" opacity="0.85"/>
+          <ellipse cx="36" cy="28" rx="3" ry="5" fill="#A8F0C8" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="ingredient-name">Aloe</div>
+      <div class="ingredient-latin">Aloe Barbadensis</div>
+      <div class="ingredient-role">Soothing &amp; Calming</div>
       <div class="ingredient-desc">Ekstrak lidah buaya premium menenangkan area mata sensitif dan mencegah iritasi.</div>
+      <div class="ingredient-bar"></div>
+    </div>
+
+  </div><!-- /.ingredients-grid -->
+
+  <!-- Trust bar -->
+  <div class="ingr-trust reveal" style="transition-delay:0.3s">
+    <div class="ingr-trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Aman Digunakan
+    </div>
+    <div class="ingr-trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6 17 4 13.5 4 10a8 8 0 0116 0c0 3.5-2 7-8 12z"/><circle cx="12" cy="10" r="3"/></svg>
+      Teruji Secara Dermatologis
+    </div>
+    <div class="ingr-trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Bahan Berkualitas Tinggi
+    </div>
+    <div class="ingr-trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+      Teruji Secara Klinis
     </div>
   </div>
+
 </section>
 
 <!-- WHERE TO BUY (new premium section) -->
