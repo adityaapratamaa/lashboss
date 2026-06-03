@@ -3105,10 +3105,14 @@
 
   /* ─── WHERE TO BUY (new premium) ─── */
   #wheretobuy { background: var(--cream); }
-  .marketplace-grid {
-    display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem;
-    margin-top: 3rem;
-  }
+  .marketplace-grid{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(220px, 260px));
+    justify-content:center;   /* CENTER GRID */
+    gap:1.5rem;
+    margin:3rem auto 0;
+    width:100%;
+}
   .marketplace-card {
     background: var(--white);
     border: 1.5px solid rgba(232,115,154,0.1);
@@ -4860,7 +4864,7 @@
     <h2 class="section-title">Beli di Marketplace<br><em>Favoritmu</em></h2>
     <p class="section-desc" style="margin:0 auto">LashBoss tersedia di berbagai platform belanja terpercaya. Pastikan beli dari toko resmi untuk produk original!</p>
   </div>
-  <div class="marketplace-grid reveal" style="max-width:900px;margin:3rem auto 0">
+  <div class="marketplace-grid reveal">
     <a href="https://shopee.co.id/lashboss.id" target="_blank" class="marketplace-card">
       <!-- GANTI: logo Shopee di images/marketplace/shopee-logo.png -->
       <img src="./images/shope.png" alt="Shopee" class="marketplace-icon" width="250px" height="250px" style="object-fit:contain;margin-bottom:0rem;">
