@@ -4287,208 +4287,135 @@
 
 
 <!-- TRANSFORMASI NYATA (Slider Section) -->
-<section id="transformasi">
-  <div class="tr-container">
-
-    <!-- Header -->
-    <div class="tr-header">
-      <div class="tr-label">
-        <span class="tr-spark">✦</span>
-        Transformasi Nyata
-        <span class="tr-spark">✦</span>
-      </div>
-      <h2 class="tr-title">Lihat Sendiri <span class="accent">Hasilnya</span></h2>
-      <p class="tr-subtitle">Bukan rekayasa — ini hasil asli pengguna LashBoss dari seluruh Indonesia</p>
+<section class="lashboss-section" id="results">
+  <!-- Header -->
+  <div class="section-header">
+    <div class="eyebrow">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-icon">✦</span>
+      Transformasi Nyata
+      <span class="eyebrow-icon">✦</span>
+      <span class="eyebrow-line"></span>
     </div>
+    <h2 class="section-title">
+      Lihat Sendiri <em>Hasilnya</em>
+    </h2>
+    <p class="section-subtitle">
+      Bukan rekayasa — ini hasil asli pengguna LashBoss dari seluruh Indonesia
+    </p>
+  </div>
 
-    <!-- Slider Card -->
-    <div class="tr-slider-wrap" id="trSliderWrap">
+  <!-- Carousel -->
+  <div class="carousel-wrapper">
+    <!-- Arrows sit outside the card so they overlap the edge -->
+    <button class="arrow arrow-prev" id="prevBtn" aria-label="Sebelumnya">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="arrow arrow-next" id="nextBtn" aria-label="Berikutnya">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
 
-      <!-- Arrow Prev -->
-      <button class="tr-arrow prev" id="trPrev" aria-label="Slide sebelumnya">&#8249;</button>
-      <!-- Arrow Next -->
-      <button class="tr-arrow next" id="trNext" aria-label="Slide berikutnya">&#8250;</button>
+    <div class="carousel-card" id="carouselCard">
+      <!-- Progress bar -->
+      <div class="progress-bar" id="progressBar"></div>
 
-      <!-- LEFT: Photo Panel -->
-      <div class="tr-photo-panel">
-        <div class="tr-img-track" id="trImgTrack">
+      <!-- Slides -->
+      <div class="slides-track" id="slidesTrack">
 
+        <!-- Slide 1 -->
+        <div class="slide active" data-index="0">
           <!--
-            ──────────────────────────────────────────────
-            SLIDE 1 — ganti src dengan path foto nyata
-            Ukuran ideal: 800×600 px (rasio 4:3) atau
-                          600×700 px (rasio portrait closeup)
-            Format: WebP / JPG, maks 200 KB
-            ──────────────────────────────────────────────
+            REPLACE the div below with:
+            <img src="your-before-after-1.jpg" alt="Hasil bulu mata" class="slide-img">
           -->
-          <div class="tr-slide active" data-index="0">
-            <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf1.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
+          <div class="slide-placeholder ph-1">
+            <span>Before &amp; After — Bulu Mata</span>
           </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 2
-            Ukuran ideal: sama seperti slide 1
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="1">
-             <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf2.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 3
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="2">
-             <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf3.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 4
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="3">
-            <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf4.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 5
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="4">
-             <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf5.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 6
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="5">
-             <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf6.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!--
-            ──────────────────────────────────────────────
-            SLIDE 7
-            ──────────────────────────────────────────────
-          -->
-          <div class="tr-slide" data-index="6">
-             <div class="tr-slide-placeholder">
-            </div>
-            <!-- Uncomment dan isi src saat foto sudah tersedia: -->
-            <img src="/images/beforeafter/bf7.jpg" alt="Transformasi Dewi — Minggu ke-3" loading="lazy">
-          </div>
-
-          <!-- Progress bar -->
-          <div class="tr-progress-bar">
-            <div class="tr-progress-fill" id="trProgressFill"></div>
-          </div>
-        </div><!-- /.tr-img-track -->
-      </div><!-- /.tr-photo-panel -->
-
-      <!-- RIGHT: Testimonial Content Panel -->
-      <div class="tr-content-panel" id="trContentPanel">
-
-        <!-- Week badge -->
-        <div class="tr-week-badge" id="trWeekBadge">
-          ✦&nbsp; Minggu ke-3
         </div>
 
-        <!-- Quote -->
-        <p class="tr-quote" id="trQuote">
-          "Bulu mata jadi lebih panjang &amp; lentik!"
-        </p>
-
-        <!-- Body copy -->
-        <p class="tr-body" id="trBody">
-          Awalnya ragu, tapi ternyata LashBoss benar-benar bikin bulu mata tumbuh <span class="hl">lebih panjang dan tebal</span>. Sekarang makin <span class="hl">percaya diri</span> tanpa maskara!
-        </p>
-
-        <!-- Stars -->
-        <div class="tr-stars" id="trStars" aria-label="5 dari 5 bintang">
-          <span class="tr-star">★</span>
-          <span class="tr-star">★</span>
-          <span class="tr-star">★</span>
-          <span class="tr-star">★</span>
-          <span class="tr-star">★</span>
-        </div>
-
-        <!-- User -->
-        <div>
-          <div class="tr-user-row">
-            <span class="tr-user-name" id="trUserName">Dewi, 29</span>
-            <span class="tr-user-loc">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              <span id="trUserCity">Surabaya</span>
-            </span>
-          </div>
-          <div class="tr-verified" style="margin-top:0.45rem;">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            Pembelian Terverifikasi
+        <!-- Slide 2 -->
+        <div class="slide" data-index="1">
+          <div class="slide-placeholder ph-2">
+            <span>Before &amp; After — Alis</span>
           </div>
         </div>
-      </div><!-- /.tr-content-panel -->
 
-    </div><!-- /.tr-slider-wrap -->
+        <!-- Slide 3 -->
+        <div class="slide" data-index="2">
+          <div class="slide-placeholder ph-3">
+            <span>Before &amp; After — Bulu Mata</span>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide" data-index="3">
+          <div class="slide-placeholder ph-4">
+            <span>Before &amp; After — Hairline</span>
+          </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide" data-index="4">
+          <div class="slide-placeholder ph-5">
+            <span>Before &amp; After — Alis</span>
+          </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide" data-index="5">
+          <div class="slide-placeholder ph-6">
+            <span>Before &amp; After — Bulu Mata</span>
+          </div>
+        </div>
+
+      </div><!-- /slides-track -->
+
+      <!-- Caption -->
+      <div class="slide-caption">
+        <div class="result-badge">
+          <span class="badge-dot"></span>
+          Hasil Pengguna Asli
+        </div>
+        <p class="caption-headline">Bulu mata tampak lebih panjang &amp; lentik alami</p>
+        <p class="caption-sub">Hasil nyata dari pemakaian rutin LashBoss</p>
+      </div>
+    </div><!-- /carousel-card -->
 
     <!-- Dots -->
-    <div class="tr-dots" id="trDots" role="tablist" aria-label="Pilih slide"></div>
+    <div class="dots" id="dotsContainer" role="tablist" aria-label="Navigasi slide"></div>
+  </div><!-- /carousel-wrapper -->
 
-    <!-- Trust Bar -->
-    <div class="tr-trust">
-      <div class="tr-trust-item">
-        <div class="tr-trust-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="tr-trust-name">Hasil Nyata</div>
-        <div class="tr-trust-desc">Terbukti oleh ribuan pengguna</div>
+  <!-- Trust strip -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <div class="tr-trust-item">
-        <div class="tr-trust-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="tr-trust-name">Aman &amp; BPOM</div>
-        <div class="tr-trust-desc">Formula lembut, aman digunakan</div>
+      <div class="trust-label">
+        <strong>Aman Digunakan</strong>
+        Teruji dermatologis
       </div>
-      <div class="tr-trust-item">
-        <div class="tr-trust-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
-        </div>
-        <div class="tr-trust-name">Tanpa Efek Samping</div>
-        <div class="tr-trust-desc">Nyaman untuk pemakaian harian</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </div>
-      <div class="tr-trust-item">
-        <div class="tr-trust-icon">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <div class="tr-trust-name">Dipercaya Banyak Orang</div>
-        <div class="tr-trust-desc">Ribuan testimoni positif</div>
+      <div class="trust-label">
+        <strong>Hasil Nyata</strong>
+        Terlihat dalam 2–4 minggu
       </div>
-    </div><!-- /.tr-trust -->
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="trust-label">
+        <strong>Dipercaya Ribuan Pengguna</strong>
+        Seluruh Indonesia
+      </div>
+    </div>
+  </div>
 
-  </div><!-- /.tr-container -->
 </section>
 
 
@@ -6626,238 +6553,115 @@ document.addEventListener('keydown', e => {
 <!-- JS: Transformasi Nyata Slider -->
 <script>
 (function () {
-  'use strict';
+  const slides     = Array.from(document.querySelectorAll('.slide'));
+  const dotsEl     = document.getElementById('dotsContainer');
+  const prevBtn    = document.getElementById('prevBtn');
+  const nextBtn    = document.getElementById('nextBtn');
+  const progressEl = document.getElementById('progressBar');
+  const card       = document.getElementById('carouselCard');
 
-  /* ── DATA SLIDES (edit sesuai konten nyata) ── */
-  const TR_DATA = [
-    {
-      week:    'Minggu ke-3',
-      quote:   '"Bulu mata jadi lebih panjang &amp; lentik!"',
-      body:    'Awalnya ragu, tapi ternyata LashBoss benar-benar bikin bulu mata tumbuh <span class="hl">lebih panjang dan tebal</span>. Sekarang makin <span class="hl">percaya diri</span> tanpa maskara!',
-      name:    'Dewi, 29',
-      city:    'Surabaya',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-2',
-      quote:   '"Alis saya makin tebal, terima kasih LashBoss!"',
-      body:    'Sudah 2 minggu pakai dan perubahannya <span class="hl">benar-benar terlihat</span>. Bulu alis lebih rapi dan tebal, gak perlu pensil alis lagi setiap hari.',
-      name:    'Siti, 25',
-      city:    'Jakarta',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-4',
-      quote:   '"Hasilnya melebihi ekspektasi saya!"',
-      body:    'Sempat skeptis tapi setelah <span class="hl">4 minggu konsisten</span> hasilnya sungguh nyata. Bulu mata jadi lebih hitam, panjang, dan natural.',
-      name:    'Rina, 32',
-      city:    'Bandung',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-3',
-      quote:   '"Bulu mata tumbuh lebih cepat dari yang saya kira!"',
-      body:    'Pemakaian rutin tiap malam sebelum tidur dan hasilnya <span class="hl">sangat memuaskan</span>. Bulu mata terasa lebih sehat dan tidak mudah rontok.',
-      name:    'Ayu, 27',
-      city:    'Yogyakarta',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-2',
-      quote:   '"Recommend banget buat yang mau bulu mata natural!"',
-      body:    'Formula-nya lembut dan tidak bikin iritasi. Dalam <span class="hl">2 minggu</span> sudah terasa bulu mata lebih lentik dan kuat.',
-      name:    'Maya, 23',
-      city:    'Semarang',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-4',
-      quote:   '"Investasi terbaik untuk perawatan bulu mata!"',
-      body:    'Setelah 4 minggu pakai LashBoss, hasilnya <span class="hl">luar biasa</span>. Bulu mata jadi lebih panjang, tebal, dan hitam alami. Sangat puas!',
-      name:    'Fitri, 30',
-      city:    'Makassar',
-      stars:   5,
-    },
-    {
-      week:    'Minggu ke-3',
-      quote:   '"Sekarang percaya diri tampil tanpa maskara!"',
-      body:    'Tiga minggu pakai dan bulu mata saya <span class="hl">jelas lebih panjang dan melengkung</span>. Teman-teman pada tanya pakai maskara apa, padahal enggak!',
-      name:    'Nadia, 28',
-      city:    'Medan',
-      stars:   5,
-    },
-  ];
+  const TOTAL      = slides.length;
+  const DURATION   = 5000; // ms
+  const TICK       = 50;   // ms for progress update
 
-  /* ── CONSTANTS ── */
-  const DURATION   = 5000;   // ms between auto-slides
-  const TRANS_MS   = 650;    // match CSS transition duration
+  let current  = 0;
+  let timer    = null;
+  let progress = 0;
+  let paused   = false;
 
-  /* ── ELEMENTS ── */
-  const wrap        = document.getElementById('trSliderWrap');
-  const slides      = Array.from(document.querySelectorAll('.tr-slide'));
-  const dotsWrap    = document.getElementById('trDots');
-  const progressFill = document.getElementById('trProgressFill');
-  const btnPrev     = document.getElementById('trPrev');
-  const btnNext     = document.getElementById('trNext');
-  const elWeek      = document.getElementById('trWeekBadge');
-  const elQuote     = document.getElementById('trQuote');
-  const elBody      = document.getElementById('trBody');
-  const elStars     = document.getElementById('trStars');
-  const elName      = document.getElementById('trUserName');
-  const elCity      = document.getElementById('trUserCity');
-
-  if (!slides.length) return; // guard
-
-  let current   = 0;
-  let animating = false;
-  let paused    = false;
-  let timer     = null;
-  let progTimer = null;
-
-  /* ── BUILD DOTS ── */
-  dotsWrap.innerHTML = TR_DATA.map((_, i) =>
-    `<button class="tr-dot${i === 0 ? ' active' : ''}" data-i="${i}" role="tab" aria-label="Slide ${i + 1}" aria-selected="${i === 0}"></button>`
-  ).join('');
-
-  dotsWrap.querySelectorAll('.tr-dot').forEach(d => {
-    d.addEventListener('click', () => {
-      const idx = parseInt(d.dataset.i, 10);
-      if (idx !== current) goTo(idx);
-      resetTimer();
-    });
+  // ── Build dots ─────────────────────────────────────────
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('role', 'tab');
+    d.setAttribute('aria-label', `Slide ${i + 1}`);
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
   });
 
-  /* ── UPDATE DOTS ── */
-  function updateDots() {
-    dotsWrap.querySelectorAll('.tr-dot').forEach((d, i) => {
-      const active = i === current;
-      d.classList.toggle('active', active);
-      d.setAttribute('aria-selected', String(active));
-    });
+  const dots = Array.from(dotsEl.querySelectorAll('.dot'));
+
+  // ── Go to slide ─────────────────────────────────────────
+  function goTo(index, direction = 'next') {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+
+    current = (index + TOTAL) % TOTAL;
+
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+
+    resetProgress();
   }
 
-  /* ── UPDATE CONTENT ── */
-  function updateContent(idx) {
-    const d = TR_DATA[idx];
-    if (!d) return;
-
-    /* fade out content slightly, swap, fade back in */
-    const els = [elWeek, elQuote, elBody, elName, elCity, elStars];
-    els.forEach(el => {
-      el.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
-      el.style.opacity    = '0';
-      el.style.transform  = 'translateY(8px)';
-    });
-
-    setTimeout(() => {
-      elWeek.innerHTML  = `✦&nbsp; ${d.week}`;
-      elQuote.innerHTML = d.quote;
-      elBody.innerHTML  = d.body;
-      elName.textContent = d.name;
-      elCity.textContent = d.city;
-
-      /* Re-trigger star animation */
-      elStars.innerHTML = Array(d.stars).fill('').map((_, si) =>
-        `<span class="tr-star" style="animation-delay:${(si * 0.05).toFixed(2)}s">★</span>`
-      ).join('');
-
-      els.forEach(el => {
-        el.style.opacity   = '1';
-        el.style.transform = 'translateY(0)';
-      });
-    }, 230);
-  }
-
-  /* ── GO TO SLIDE ── */
-  function goTo(next) {
-    if (animating || next === current) return;
-    animating = true;
-
-    const prev = current;
-    current    = next;
-
-    slides[prev].classList.remove('active');
-    slides[prev].classList.add('exit');
-    slides[next].classList.add('active');
-
-    updateDots();
-    updateContent(next);
-    startProgress();
-
-    setTimeout(() => {
-      slides[prev].classList.remove('exit');
-      animating = false;
-    }, TRANS_MS + 50);
-  }
-
-  /* ── AUTO ADVANCE ── */
-  function advance() {
-    if (!paused) goTo((current + 1) % slides.length);
-  }
-
-  /* ── TIMER ── */
-  function resetTimer() {
+  // ── Progress bar ────────────────────────────────────────
+  function resetProgress() {
+    progress = 0;
+    progressEl.style.width = '0%';
     clearInterval(timer);
-    timer = setInterval(advance, DURATION);
+    if (!paused) startTimer();
   }
 
-  /* ── PROGRESS BAR ── */
-  function startProgress() {
-    clearInterval(progTimer);
-    progressFill.style.transition = 'none';
-    progressFill.style.width = '0%';
-    /* force reflow */
-    progressFill.offsetHeight; // eslint-disable-line no-unused-expressions
-    progressFill.style.transition = `width ${DURATION}ms linear`;
-    progressFill.style.width = '100%';
+  function startTimer() {
+    timer = setInterval(() => {
+      progress += TICK;
+      const pct = Math.min((progress / DURATION) * 100, 100);
+      progressEl.style.width = pct + '%';
+      if (progress >= DURATION) {
+        goTo(current + 1);
+      }
+    }, TICK);
   }
 
-  /* ── ARROW BUTTONS ── */
-  btnPrev.addEventListener('click', () => {
-    goTo((current - 1 + slides.length) % slides.length);
-    resetTimer();
-  });
-  btnNext.addEventListener('click', () => {
-    goTo((current + 1) % slides.length);
-    resetTimer();
-  });
+  // ── Controls ─────────────────────────────────────────────
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  /* ── PAUSE ON HOVER (desktop) ── */
-  wrap.addEventListener('mouseenter', () => { paused = true; });
-  wrap.addEventListener('mouseleave', () => { paused = false; });
-
-  /* ── TOUCH SWIPE ── */
-  let touchX = 0;
-  wrap.addEventListener('touchstart', e => {
-    touchX = e.touches[0].clientX;
-  }, { passive: true });
-  wrap.addEventListener('touchend', e => {
-    const diff = touchX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 44) {
-      goTo(diff > 0
-        ? (current + 1) % slides.length
-        : (current - 1 + slides.length) % slides.length
-      );
-      resetTimer();
-    }
+  // Pause on hover
+  card.addEventListener('mouseenter', () => {
+    paused = true;
+    clearInterval(timer);
+  });
+  card.addEventListener('mouseleave', () => {
+    paused = false;
+    startTimer();
   });
 
-  /* ── KEYBOARD ── */
+  // Keyboard
   document.addEventListener('keydown', e => {
-    const focused = wrap.contains(document.activeElement) || document.activeElement === document.body;
-    if (!focused) return;
-    if (e.key === 'ArrowRight') { goTo((current + 1) % slides.length); resetTimer(); }
-    if (e.key === 'ArrowLeft')  { goTo((current - 1 + slides.length) % slides.length); resetTimer(); }
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
   });
 
-  /* ── INIT ── */
-  slides.forEach((s, i) => {
-    s.classList.remove('active', 'exit');
-    if (i === 0) s.classList.add('active');
-  });
-  updateContent(0);
-  startProgress();
-  resetTimer();
+  // ── Touch / Swipe ────────────────────────────────────────
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isDragging  = false;
+
+  card.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isDragging = true;
+  }, { passive: true });
+
+  card.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (dx > dy && dx > 10) e.preventDefault();
+  }, { passive: false });
+
+  card.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    isDragging = false;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
+
+  // ── Start ─────────────────────────────────────────────────
+  startTimer();
 
 })();
 </script>
