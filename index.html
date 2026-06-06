@@ -3867,13 +3867,16 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    line-height: 0; /* kills any inline whitespace */
+    line-height: 0;
+    /* Fixed aspect ratio — all slides crop to this, no layout jump */
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
   }
 
-  /* All slides stacked; only active one occupies layout space */
+  /* All slides fill the fixed track area */
   .slide {
     position: absolute;
-    top: 0; left: 0; right: 0;
+    inset: 0;
     opacity: 0;
     transition: opacity var(--transition);
     pointer-events: none;
@@ -3883,23 +3886,20 @@
     line-height: 0;
   }
   .slide.active {
-    position: relative;
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
-    margin: 0;
-    padding: 0;
   }
 
   .slide-img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     border-radius: 0 !important;
     margin: 0;
     padding: 0;
-
     filter: saturate(1.05) contrast(1.02);
     user-select: none;
     -webkit-user-drag: none;
@@ -4114,11 +4114,13 @@
     .carousel-wrapper { margin: 0 auto; padding: 0; }
     .carousel-card { border-radius: 20px; }
 
-    /* Image fills card edge-to-edge, no gap */
+    /* Image fills fixed track container, no height jump */
     .slide-img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       border-radius: 0;
     }
 
