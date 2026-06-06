@@ -3865,21 +3865,24 @@
   .slides-track {
     position: relative;
     width: 100%;
-    flex: 1;
-    /* height is driven by the image aspect */
+    /* height driven by active slide image */
   }
 
+  /* All slides stacked; only active one occupies layout space */
   .slide {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0;
     opacity: 0;
     transition: opacity var(--transition);
     pointer-events: none;
+    /* height 0 when hidden so track collapses to active slide size */
+    visibility: hidden;
   }
   .slide.active {
     position: relative;
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
   }
 
   .slide-img {
@@ -4111,18 +4114,8 @@
       border-radius: 0;
     }
 
-    /* Arrows: inside the image area, smaller pill style */
-    .arrow {
-      width: 36px;
-      height: 36px;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.14);
-    }
-    .arrow-prev { left: 10px; }
-    .arrow-next { right: 10px; }
-    .arrow svg { width: 13px; height: 13px; }
+    /* Hide arrows on mobile — swipe to navigate */
+    .arrow { display: none !important; }
 
     .slide-caption { padding: 18px 16px 20px; }
     .trust-strip { gap: 16px; margin-top: 36px; }
@@ -4132,10 +4125,6 @@
   @media (max-width: 480px) {
     .lashboss-section { padding: 44px 12px 40px; }
     .carousel-card { border-radius: 16px; }
-    .arrow { width: 32px; height: 32px; }
-    .arrow-prev { left: 8px; }
-    .arrow-next { right: 8px; }
-    .arrow svg { width: 12px; height: 12px; }
     .section-header { margin-bottom: 28px; }
   }
 
@@ -6567,7 +6556,6 @@ document.addEventListener('keydown', e => {
   let current  = 0;
   let timer    = null;
   let progress = 0;
-  let paused   = false;
 
   // ── Build dots ─────────────────────────────────────────
   slides.forEach((_, i) => {
@@ -6599,7 +6587,7 @@ document.addEventListener('keydown', e => {
     progress = 0;
     progressEl.style.width = '0%';
     clearInterval(timer);
-    if (!paused) startTimer();
+    startTimer();
   }
 
   function startTimer() {
@@ -6617,23 +6605,13 @@ document.addEventListener('keydown', e => {
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  // Pause on hover
-  card.addEventListener('mouseenter', () => {
-    paused = true;
-    clearInterval(timer);
-  });
-  card.addEventListener('mouseleave', () => {
-    paused = false;
-    startTimer();
-  });
-
   // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft')  goTo(current - 1);
     if (e.key === 'ArrowRight') goTo(current + 1);
   });
 
-  // ── Touch / Swipe ────────────────────────────────────────
+  // ── Touch / Swipe (no pause on touch) ───────────────────
   let touchStartX = 0;
   let touchStartY = 0;
   let isDragging  = false;
