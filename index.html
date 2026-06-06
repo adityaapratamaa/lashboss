@@ -844,9 +844,9 @@
 
   .why-grid {
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 4rem;
-    align-items: start; /* align to top so video shows full height */
+    grid-template-columns: 1fr 1fr;
+    gap: 4.5rem;
+    align-items: center;
   }
 
   /* ── Left col: text + features ── */
@@ -976,7 +976,7 @@
       0 30px 80px rgba(0,0,0,0.18),
       0 0 0 1px rgba(255,77,148,0.18);
     background: var(--dark);
-    /* No max-height — let the portrait ratio breathe naturally */
+    max-height: 660px;
   }
 
   .why-video-wrap video {
@@ -1053,7 +1053,18 @@
       0 30px 80px rgba(0,0,0,0.18),
       0 0 0 1px rgba(255,77,148,0.18);
     background: var(--dark);
-    /* No max-height — let TikTok portrait ratio show fully */
+
+    /* ═══════════════════════════════════════════════════════
+       📏 TINGGI MAKSIMUM VIDEO — DESKTOP
+       Naikkan atau turunkan angka ini untuk memperbesar /
+       memperkecil tampilan video di layar desktop.
+       Contoh nilai yang bisa dicoba:
+       • 580px  → ukuran medium
+       • 660px  → ukuran besar (default sekarang)
+       • 720px  → ukuran sangat besar
+       • 800px  → hampir penuh tinggi layar
+    ═══════════════════════════════════════════════════════ */
+    max-height: 660px;
   }
 
   /* Video testimoni utama */
