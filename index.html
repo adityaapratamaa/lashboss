@@ -844,9 +844,9 @@
 
   .why-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4.5rem;
-    align-items: center;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4rem;
+    align-items: start; /* align to top so video shows full height */
   }
 
   /* ── Left col: text + features ── */
@@ -976,7 +976,7 @@
       0 30px 80px rgba(0,0,0,0.18),
       0 0 0 1px rgba(255,77,148,0.18);
     background: var(--dark);
-    max-height: 660px;
+    /* No max-height — let the portrait ratio breathe naturally */
   }
 
   .why-video-wrap video {
@@ -1053,18 +1053,7 @@
       0 30px 80px rgba(0,0,0,0.18),
       0 0 0 1px rgba(255,77,148,0.18);
     background: var(--dark);
-
-    /* ═══════════════════════════════════════════════════════
-       📏 TINGGI MAKSIMUM VIDEO — DESKTOP
-       Naikkan atau turunkan angka ini untuk memperbesar /
-       memperkecil tampilan video di layar desktop.
-       Contoh nilai yang bisa dicoba:
-       • 580px  → ukuran medium
-       • 660px  → ukuran besar (default sekarang)
-       • 720px  → ukuran sangat besar
-       • 800px  → hampir penuh tinggi layar
-    ═══════════════════════════════════════════════════════ */
-    max-height: 660px;
+    /* No max-height — let TikTok portrait ratio show fully */
   }
 
   /* Video testimoni utama */
@@ -3070,21 +3059,35 @@
   #wheretobuy { background: var(--cream); }
   .marketplace-grid{
     display:grid;
-    grid-template-columns:repeat(4, minmax(220px, 260px));
-    justify-content:center;   /* CENTER GRID */
+    grid-template-columns: repeat(4, 1fr);
+    justify-content:center;
     gap:1.5rem;
     margin:3rem auto 0;
     width:100%;
+    max-width: 960px;
 }
   .marketplace-card {
     background: var(--white);
     border: 1.5px solid rgba(232,115,154,0.1);
-    border-radius: var(--radius); padding: 1.5rem 1rem;
-    text-align: center; text-decoration: none;
-    transition: all 0.3s; display: block;
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .marketplace-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(232,115,154,0.18); border-color: var(--pink); }
-  .marketplace-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .marketplace-icon {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 0.8rem;
+    font-size: 2rem;
+  }
   .marketplace-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); margin-bottom: 0.2rem; }
   .marketplace-sub { font-size: 0.65rem; color: var(--text-light); letter-spacing: 0.05em; }
 
@@ -3397,7 +3400,7 @@
 
 
     /* MARKETPLACE */
-    .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 100%; }
 
     /* CERTIFICATIONS */
     /* CERT — tablet */
@@ -3525,8 +3528,9 @@
 
 
     /* MARKETPLACE */
-    .marketplace-card { padding: 1.2rem 0.8rem; }
-    .marketplace-icon { font-size: 1.7rem; }
+    .marketplace-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; max-width: 100%; }
+    .marketplace-card { padding: 1rem 0.6rem; }
+    .marketplace-icon { width: 60px; height: 60px; margin-bottom: 0.5rem; }
     .marketplace-name { font-size: 0.82rem; }
 
     /* CERTIFICATIONS — 1 kolom di HP kecil */
@@ -5309,26 +5313,22 @@
   </div>
   <div class="marketplace-grid reveal">
     <a href="https://shopee.co.id/lashboss.id" target="_blank" class="marketplace-card">
-      <!-- GANTI: logo Shopee di images/marketplace/shopee-logo.png -->
-      <img src="./images/shope.png" alt="Shopee" class="marketplace-icon" width="250px" height="250px" style="object-fit:contain;margin-bottom:0rem;">
+      <img src="./images/shope.png" alt="Shopee" class="marketplace-icon">
       <div class="marketplace-name">Shopee</div>
       <div class="marketplace-sub">lashboss.id</div>
     </a>
-    <a href="#" target="_blank" class="marketplace-card">
-      <!-- GANTI: logo Tokopedia di images/marketplace/tokopedia-logo.png -->
-      <img src="./images/tokped.png" alt="Tokopedia" class="marketplace-icon" width="250px" height="250px" style="object-fit:contain;margin-bottom:0rem;">
+    <a href="https://www.tokopedia.com/lashboss" target="_blank" class="marketplace-card">
+      <img src="./images/tokped.png" alt="Tokopedia" class="marketplace-icon">
       <div class="marketplace-name">Tokopedia</div>
       <div class="marketplace-sub">Official Store</div>
     </a>
-    <a href="#" target="_blank" class="marketplace-card">
-      <!-- GANTI: logo TikTok di images/marketplace/tiktok-logo.png -->
-      <img src="./images/tiktok.png" alt="TikTok Shop" class="marketplace-icon" width="250px" height="250px" style="object-fit:contain;margin-bottom:0rem;">
+    <a href="https://www.tiktok.com/@lashboss.id" target="_blank" class="marketplace-card">
+      <img src="./images/tiktok.png" alt="TikTok Shop" class="marketplace-icon">
       <div class="marketplace-name">TikTok Shop</div>
       <div class="marketplace-sub">@lashboss.id</div>
     </a>
-    <a href="#" target="_blank" class="marketplace-card">
-      <!-- GANTI: logo Sociolla di images/marketplace/sociolla-logo.png -->
-      <img src="./images/lazada.png" alt="Lazada" class="marketplace-icon" width="250px" height="250px" style="object-fit:contain;margin-bottom:0rem;">
+    <a href="https://www.lazada.co.id/tag/lashboss-serum-bulu-mata/" target="_blank" class="marketplace-card">
+      <img src="./images/lazada.png" alt="Lazada" class="marketplace-icon">
       <div class="marketplace-name">Lazada</div>
       <div class="marketplace-sub">Beauty Platform</div>
     </a>
