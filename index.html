@@ -3856,16 +3856,18 @@
     box-shadow: var(--shadow-card);
     overflow: hidden;
     position: relative;
-    /* Ensure image is truly flush — no padding, no gap */
     display: flex;
     flex-direction: column;
+    padding: 0; /* no internal padding */
   }
 
   /* ─── SLIDE TRACK ─────────────────────────────────────── */
   .slides-track {
     position: relative;
     width: 100%;
-    /* height driven by active slide image */
+    margin: 0;
+    padding: 0;
+    line-height: 0; /* kills any inline whitespace */
   }
 
   /* All slides stacked; only active one occupies layout space */
@@ -3875,14 +3877,18 @@
     opacity: 0;
     transition: opacity var(--transition);
     pointer-events: none;
-    /* height 0 when hidden so track collapses to active slide size */
     visibility: hidden;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
   }
   .slide.active {
     position: relative;
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
+    margin: 0;
+    padding: 0;
   }
 
   .slide-img {
@@ -3890,8 +3896,10 @@
     width: 100%;
     height: auto;
     object-fit: cover;
-    border-radius: 0;
-    /* slight warm tint to make placeholder look nice */
+    border-radius: 0 !important;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom; /* removes inline baseline gap */
     filter: saturate(1.05) contrast(1.02);
     user-select: none;
     -webkit-user-drag: none;
